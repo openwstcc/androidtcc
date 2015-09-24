@@ -1,9 +1,11 @@
-package com.example.gqueiroz.androidtcc;
+package edu.fatec.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.gqueiroz.androidtcc.R;
 
 public class MainActivity extends Activity {
 
