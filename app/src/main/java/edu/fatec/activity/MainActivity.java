@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                teste.setText("That didn't work!");
+                teste.setText("Não funcionou. Verificar conexão com o WebService e URL");
             }
         });
         // Add the request to the RequestQueue.
