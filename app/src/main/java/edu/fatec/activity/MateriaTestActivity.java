@@ -14,6 +14,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import com.example.gqueiroz.androidtcc.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.lang.reflect.Type;
+
+import edu.fatec.model.Materia;
 
 public class MateriaTestActivity extends Activity {
     private TextView materias;
@@ -32,18 +40,25 @@ public class MateriaTestActivity extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        materias.setText("Materias: " + response);
+                        Type listType = new TypeToken<ArrayList<Materia>>() {
+                        }.getType();
+                        List<Materia> materiasJson = new Gson().fromJson(response, listType);
+
+                        String gsonObjects = "Todas as Materias:\n";
+                        for (Materia m : materiasJson) {
+                            gsonObjects = gsonObjects + "\nID:" + m.getIdMateria() + "\nMateria:"
+                                    + m.getMateria() + "\nSemestre:" + m.getSemestre()+"\n";
+                        }
+                        materias.setText(gsonObjects);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                materias.setText("Não funcionou. Verificar conexão com o WebService e URL");
+                materias.setText("Não funcionou. Verificar a conexão com o WebService e URL");
             }
         });
 
         queue.add(stringRequest);
-
-
     }
 
     @Override
