@@ -8,10 +8,44 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/teste" />
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MATERIAS"
+            android:id="@+id/materias"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="USUARIO"
+            android:id="@+id/usuario"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DUVIDAS"
+            android:id="@+id/duvidas"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RESPOSTAS"
+            android:id="@+id/respostas"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
 </RelativeLayout>

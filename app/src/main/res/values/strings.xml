@@ -3,4 +3,8 @@
 
     <string name="teste">TESTE</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_materia_test">MateriaTestActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_test">TestActivity</string>
 </resources>

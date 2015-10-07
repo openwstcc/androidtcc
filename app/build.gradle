@@ -19,6 +19,9 @@ android {
     }
 }
 
+repositories { mavenCentral() }
+
 dependencies {
     compile project(':volley')
+    compile 'com.google.code.gson:gson:2.3'
 }

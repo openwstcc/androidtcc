@@ -18,6 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="edu.fatec.activity.MateriaTestActivity"
+            android:label="@string/title_activity_materia_test" >
+        </activity>
     </application>
 
 </manifest>
