@@ -1,12 +1,12 @@
 package edu.fatec.activity;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -29,17 +29,21 @@ import edu.fatec.model.Materia;
 public class MateriaTestActivity extends Activity {
     private LinearLayout linearMain;
     private CheckBox checkBox;
-    private String jsonMaterias;
+
+    private String server;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_materia_test);
 
+        server = getString(R.string.wstcc);
+
         linearMain = (LinearLayout) findViewById(R.id.linearMain);
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://192.168.167.118:8080/wstcc/materias/buscarMaterias";
+
+        String url = server+"wstcc/materias/buscarMaterias";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -68,19 +72,14 @@ public class MateriaTestActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_materia_test, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

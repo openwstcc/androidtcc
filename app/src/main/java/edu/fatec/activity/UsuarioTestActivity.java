@@ -1,5 +1,6 @@
 package edu.fatec.activity;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
@@ -22,8 +23,6 @@ import com.google.gson.GsonBuilder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import edu.fatec.model.Usuario;
 
@@ -31,10 +30,14 @@ public class UsuarioTestActivity extends Activity {
     private Usuario usuario = new Usuario();
     private Button inserirUsuario;
 
+    private String server;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuario_test);
+
+        server = getString(R.string.wstcc);
 
         inserirUsuario = (Button) findViewById(R.id.inserirUsuario);
 
@@ -45,7 +48,7 @@ public class UsuarioTestActivity extends Activity {
                   Toast.makeText(getApplicationContext(), novoUsuario(), Toast.LENGTH_LONG).show();
 
                   RequestQueue queue = Volley.newRequestQueue(UsuarioTestActivity.this);
-                  String url = "http://192.168.167.118:8080/wstcc/usuarios/inserirUsuario";
+                  String url = server+"wstcc/usuarios/inserirUsuario";
 
                   StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                           new Response.Listener<String>() {
@@ -55,7 +58,8 @@ public class UsuarioTestActivity extends Activity {
                               }
                           }, new Response.ErrorListener() {
                       @Override
-                      public void onErrorResponse(VolleyError error) {                      Toast.makeText(getApplicationContext(), "Erro ao se conectar com o WebService:"+error.toString(), Toast.LENGTH_SHORT).show();
+                      public void onErrorResponse(VolleyError error) {
+                          Toast.makeText(getApplicationContext(), "Erro ao se conectar com o WebService:"+error.toString(), Toast.LENGTH_SHORT).show();
                       }
                   }) {
                       @Override

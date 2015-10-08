@@ -8,4 +8,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_usuario_test">UsuarioTestActivity</string>
+
+    <string name="wstcc">http://192.168.167.118:8080/</string>
 </resources>
