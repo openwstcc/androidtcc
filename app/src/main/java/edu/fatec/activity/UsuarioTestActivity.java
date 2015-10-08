@@ -1,11 +1,9 @@
 package edu.fatec.activity;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
