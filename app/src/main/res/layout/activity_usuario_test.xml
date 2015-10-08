@@ -9,8 +9,8 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true">
 
@@ -53,15 +53,23 @@
             android:id="@+id/telefone"
             android:hint="Telefone"
             android:layout_gravity="center_horizontal" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/dataNasc"
+            android:hint="Data Nascimento"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Concluir"
+            android:id="@+id/inserirUsuario"
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Concluir Cadastro"
-        android:id="@+id/button"
-        android:textColor="@android:color/black"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+
 
 </RelativeLayout>
