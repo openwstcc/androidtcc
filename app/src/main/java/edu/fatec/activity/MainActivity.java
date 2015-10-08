@@ -12,6 +12,7 @@ import com.example.gqueiroz.androidtcc.R;
 
 public class MainActivity extends Activity {
     private Button materias;
+    private Button usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +23,16 @@ public class MainActivity extends Activity {
         materias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this,MateriaTestActivity.class);
+                Intent i = new Intent(MainActivity.this, MateriaTestActivity.class);
+                startActivity(i);
+            }
+        });
+
+        usuario = (Button)findViewById(R.id.usuario);
+        usuario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this,UsuarioTestActivity.class);
                 startActivity(i);
             }
         });
