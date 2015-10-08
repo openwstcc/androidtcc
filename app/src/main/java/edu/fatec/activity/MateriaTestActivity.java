@@ -48,7 +48,6 @@ public class MateriaTestActivity extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         Type listType = new TypeToken<ArrayList<Materia>>() {
                         }.getType();
                         List<Materia> materiasJson = new Gson().fromJson(response, listType);

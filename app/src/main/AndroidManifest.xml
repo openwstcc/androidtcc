@@ -26,6 +26,10 @@
             android:name="edu.fatec.activity.UsuarioTestActivity"
             android:label="@string/title_activity_usuario_test" >
         </activity>
+        <activity
+            android:name="edu.fatec.activity.DuvidaTestActivity"
+            android:label="@string/title_activity_duvida_test" >
+        </activity>
     </application>
 
 </manifest>

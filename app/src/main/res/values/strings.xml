@@ -3,11 +3,12 @@
 
     <string name="teste">TESTE</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_materia_test">MateriaTestActivity</string>
+    <string name="title_activity_materia_test">Selecione suas Matérias</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_test">TestActivity</string>
-    <string name="title_activity_usuario_test">UsuarioTestActivity</string>
+    <string name="title_activity_usuario_test">Criar nova conta</string>
 
     <string name="wstcc">http://192.168.167.118:8080/</string>
+    <string name="title_activity_duvida_test">Suas Dúvidas</string>
 </resources>
