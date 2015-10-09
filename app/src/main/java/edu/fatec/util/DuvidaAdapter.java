@@ -29,9 +29,9 @@ public class DuvidaAdapter extends RecyclerView.Adapter<DuvidaAdapter.DuvidaView
     @Override
     public void onBindViewHolder(DuvidaViewHolder duvidaViewHolder, int position) {
         Duvida d = DuvidaList.get(position);
-        duvidaViewHolder.duvidaTitulo.setText(" " + d.getTitulo());
-        duvidaViewHolder.duvidaConteudo.setText(" " + d.getConteudo());
-        duvidaViewHolder.duvidaCriador.setText("Criada por " + d.getCriador().toLowerCase());
+        duvidaViewHolder.duvidaTitulo.setText(d.getTitulo());
+        duvidaViewHolder.duvidaConteudo.setText(d.getConteudo());
+        duvidaViewHolder.duvidaCriador.setText("Criada por " + d.getCriador());
     }
 
     @Override

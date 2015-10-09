@@ -46,6 +46,7 @@ public class DuvidaTestActivity extends Activity {
                         }.getType();
                         List<Duvida> duvidasJson = new Gson().fromJson(response, listType);
                         duvidaAdapter.swap(duvidasJson);
+                        Toast.makeText(getApplicationContext(), "Lista atualizada.", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
             @Override
