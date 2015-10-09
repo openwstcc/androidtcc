@@ -13,6 +13,7 @@ import com.example.gqueiroz.androidtcc.R;
 public class MainActivity extends Activity {
     private Button materias;
     private Button usuario;
+    private Button duvida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,15 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,UsuarioTestActivity.class);
+                startActivity(i);
+            }
+        });
+
+        duvida = (Button)findViewById(R.id.duvidas);
+        duvida.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this,DuvidaTestActivity.class);
                 startActivity(i);
             }
         });
