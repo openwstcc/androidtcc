@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Activity;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.InputType;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -123,6 +124,7 @@ public class UsuarioTestActivity extends Activity {
         email = (EditText) findViewById(R.id.email);
         senha = (EditText) findViewById(R.id.senha);
         telefone = (EditText) findViewById(R.id.telefone);
+        telefone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         dataNasc = (EditText) findViewById(R.id.dataNasc);
         dataNasc.setInputType(InputType.TYPE_NULL);
         inserirUsuario = (Button) findViewById(R.id.inserirUsuario);
