@@ -2,15 +2,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_margin_recycle"
-    android:paddingLeft="@dimen/activity_margin_recycle"
-    android:paddingRight="@dimen/activity_margin_recycle"
-    android:paddingTop="@dimen/activity_margin_recycle"
     tools:context="edu.fatec.activity.RespostaTest">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimaryLight"
+        android:id="@+id/conteudoDuvida">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Conteudo da Duvida"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:id="@+id/textConteudoDuvida"
+            android:textSize="15sp"
+            android:textColor="@color/textColorPrimary"/>
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
+        android:paddingBottom="@dimen/activity_margin_recycle"
+        android:paddingLeft="@dimen/activity_margin_recycle"
+        android:paddingRight="@dimen/activity_margin_recycle"
+        android:paddingTop="@dimen/activity_margin_recycle"
         android:id="@+id/cardList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/conteudoDuvida"/>
 
 </RelativeLayout>

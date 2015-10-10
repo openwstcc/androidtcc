@@ -13,7 +13,7 @@ public class Duvida {
     private String titulo;
     private String conteudo;
     private String criador;
-    private Date dataCriacao;
+    private String dataCriacao;
 
     public int getIdDuvida() {
         return idDuvida;
@@ -39,11 +39,11 @@ public class Duvida {
         this.conteudo = conteudo;
     }
 
-    public Date getDataCriacao() {
+    public String getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
+    public void setDataCriacao(String dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
