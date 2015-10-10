@@ -10,53 +10,55 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:id="@+id/backgroundDuvida">
+            android:id="@+id/backgroundResposta">
 
             <TextView
-                android:id="@+id/duvidaTitulo"
+                android:id="@+id/respostaTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="Titulo da Dúvida"
+                android:text="Criador da Resposta"
                 android:textColor="@android:color/white"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:textSize="18sp"/>
+                android:textSize="18dp"/>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/duvidaConteudo"
+            android:id="@+id/respostaConteudo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/backgroundDuvida"
+            android:layout_below="@id/backgroundResposta"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
-            android:text="Conteudo da Dúvida"
-            android:textSize="15sp" />
+            android:text="Conteudo da Resposta"
+            android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/duvidaCriador"
+            android:id="@+id/respostaCriador"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Criador da Dúvida"
-            android:textSize="15sp"
+            android:textSize="15dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:layout_below="@+id/duvidaConteudo"
+            android:layout_below="@+id/respostaConteudo"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
+
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

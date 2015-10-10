@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.gqueiroz.androidtcc.R;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import edu.fatec.model.Duvida;

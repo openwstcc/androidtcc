@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -28,6 +29,7 @@ import edu.fatec.model.Materia;
 public class MateriaTestActivity extends Activity {
     private LinearLayout linearMain;
     private CheckBox checkBox;
+    private TextView semestre;
 
     private String server;
 
@@ -55,6 +57,7 @@ public class MateriaTestActivity extends Activity {
                             checkBox = new CheckBox(MateriaTestActivity.this);
                             checkBox.setId(m.getIdMateria());
                             checkBox.setText(m.getMateria());
+                            
                             linearMain.addView(checkBox);
                         }
                     }

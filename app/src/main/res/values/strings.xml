@@ -1,14 +1,16 @@
 <resources>
     <string name="app_name">androidtcc</string>
 
-    <string name="teste">TESTE</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Sobre</string>
+
     <string name="title_activity_materia_test">Selecione suas Matérias</string>
+    <string name="title_activity_usuario_test">Criar nova conta</string>
+    <string name="title_activity_duvida_test">Suas Dúvidas</string>
+    <string name="title_activity_test">TestActivity</string>
+
+    <string name="wstcc">http://192.168.43.231:8080/</string>
+    <string name="title_activity_resposta_test">RespostaTest</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_test">TestActivity</string>
-    <string name="title_activity_usuario_test">Criar nova conta</string>
 
-    <string name="wstcc">http://192.168.167.118:8080/</string>
-    <string name="title_activity_duvida_test">Suas Dúvidas</string>
 </resources>

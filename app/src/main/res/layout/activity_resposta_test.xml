@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,12 +6,11 @@
     android:paddingLeft="@dimen/activity_margin_recycle"
     android:paddingRight="@dimen/activity_margin_recycle"
     android:paddingTop="@dimen/activity_margin_recycle"
-    tools:context="edu.fatec.activity.DuvidaTestActivity">
+    tools:context="edu.fatec.activity.RespostaTest">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cardList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 
 </RelativeLayout>
