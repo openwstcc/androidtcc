@@ -31,7 +31,7 @@
             android:label="@string/title_activity_duvida_test" >
         </activity>
         <activity
-            android:name="edu.fatec.activity.RespostaTest"
+            android:name="edu.fatec.activity.RespostaTestActivity"
             android:label="@string/title_activity_resposta_test" >
         </activity>
     </application>

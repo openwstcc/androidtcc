@@ -28,7 +28,7 @@ import edu.fatec.json.JsonResposta;
 import edu.fatec.model.Duvida;
 import edu.fatec.util.RespostaAdapter;
 
-public class RespostaTest extends Activity {
+public class RespostaTestActivity extends Activity {
     private String server;
     private String jsonDuvida;
     private String idDuvida;
@@ -84,7 +84,7 @@ public class RespostaTest extends Activity {
 
         RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(RespostaTest.this);
+        LinearLayoutManager llm = new LinearLayoutManager(RespostaTestActivity.this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
