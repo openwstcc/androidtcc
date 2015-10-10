@@ -45,21 +45,13 @@
             android:textColor="@android:color/black"
             android:layout_gravity="center_horizontal" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="RESPOSTAS"
-            android:id="@+id/respostas"
-            android:textColor="@android:color/black"
-            android:layout_gravity="center_horizontal" />
-        
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Versão 0.1"
+        android:text="Versão 0.2"
         android:id="@+id/textVersao"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"

@@ -1,14 +1,9 @@
 package edu.fatec.json;
 
-/**
- * Created by gqueiroz on 24/09/2015.
- */
-import java.util.Date;
-
 public class JsonResposta {
     private String criador;
     private String resposta;
-    private Date dataCriacao;
+    private String dataCriacao;
     private boolean flagCriador;
     private boolean flagProfessor;
     private int idResposta;
@@ -32,11 +27,11 @@ public class JsonResposta {
         this.resposta = resposta;
     }
 
-    public Date getDataCriacao() {
+    public String getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
+    public void setDataCriacao(String dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 

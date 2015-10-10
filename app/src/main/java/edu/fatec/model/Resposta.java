@@ -1,7 +1,5 @@
 package edu.fatec.model;
 
-import java.util.Date;
-
 /**
  * Entity Resposta responsável pelo gerenciamento de atributos de respostas.
  *
@@ -12,7 +10,7 @@ public class Resposta {
     private int idResposta;
     private String resposta;
     private String criador;
-    private Date dataCriacao;
+    private String dataCriacao;
     private int rank;
     private boolean flagProfessor;
     private boolean flagCriador;
@@ -33,11 +31,11 @@ public class Resposta {
         this.resposta = resposta;
     }
 
-    public Date getDataCriacao() {
+    public String getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
+    public void setDataCriacao(String dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 

@@ -10,13 +10,14 @@ import com.example.gqueiroz.androidtcc.R;
 
 import java.util.List;
 
+import edu.fatec.json.JsonResposta;
 import edu.fatec.model.Resposta;
 
 public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.RespostaViewHolder> {
 
-    private List<Resposta> RespostaList;
+    private List<JsonResposta> RespostaList;
 
-    public RespostaAdapter(List<Resposta> RespostaList) {
+    public RespostaAdapter(List<JsonResposta> RespostaList) {
         this.RespostaList = RespostaList;
     }
 
@@ -26,8 +27,11 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
     }
 
     @Override
-    public void onBindViewHolder(RespostaViewHolder RespostaViewHolder, int position) {
-        Resposta r = RespostaList.get(position);
+    public void onBindViewHolder(RespostaViewHolder respostaViewHolder, int position) {
+        JsonResposta r = RespostaList.get(position);
+        respostaViewHolder.RespostaTitulo.setText(r.getCriador());
+        respostaViewHolder.RespostaConteudo.setText(r.getResposta());
+        respostaViewHolder.dataResposta.setText("Em "+r.getDataCriacao());
     }
 
     @Override
@@ -43,17 +47,17 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
 
         protected TextView RespostaTitulo;
         protected TextView RespostaConteudo;
-        protected TextView RespostaCriador;
+        protected TextView dataResposta;
 
         public RespostaViewHolder(View v) {
             super(v);
             RespostaTitulo = (TextView) v.findViewById(R.id.respostaTitulo);
             RespostaConteudo = (TextView) v.findViewById(R.id.respostaConteudo);
-            RespostaCriador = (TextView) v.findViewById(R.id.respostaCriador);
+            dataResposta = (TextView) v.findViewById(R.id.dataResposta);
         }
     }
 
-    public void swap(List<Resposta> Respostas) {
+    public void swap(List<JsonResposta> Respostas) {
         RespostaList.clear();
         RespostaList.addAll(Respostas);
         this.notifyDataSetChanged();
