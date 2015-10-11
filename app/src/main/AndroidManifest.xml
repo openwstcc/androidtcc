@@ -34,6 +34,14 @@
             android:name="edu.fatec.activity.RespostaTestActivity"
             android:label="@string/title_activity_resposta_test" >
         </activity>
+        <activity
+            android:name="edu.fatec.activity.ApresentacaoActivity"
+            android:label="@string/title_activity_apresentacao" >
+        </activity>
+        <activity
+            android:name="edu.fatec.activity.LoginActivity"
+            android:label="@string/title_activity_login" >
+        </activity>
     </application>
 
 </manifest>
