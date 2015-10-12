@@ -1,6 +1,7 @@
 package edu.fatec.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,11 +29,13 @@ import edu.fatec.model.Usuario;
 public class LoginActivity extends Activity {
 
     private Usuario u = new Usuario();
+    private Usuario jsonUsuario;
+
     private Button login;
+    private Button registre;
     private EditText email;
     private EditText senha;
     private String server;
-    private Usuario jsonUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,17 @@ public class LoginActivity extends Activity {
 
         server = getString(R.string.wstcc);
 
-        login = (Button) findViewById(R.id.LoginUsuario);
+        registre = (Button) findViewById(R.id.registreUsuario);
+
+        registre.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this,UsuarioTestActivity.class);
+                startActivity(i);
+            }
+        });
+
+        login = (Button) findViewById(R.id.loginUsuario);
 
         login.setOnClickListener(new OnClickListener() {
             @Override
@@ -87,9 +100,9 @@ public class LoginActivity extends Activity {
     }
 
     private void persisteSharedPref() {
-        SharedPreferences  SharedPref = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor  SharedPrefEdit = SharedPref.edit();
-        SharedPrefEdit.putString("jsonUsuario",jsonUsuario.toString());
+        SharedPreferences SharedPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor SharedPrefEdit = SharedPref.edit();
+        SharedPrefEdit.putString("jsonUsuario", jsonUsuario.toString());
         SharedPrefEdit.commit();
     }
 

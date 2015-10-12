@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
         usuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this,UsuarioTestActivity.class);
+                Intent i = new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(i);
             }
         });

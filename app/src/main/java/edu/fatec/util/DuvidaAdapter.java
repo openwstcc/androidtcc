@@ -18,7 +18,6 @@ import edu.fatec.activity.RespostaTestActivity;
 import edu.fatec.model.Duvida;
 
 public class DuvidaAdapter extends RecyclerView.Adapter<DuvidaAdapter.DuvidaViewHolder> {
-    private View v;
     private List<Duvida> DuvidaList;
 
     public DuvidaAdapter(List<Duvida> DuvidaList) {
@@ -37,7 +36,7 @@ public class DuvidaAdapter extends RecyclerView.Adapter<DuvidaAdapter.DuvidaView
         duvidaViewHolder.duvidaTitulo.setText(d.getTitulo());
         duvidaViewHolder.duvidaConteudo.setText(d.getConteudo());
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        duvidaViewHolder.duvidaCriador.setText("Criada por " + d.getCriador()+" em "+d.getDataCriacao());
+        duvidaViewHolder.duvidaCriador.setText("Criada por " + d.getCriador() + " em " + d.getDataCriacao());
     }
 
     @Override
@@ -45,15 +44,16 @@ public class DuvidaAdapter extends RecyclerView.Adapter<DuvidaAdapter.DuvidaView
         View itemView = LayoutInflater.
                 from(viewGroup.getContext()).
                 inflate(R.layout.layout_duvida, viewGroup, false);
+
         final Duvida d = DuvidaList.get(position);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(),RespostaTestActivity.class);
+                Intent i = new Intent(v.getContext(), RespostaTestActivity.class);
                 Gson gson = new GsonBuilder().create();
                 String jsonDuvida = gson.toJson(d);
-                i.putExtra("duvida",jsonDuvida);
+                i.putExtra("duvida", jsonDuvida);
                 v.getContext().startActivity(i);
             }
         });
