@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gqueiroz.androidtcc.R;
 import com.google.gson.Gson;
@@ -32,22 +34,13 @@ public class DuvidaAdapter extends RecyclerView.Adapter<DuvidaAdapter.DuvidaView
 
     @Override
     public void onBindViewHolder(DuvidaViewHolder duvidaViewHolder, int position) {
-        Duvida d = DuvidaList.get(position);
+        final Duvida d = DuvidaList.get(position);
         duvidaViewHolder.duvidaTitulo.setText(d.getTitulo());
         duvidaViewHolder.duvidaConteudo.setText(d.getConteudo());
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         duvidaViewHolder.duvidaCriador.setText("Criada por " + d.getCriador() + " em " + d.getDataCriacao());
-    }
 
-    @Override
-    public DuvidaViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
-        View itemView = LayoutInflater.
-                from(viewGroup.getContext()).
-                inflate(R.layout.layout_duvida, viewGroup, false);
-
-        final Duvida d = DuvidaList.get(position);
-
-        itemView.setOnClickListener(new View.OnClickListener() {
+        duvidaViewHolder.replyDuvida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), RespostaTestActivity.class);
@@ -57,6 +50,13 @@ public class DuvidaAdapter extends RecyclerView.Adapter<DuvidaAdapter.DuvidaView
                 v.getContext().startActivity(i);
             }
         });
+    }
+
+    @Override
+    public DuvidaViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
+        View itemView = LayoutInflater.
+                from(viewGroup.getContext()).
+                inflate(R.layout.layout_duvida, viewGroup, false);
 
         return new DuvidaViewHolder(itemView);
     }
@@ -66,12 +66,14 @@ public class DuvidaAdapter extends RecyclerView.Adapter<DuvidaAdapter.DuvidaView
         protected TextView duvidaTitulo;
         protected TextView duvidaConteudo;
         protected TextView duvidaCriador;
+        protected Button replyDuvida;
 
         public DuvidaViewHolder(View v) {
             super(v);
             duvidaTitulo = (TextView) v.findViewById(R.id.duvidaTitulo);
             duvidaConteudo = (TextView) v.findViewById(R.id.duvidaConteudo);
             duvidaCriador = (TextView) v.findViewById(R.id.duvidaCriador);
+            replyDuvida = (Button) v.findViewById(R.id.replyDuvida);
         }
     }
 
