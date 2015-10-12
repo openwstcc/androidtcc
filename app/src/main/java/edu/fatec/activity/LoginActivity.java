@@ -1,6 +1,7 @@
 package edu.fatec.activity;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +32,7 @@ public class LoginActivity extends Activity {
     private EditText email;
     private EditText senha;
     private String server;
-
+    private Usuario jsonUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +56,9 @@ public class LoginActivity extends Activity {
                             @Override
                             public void onResponse(String response) {
 
-                                Usuario jsonUsuario = new Gson().fromJson(response, Usuario.class);
+                                jsonUsuario = new Gson().fromJson(response, Usuario.class);
                                 Toast.makeText(getApplicationContext(), jsonUsuario.toString(), Toast.LENGTH_SHORT).show();
+                                persisteSharedPref();
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -82,6 +84,13 @@ public class LoginActivity extends Activity {
         u.setSenha(senha.getText().toString());
         Gson gson = new GsonBuilder().create();
         return gson.toJson(u);
+    }
+
+    private void persisteSharedPref() {
+        SharedPreferences  SharedPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor  SharedPrefEdit = SharedPref.edit();
+        SharedPrefEdit.putString("jsonUsuario",jsonUsuario.toString());
+        SharedPrefEdit.commit();
     }
 
     @Override
