@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,41 +26,37 @@ import java.util.List;
 import java.lang.reflect.Type;
 
 import edu.fatec.model.Materia;
+import edu.fatec.util.ExpandableListAdapter;
 
 public class MateriaTestActivity extends Activity {
-    private LinearLayout linearMain;
-    private CheckBox checkBox;
-    private TextView semestre;
+    private ExpandableListAdapter listAdapter;
+    private ExpandableListView expListView;
 
     private String server;
+    private List<Materia> materiasJson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_materia_test);
 
-        server = getString(R.string.wstcc);
+        expListView = (ExpandableListView) findViewById(R.id.listaMaterias);
 
-        linearMain = (LinearLayout) findViewById(R.id.linearMain);
+        server = getString(R.string.wstcc);
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String url = server+"wstcc/materias/buscarMaterias";
+        String url = server + "wstcc/materias/buscarMaterias";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Type listType = new TypeToken<ArrayList<Materia>>() {
                         }.getType();
-                        List<Materia> materiasJson = new Gson().fromJson(response, listType);
-
-                        for (Materia m : materiasJson) {
-                            checkBox = new CheckBox(MateriaTestActivity.this);
-                            checkBox.setId(m.getIdMateria());
-                            checkBox.setText(m.getMateria());
-                            
-                            linearMain.addView(checkBox);
-                        }
+                        materiasJson = new Gson().fromJson(response, listType);
+                        Toast.makeText(getApplicationContext(), "Materias atualizadas.", Toast.LENGTH_SHORT).show();
+                        listAdapter = new ExpandableListAdapter(MateriaTestActivity.this, materiasJson);
+                        expListView.setAdapter(listAdapter);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -67,6 +64,23 @@ public class MateriaTestActivity extends Activity {
                 Toast.makeText(getApplicationContext(), "Erro ao se conectar com o WebService. Tente Novamente.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+            @Override
+            public void onGroupExpand(int groupPosition) {
+
+            }
+        });
+
+        expListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+
+            }
+        });
+
         queue.add(stringRequest);
     }
 
