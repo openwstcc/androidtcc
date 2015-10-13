@@ -29,7 +29,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
     public void onBindViewHolder(RespostaViewHolder respostaViewHolder, int position) {
         JsonResposta r = RespostaList.get(position);
         respostaViewHolder.RespostaConteudo.setText(r.getResposta());
-        respostaViewHolder.infoResposta.setText("Criada por "+r.getCriador()+" em "+r.getDataCriacao());
+        respostaViewHolder.infoResposta.setText("Respondido por "+r.getCriador()+" em "+r.getDataCriacao());
     }
 
     @Override

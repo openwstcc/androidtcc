@@ -4,8 +4,10 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v4.app.NavUtils;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.InputType;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -50,6 +52,8 @@ public class UsuarioTestActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuario_test);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         findViewsById();
 
@@ -144,6 +148,16 @@ public class UsuarioTestActivity extends Activity {
     private void hideSoftKeyboard(){
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(dataNasc.getWindowToken(),0);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

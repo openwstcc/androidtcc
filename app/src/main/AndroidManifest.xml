@@ -19,27 +19,51 @@
         </activity>
         <activity
             android:name="edu.fatec.activity.MateriaTestActivity"
-            android:label="@string/title_activity_materia_test" >
+            android:label="@string/title_activity_materia_test"
+            android:parentActivityName="edu.fatec.activity.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.fatec.activity.MainActivity" />
         </activity>
         <activity
             android:name="edu.fatec.activity.UsuarioTestActivity"
-            android:label="@string/title_activity_usuario_test" >
+            android:label="@string/title_activity_usuario_test"
+            android:parentActivityName="edu.fatec.activity.LoginActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.fatec.activity.LoginActivity" />
         </activity>
         <activity
             android:name="edu.fatec.activity.DuvidaTestActivity"
-            android:label="@string/title_activity_duvida_test" >
+            android:label="@string/title_activity_duvida_test"
+            android:parentActivityName="edu.fatec.activity.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.fatec.activity.MainActivity" />
         </activity>
         <activity
             android:name="edu.fatec.activity.RespostaTestActivity"
-            android:label="@string/title_activity_resposta_test" >
+            android:label="@string/title_activity_resposta_test"
+            android:parentActivityName="edu.fatec.activity.DuvidaTestActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.fatec.activity.DuvidaTestActivity" />
         </activity>
         <activity
             android:name="edu.fatec.activity.ApresentacaoActivity"
-            android:label="@string/title_activity_apresentacao" >
+            android:label="@string/title_activity_apresentacao"
+            android:parentActivityName="edu.fatec.activity.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.fatec.activity.MainActivity" />
         </activity>
         <activity
             android:name="edu.fatec.activity.LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:parentActivityName="edu.fatec.activity.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.fatec.activity.MainActivity" />
         </activity>
     </application>
 

@@ -1,14 +1,11 @@
 package edu.fatec.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +41,8 @@ public class RespostaTestActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resposta_test);
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
         Bundle extras = getIntent().getExtras();
 
         jsonDuvida = "";
@@ -52,7 +51,7 @@ public class RespostaTestActivity extends Activity {
 
         Duvida d = new Gson().fromJson(jsonDuvida, Duvida.class);
 
-        this.setTitle(d.getTitulo());
+        getActionBar().setTitle(d.getTitulo());
         conteudoDuvida = (TextView)findViewById(R.id.textConteudoDuvida);
         conteudoDuvida.setText(d.getConteudo());
         idDuvida = "{idDuvida:"+d.getIdDuvida()+"}";
@@ -98,24 +97,12 @@ public class RespostaTestActivity extends Activity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_resposta_test, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

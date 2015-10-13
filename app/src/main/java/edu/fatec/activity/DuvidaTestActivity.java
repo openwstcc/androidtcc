@@ -2,11 +2,11 @@ package edu.fatec.activity;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v4.app.NavUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import android.view.ViewGroup;
-import android.widget.Space;
+import android.view.MenuItem;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,6 +33,8 @@ public class DuvidaTestActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_duvida_test);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         server = getString(R.string.wstcc);
 
@@ -67,7 +69,15 @@ public class DuvidaTestActivity extends Activity {
         List<Duvida> duvidas = new ArrayList<>();
         duvidaAdapter = new DuvidaAdapter(duvidas);
         recList.setAdapter(duvidaAdapter);
+    }
 
-        llm.offsetChildrenVertical(120);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
