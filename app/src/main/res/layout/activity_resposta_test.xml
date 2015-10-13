@@ -5,34 +5,76 @@
     tools:context="edu.fatec.activity.RespostaTestActivity">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/conteudoDuvida"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimaryLight"
-        android:id="@+id/conteudoDuvida">
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
         <TextView
+            android:id="@+id/textConteudoDuvida"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Conteudo da Duvida"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:id="@+id/textConteudoDuvida"
-            android:textSize="15sp"
-            android:textColor="@color/textColorPrimary"/>
+            android:layout_marginTop="8dp"
+            android:text="Conteudo da Duvida"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="15sp" />
+
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:paddingBottom="@dimen/activity_margin_recycle"
-        android:paddingLeft="@dimen/activity_margin_recycle"
-        android:paddingRight="@dimen/activity_margin_recycle"
-        android:paddingTop="@dimen/activity_margin_recycle"
         android:id="@+id/cardList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/conteudoDuvida"/>
+        android:layout_below="@id/conteudoDuvida"
+        android:paddingLeft="@dimen/activity_margin_recycle"
+        android:paddingRight="@dimen/activity_margin_recycle"
+        android:paddingTop="@dimen/activity_margin_recycle"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@+id/backgroundResposta" />
+
+    <android.support.design.widget.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/novaResposta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="14dp"
+        android:layout_marginRight="14dp"
+        android:src="@drawable/ic_send_white_24dp"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:borderWidth="0dp"
+        app:elevation="5dp"
+        app:rippleColor="@color/colorPrimaryDark" />
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/backgroundResposta"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        card_view:cardCornerRadius="10dp"
+        android:layout_alignBottom="@+id/novaResposta"
+        android:layout_toLeftOf="@+id/novaResposta"
+        android:layout_toStartOf="@+id/novaResposta"
+        android:elevation="5dp">
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/resposta"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"/>
+
+    </android.support.v7.widget.CardView>
 
 </RelativeLayout>

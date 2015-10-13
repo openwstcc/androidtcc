@@ -38,7 +38,7 @@ public class DuvidaAdapter extends RecyclerView.Adapter<DuvidaAdapter.DuvidaView
         duvidaViewHolder.duvidaTitulo.setText(d.getTitulo());
         duvidaViewHolder.duvidaConteudo.setText(d.getConteudo());
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        duvidaViewHolder.duvidaCriador.setText("Criada por " + d.getCriador() + " em " + d.getDataCriacao());
+        duvidaViewHolder.infoDuvida.setText("Criada em "+ d.getDataCriacao());
 
         duvidaViewHolder.replyDuvida.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,14 +65,14 @@ public class DuvidaAdapter extends RecyclerView.Adapter<DuvidaAdapter.DuvidaView
 
         protected TextView duvidaTitulo;
         protected TextView duvidaConteudo;
-        protected TextView duvidaCriador;
+        protected TextView infoDuvida;
         protected Button replyDuvida;
 
         public DuvidaViewHolder(View v) {
             super(v);
             duvidaTitulo = (TextView) v.findViewById(R.id.duvidaTitulo);
             duvidaConteudo = (TextView) v.findViewById(R.id.duvidaConteudo);
-            duvidaCriador = (TextView) v.findViewById(R.id.duvidaCriador);
+            infoDuvida = (TextView) v.findViewById(R.id.infoDuvida);
             replyDuvida = (Button) v.findViewById(R.id.replyDuvida);
         }
     }

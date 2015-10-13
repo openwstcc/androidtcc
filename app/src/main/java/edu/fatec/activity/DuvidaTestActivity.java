@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import android.view.ViewGroup;
+import android.widget.Space;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -65,5 +67,6 @@ public class DuvidaTestActivity extends Activity {
         List<Duvida> duvidas = new ArrayList<>();
         duvidaAdapter = new DuvidaAdapter(duvidas);
         recList.setAdapter(duvidaAdapter);
+
     }
 }

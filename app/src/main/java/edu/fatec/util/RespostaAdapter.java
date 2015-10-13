@@ -11,7 +11,6 @@ import com.example.gqueiroz.androidtcc.R;
 import java.util.List;
 
 import edu.fatec.json.JsonResposta;
-import edu.fatec.model.Resposta;
 
 public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.RespostaViewHolder> {
 
@@ -29,9 +28,8 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
     @Override
     public void onBindViewHolder(RespostaViewHolder respostaViewHolder, int position) {
         JsonResposta r = RespostaList.get(position);
-        respostaViewHolder.RespostaTitulo.setText(r.getCriador());
         respostaViewHolder.RespostaConteudo.setText(r.getResposta());
-        respostaViewHolder.dataResposta.setText("Em "+r.getDataCriacao());
+        respostaViewHolder.infoResposta.setText("Criada por "+r.getCriador()+" em "+r.getDataCriacao());
     }
 
     @Override
@@ -45,15 +43,13 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
 
     public static class RespostaViewHolder extends RecyclerView.ViewHolder {
 
-        protected TextView RespostaTitulo;
         protected TextView RespostaConteudo;
-        protected TextView dataResposta;
+        protected TextView infoResposta;
 
         public RespostaViewHolder(View v) {
             super(v);
-            RespostaTitulo = (TextView) v.findViewById(R.id.respostaTitulo);
             RespostaConteudo = (TextView) v.findViewById(R.id.respostaConteudo);
-            dataResposta = (TextView) v.findViewById(R.id.dataResposta);
+            infoResposta = (TextView) v.findViewById(R.id.infoResposta);
         }
     }
 

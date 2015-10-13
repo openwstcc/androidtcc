@@ -1,11 +1,14 @@
 package edu.fatec.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -91,6 +94,7 @@ public class RespostaTestActivity extends Activity {
         List<JsonResposta> respostas = new ArrayList<>();
         respostaAdapter = new RespostaAdapter(respostas);
         recList.setAdapter(respostaAdapter);
+
     }
 
     @Override
