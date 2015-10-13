@@ -68,5 +68,6 @@ public class DuvidaTestActivity extends Activity {
         duvidaAdapter = new DuvidaAdapter(duvidas);
         recList.setAdapter(duvidaAdapter);
 
+        llm.offsetChildrenVertical(120);
     }
 }
