@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Versão 0.4"
+        android:text="Versão 0.5"
         android:id="@+id/textVersao"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"

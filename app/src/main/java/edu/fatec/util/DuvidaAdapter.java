@@ -50,6 +50,8 @@ public class DuvidaAdapter extends RecyclerView.Adapter<DuvidaAdapter.DuvidaView
                 v.getContext().startActivity(i);
             }
         });
+
+
     }
 
     @Override

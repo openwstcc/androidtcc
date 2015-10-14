@@ -1,9 +1,11 @@
 package edu.fatec.util;
 
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.gqueiroz.androidtcc.R;
@@ -27,9 +29,16 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
 
     @Override
     public void onBindViewHolder(RespostaViewHolder respostaViewHolder, int position) {
-        JsonResposta r = RespostaList.get(position);
+        final JsonResposta r = RespostaList.get(position);
         respostaViewHolder.RespostaConteudo.setText(r.getResposta());
         respostaViewHolder.infoResposta.setText("Respondido por "+r.getCriador()+" em "+r.getDataCriacao());
+
+        respostaViewHolder.respostaFavorita.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
@@ -45,11 +54,13 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
 
         protected TextView RespostaConteudo;
         protected TextView infoResposta;
+        protected Button respostaFavorita;
 
         public RespostaViewHolder(View v) {
             super(v);
             RespostaConteudo = (TextView) v.findViewById(R.id.respostaConteudo);
             infoResposta = (TextView) v.findViewById(R.id.infoResposta);
+            respostaFavorita = (Button) v.findViewById(R.id.respostaFavorita);
         }
     }
 
