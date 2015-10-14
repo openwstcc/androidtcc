@@ -2,6 +2,8 @@ package edu.fatec.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,14 +34,17 @@ import edu.fatec.model.Duvida;
 import edu.fatec.util.DuvidaAdapter;
 
 public class DuvidaTestActivity extends Activity {
-    private String server;
     private DuvidaAdapter duvidaAdapter;
     private LinearLayout infoDuvida;
+    private FloatingActionButton novaDuvida;
+    private TextView textInfoDuvida;
+    private ProgressBar progressBar;
 
     private SharedPreferences SharedPref;
     private SharedPreferences.Editor SharedPrefEdit;
 
-    private FloatingActionButton novaDuvida;
+    private String server;
+    private List<Duvida> jsonDuvidas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +55,8 @@ public class DuvidaTestActivity extends Activity {
         SharedPrefEdit = SharedPref.edit();
 
         infoDuvida = (LinearLayout) findViewById(R.id.infoDuvida);
+        textInfoDuvida = (TextView) findViewById(R.id.textInfoDuvida);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -61,23 +70,23 @@ public class DuvidaTestActivity extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Type listType = new TypeToken<ArrayList<Duvida>>() {
-                        }.getType();
-                        List<Duvida> jsonDuvidas = new Gson().fromJson(response, listType);
+                        Type listType = new TypeToken<ArrayList<Duvida>>() {}.getType();
+                        jsonDuvidas.clear();
+                        jsonDuvidas = new Gson().fromJson(response, listType);
                         duvidaAdapter.swap(jsonDuvidas);
                         SharedPrefEdit.putString("jsonDuvidas", response);
                         SharedPrefEdit.commit();
+
                         Toast.makeText(getApplicationContext(), "Lista atualizada.", Toast.LENGTH_SHORT).show();
+                        infoDuvida.setVisibility(View.GONE);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), "Erro ao se conectar com o WebService. Tente Novamente.", Toast.LENGTH_SHORT).show();
-                infoDuvida.setVisibility(View.VISIBLE);
-                String sharedDuvidas = SharedPref.getString("jsonDuvidas","");
-                Type listType = new TypeToken<ArrayList<Duvida>>(){}.getType();
-                List<Duvida> jsonDuvidas = new Gson().fromJson(sharedDuvidas, listType);
-                duvidaAdapter.swap(jsonDuvidas);
+                infoDuvida.setBackgroundColor(Color.parseColor("#ff4444"));
+                textInfoDuvida.setText("Não foi possível se conectar com o servidor");
+                progressBar.setVisibility(View.GONE);
             }
         });
         queue.add(stringRequest);
@@ -88,9 +97,17 @@ public class DuvidaTestActivity extends Activity {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        List<Duvida> duvidas = new ArrayList<>();
-        duvidaAdapter = new DuvidaAdapter(duvidas);
-        recList.setAdapter(duvidaAdapter);
+        String sharedDuvidas = SharedPref.getString("jsonDuvidas", "");
+        if(sharedDuvidas.length()>1){
+            Type listType = new TypeToken<ArrayList<Duvida>>(){}.getType();
+            jsonDuvidas = new Gson().fromJson(sharedDuvidas, listType);
+            duvidaAdapter = new DuvidaAdapter(jsonDuvidas);
+            recList.setAdapter(duvidaAdapter);
+        } else {
+            jsonDuvidas = new ArrayList<>();
+            duvidaAdapter = new DuvidaAdapter(jsonDuvidas);
+            recList.setAdapter(duvidaAdapter);
+        }
 
         novaDuvida = (FloatingActionButton) findViewById(R.id.novaDuvida);
         novaDuvida.setOnClickListener(new View.OnClickListener() {

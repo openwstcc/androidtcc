@@ -6,19 +6,15 @@
     <string name="title_activity_materia_test">Selecione suas Matérias</string>
     <string name="title_activity_usuario_test">Criar nova conta</string>
     <string name="title_activity_duvida_test">Suas Dúvidas</string>
+    <string name="title_activity_resposta_test">Titulo da Dúvida</string>
     <string name="title_activity_test">TestActivity</string>
 
-    <string name="wstcc">http://192.168.43.4:8080/</string>
-    <string name="title_activity_resposta_test">RespostaTest</string>
+    <string name="wstcc">http://192.168.167.132:8080/</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_login">Login</string>
-    <string name="title_activity_apresentacao">ApresentacaoActivity</string>
-    <string name="title_activity_feed_duvidas">FeedDuvidasActivity</string>
+    <string name="title_activity_apresentacao">Apresentacao Activity</string>
+    <string name="title_activity_feed_duvidas">Feed de Dúvidas</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-    <string name="title_activity_nova_duvida_test">NovaDuvidaTestActivity</string>
+    <string name="title_activity_nova_duvida_test">Criar uma nova Dúvida</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package edu.fatec.activity;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +33,9 @@ public class MateriaTestActivity extends Activity {
     private ExpandableListAdapter listAdapter;
     private ExpandableListView expListView;
 
+    private SharedPreferences SharedPref;
+    private SharedPreferences.Editor SharedPrefEdit;
+
     private String server;
     private List<Materia> materiasJson;
 
@@ -42,46 +46,42 @@ public class MateriaTestActivity extends Activity {
 
         expListView = (ExpandableListView) findViewById(R.id.listaMaterias);
 
-        server = getString(R.string.wstcc);
+        SharedPref = getPreferences(MODE_PRIVATE);
+        SharedPrefEdit = SharedPref.edit();
 
-        RequestQueue queue = Volley.newRequestQueue(this);
+        String todasMaterias = SharedPref.getString("jsonMaterias","");
+        if(todasMaterias.length()<1){
+            server = getString(R.string.wstcc);
 
-        String url = server + "wstcc/materias/buscarMaterias";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Type listType = new TypeToken<ArrayList<Materia>>() {
-                        }.getType();
-                        materiasJson = new Gson().fromJson(response, listType);
-                        Toast.makeText(getApplicationContext(), "Materias atualizadas.", Toast.LENGTH_SHORT).show();
-                        listAdapter = new ExpandableListAdapter(MateriaTestActivity.this, materiasJson);
-                        expListView.setAdapter(listAdapter);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Erro ao se conectar com o WebService. Tente Novamente.", Toast.LENGTH_SHORT).show();
-            }
-        });
+            RequestQueue queue = Volley.newRequestQueue(this);
 
-        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            String url = server + "wstcc/materias/buscarMaterias";
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Type listType = new TypeToken<ArrayList<Materia>>(){}.getType();
+                            materiasJson = new Gson().fromJson(response, listType);
+                            Toast.makeText(getApplicationContext(), "Materias atualizadas.", Toast.LENGTH_SHORT).show();
+                            listAdapter = new ExpandableListAdapter(MateriaTestActivity.this, materiasJson);
+                            expListView.setAdapter(listAdapter);
+                            SharedPrefEdit.putString("jsonMaterias", response);
+                            SharedPrefEdit.commit();
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(), "Erro ao se conectar com o WebService. Tente Novamente.", Toast.LENGTH_SHORT).show();
+                }
+            });
+            queue.add(stringRequest);
+        } else {
+            Type listType = new TypeToken<ArrayList<Materia>>(){}.getType();
+            materiasJson = new Gson().fromJson(todasMaterias, listType);
+            listAdapter = new ExpandableListAdapter(MateriaTestActivity.this, materiasJson);
+            expListView.setAdapter(listAdapter);
+        }
 
-            @Override
-            public void onGroupExpand(int groupPosition) {
-
-            }
-        });
-
-        expListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-
-            }
-        });
-
-        queue.add(stringRequest);
     }
 
 }
