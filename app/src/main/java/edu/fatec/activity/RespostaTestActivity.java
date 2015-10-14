@@ -35,6 +35,7 @@ public class RespostaTestActivity extends Activity {
     private RespostaAdapter respostaAdapter;
 
     private TextView conteudoDuvida;
+    private RecyclerView recList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,15 +85,37 @@ public class RespostaTestActivity extends Activity {
         };
         queue.add(stringRequest);
 
-        RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
+        recList = (RecyclerView) findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(RespostaTestActivity.this);
+        final LinearLayoutManager llm = new LinearLayoutManager(RespostaTestActivity.this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
         List<JsonResposta> respostas = new ArrayList<>();
         respostaAdapter = new RespostaAdapter(respostas);
         recList.setAdapter(respostaAdapter);
+
+        this.recList.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            int mLastFirstVisibleItem = 0;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                final int currentFirstVisibleItem = llm.findFirstVisibleItemPosition();
+
+                if (currentFirstVisibleItem > this.mLastFirstVisibleItem) {
+                    RespostaTestActivity.this.getActionBar().hide();
+                } else if (currentFirstVisibleItem < this.mLastFirstVisibleItem) {
+                    RespostaTestActivity.this.getActionBar().show();
+                }
+
+                this.mLastFirstVisibleItem = currentFirstVisibleItem;
+            }
+        });
 
     }
 
