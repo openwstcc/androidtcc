@@ -3,12 +3,7 @@ package edu.fatec.activity;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.CheckBox;
 import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;

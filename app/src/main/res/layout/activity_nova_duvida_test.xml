@@ -44,8 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:minHeight="55dp"
-            card_view:cardCornerRadius="2dp"
-            android:layout_below="@+id/backgroundTituloNovaDuvida">
+            card_view:cardCornerRadius="2dp">
 
             <EditText
                 android:id="@+id/conteudoNovaDuvida"
@@ -60,13 +59,30 @@
 
         <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/backgroundMateriasDuvida"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:minHeight="55dp"
+            card_view:cardCornerRadius="2dp">
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerMaterias"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/backgroundTagNovaDuvida"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:minHeight="55dp"
-            card_view:cardCornerRadius="2dp"
-            android:layout_below="@+id/backgroundConteudoNovaDuvida">
+            card_view:cardCornerRadius="2dp">
 
             <EditText
                 android:id="@+id/tagsNovaDuvida"
