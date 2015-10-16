@@ -11,5 +11,11 @@
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
+        <item name="drawerArrowStyle">@style/MyDrawerArrowToggle</item>
     </style>
+
+    <style name="MyDrawerArrowToggle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@android:color/white</item>
+    </style>
+
 </resources>
