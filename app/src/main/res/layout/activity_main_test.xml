@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:background="@color/colorPrimaryLight"
+            android:background="@color/colorWarning"
             android:orientation="horizontal">
 
             <TextView
@@ -67,7 +67,7 @@
             app:backgroundTint="@color/colorPrimaryDark"
             app:borderWidth="0dp"
             app:elevation="5dp"
-            app:rippleColor="@color/colorPrimaryDark" />
+            app:rippleColor="@color/colorPrimary" />
 
     </RelativeLayout>
 

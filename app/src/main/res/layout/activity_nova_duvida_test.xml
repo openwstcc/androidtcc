@@ -109,6 +109,6 @@
         app:backgroundTint="@color/colorPrimaryDark"
         app:borderWidth="0dp"
         app:elevation="5dp"
-        app:rippleColor="@color/colorPrimaryDark" />
+        app:rippleColor="@color/colorPrimary" />
 
 </RelativeLayout>

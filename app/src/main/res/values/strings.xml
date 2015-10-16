@@ -13,7 +13,7 @@
     <string name="title_activity_apresentacao">Apresentacao Activity</string>
     <string name="title_activity_feed_duvidas">Feed de Dúvidas</string>
 
-    <string name="wstcc">http://192.168.43.4:8080/</string>
+    <string name="wstcc">http://192.168.167.132:8080/</string>
 
     <string-array name="navigation_drawer_items_array">
         <item>Meu Perfil</item>

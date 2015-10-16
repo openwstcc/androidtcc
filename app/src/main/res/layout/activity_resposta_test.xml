@@ -32,12 +32,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/conteudoDuvida"
+        android:clipToPadding="false"
+        android:paddingBottom="70dp"
         android:paddingLeft="@dimen/activity_margin_recycle"
         android:paddingRight="@dimen/activity_margin_recycle"
         android:paddingTop="@dimen/activity_margin_recycle"
-        android:layout_marginBottom="5dp"
-        android:clipToPadding="false"
-        android:paddingBottom="70dp"
         android:scrollbars="vertical"/>
 
     <android.support.design.widget.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -52,7 +51,7 @@
         app:backgroundTint="@color/colorPrimaryDark"
         app:borderWidth="0dp"
         app:elevation="5dp"
-        app:rippleColor="@color/colorPrimaryDark" />
+        app:rippleColor="@color/colorPrimary" />
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -65,8 +64,7 @@
         card_view:cardCornerRadius="10dp"
         android:layout_alignBottom="@+id/novaResposta"
         android:layout_toLeftOf="@+id/novaResposta"
-        android:layout_toStartOf="@+id/novaResposta"
-        android:elevation="5dp">
+        android:layout_toStartOf="@+id/novaResposta">
 
         <EditText
             android:layout_width="fill_parent"
