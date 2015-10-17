@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,7 +40,6 @@ import edu.fatec.model.Duvida;
 import edu.fatec.util.DuvidaAdapter;
 
 public class MainTestActivity extends Activity {
-
     private DuvidaAdapter duvidaAdapter;
     private LinearLayout infoDuvida;
     private FloatingActionButton novaDuvida;
@@ -49,11 +49,17 @@ public class MainTestActivity extends Activity {
     private SharedPreferences SharedPref;
     private SharedPreferences.Editor SharedPrefEdit;
 
+    public static final String TAG = "duvidas";
+    private StringRequest stringRequest;
+    private RequestQueue queue;
+
     private String server;
     private List<Duvida> jsonDuvidas;
 
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
+    private RecyclerView recList;
+    private LinearLayoutManager llm;
 
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
@@ -82,12 +88,11 @@ public class MainTestActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         server = getString(R.string.wstcc);
-
         String url = server + "wstcc/duvidas/buscarDuvidas";
 
-        RequestQueue queue = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(this);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -111,11 +116,13 @@ public class MainTestActivity extends Activity {
                 progressBar.setVisibility(View.GONE);
             }
         });
-        queue.add(stringRequest);
 
-        RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
+        queue.add(stringRequest);
+        stringRequest.setTag(TAG);
+
+        recList = (RecyclerView) findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(MainTestActivity.this);
+        llm = new LinearLayoutManager(MainTestActivity.this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
@@ -140,6 +147,28 @@ public class MainTestActivity extends Activity {
                 startActivity(i);
             }
         });
+
+        this.recList.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            int mLastFirstVisibleItem = 0;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                final int currentFirstVisibleItem = llm.findFirstVisibleItemPosition();
+
+                if (currentFirstVisibleItem > this.mLastFirstVisibleItem) {
+                    MainTestActivity.this.getActionBar().hide();
+                } else if (currentFirstVisibleItem < this.mLastFirstVisibleItem) {
+                    MainTestActivity.this.getActionBar().show();
+                }
+
+                this.mLastFirstVisibleItem = currentFirstVisibleItem;
+            }
+        });
     }
 
     private void addDrawerItems() {
@@ -150,16 +179,18 @@ public class MainTestActivity extends Activity {
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(id==0){
+                if (id == 0) {
                     Intent i = new Intent(MainTestActivity.this, LoginActivity.class);
                     startActivity(i);
                 }
-                if(id==1){
+                if (id == 1) {
                     Intent i = new Intent(MainTestActivity.this, MateriaTestActivity.class);
                     startActivity(i);
                 }
             }
         });
+
+
     }
 
     private void setupDrawer() {
@@ -206,5 +237,26 @@ public class MainTestActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPause () {
+        super.onPause();
+        Toast.makeText(getApplicationContext(), "On Pause", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStop () {
+        super.onStop();
+        Toast.makeText(getApplicationContext(), "On Stop", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy () {
+        super.onDestroy();
+        if (queue != null)
+            queue.cancelAll(TAG);
+        Log.d("ON DESTROY","APLICAÇÃO SENDO DESTRUIDA");
+        Toast.makeText(getApplicationContext(), "On Destroy", Toast.LENGTH_SHORT).show();
     }
 }
