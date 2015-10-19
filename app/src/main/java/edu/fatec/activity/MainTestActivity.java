@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,106 +41,68 @@ import edu.fatec.model.Duvida;
 import edu.fatec.util.DuvidaAdapter;
 
 public class MainTestActivity extends Activity {
+    //View Objects
     private DuvidaAdapter duvidaAdapter;
     private LinearLayout infoDuvida;
     private FloatingActionButton novaDuvida;
     private TextView textInfoDuvida;
     private ProgressBar progressBar;
 
-    private SharedPreferences SharedPref;
-    private SharedPreferences.Editor SharedPrefEdit;
+    private ListView drawerList;
+    private ArrayAdapter<String> arrayAdapter;
+    private RecyclerView recycleView;
+    private LinearLayoutManager linearLayoutManager;
+    private SwipeRefreshLayout swipeRefreshDuivda;
 
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private DrawerLayout drawerLayout;
+
+    //SharedPreferences
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor sharedPrefEdit;
+
+    //Volley Objects
     public static final String TAG = "duvidas";
-    private StringRequest stringRequest;
     private RequestQueue queue;
 
-    private String server;
     private List<Duvida> jsonDuvidas;
 
-    private ListView mDrawerList;
-    private ArrayAdapter<String> mAdapter;
-    private RecyclerView recList;
-    private LinearLayoutManager llm;
-
-    private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_test);
 
-        mDrawerList = (ListView) findViewById(R.id.navList);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        findViewsByID();
 
         addDrawerItems();
         setupDrawer();
-
-        getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
-
-        SharedPref = getPreferences(MODE_PRIVATE);
-        SharedPrefEdit = SharedPref.edit();
-
-        infoDuvida = (LinearLayout) findViewById(R.id.infoDuvida);
-        textInfoDuvida = (TextView) findViewById(R.id.textInfoDuvida);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        server = getString(R.string.wstcc);
-        String url = server + "wstcc/duvidas/buscarDuvidas";
+        sharedPref = getPreferences(MODE_PRIVATE);
+        sharedPrefEdit = sharedPref.edit();
 
-        queue = Volley.newRequestQueue(this);
+        volleyRequest();
 
-        stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Type listType = new TypeToken<ArrayList<Duvida>>() {
-                        }.getType();
-                        jsonDuvidas.clear();
-                        jsonDuvidas = new Gson().fromJson(response, listType);
-                        duvidaAdapter.swap(jsonDuvidas);
-                        SharedPrefEdit.putString("jsonDuvidas", response);
-                        SharedPrefEdit.commit();
+        recycleView.setHasFixedSize(true);
+        linearLayoutManager = new LinearLayoutManager(MainTestActivity.this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recycleView.setLayoutManager(linearLayoutManager);
 
-                        Toast.makeText(getApplicationContext(), "Lista atualizada.", Toast.LENGTH_SHORT).show();
-                        infoDuvida.setVisibility(View.GONE);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Erro ao se conectar com o WebService. Tente Novamente.", Toast.LENGTH_SHORT).show();
-                infoDuvida.setBackgroundColor(Color.parseColor("#ff4444"));
-                textInfoDuvida.setText("Não foi possível se conectar com o servidor");
-                progressBar.setVisibility(View.GONE);
-            }
-        });
-
-        queue.add(stringRequest);
-        stringRequest.setTag(TAG);
-
-        recList = (RecyclerView) findViewById(R.id.cardList);
-        recList.setHasFixedSize(true);
-        llm = new LinearLayoutManager(MainTestActivity.this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recList.setLayoutManager(llm);
-
-        String sharedDuvidas = SharedPref.getString("jsonDuvidas", "");
+        String sharedDuvidas = sharedPref.getString("jsonDuvidas", "");
         if (sharedDuvidas.length() > 1) {
             Type listType = new TypeToken<ArrayList<Duvida>>() {
             }.getType();
             jsonDuvidas = new Gson().fromJson(sharedDuvidas, listType);
             duvidaAdapter = new DuvidaAdapter(jsonDuvidas);
-            recList.setAdapter(duvidaAdapter);
+            recycleView.setAdapter(duvidaAdapter);
         } else {
             jsonDuvidas = new ArrayList<>();
             duvidaAdapter = new DuvidaAdapter(jsonDuvidas);
-            recList.setAdapter(duvidaAdapter);
+            recycleView.setAdapter(duvidaAdapter);
         }
 
-        novaDuvida = (FloatingActionButton) findViewById(R.id.novaDuvida);
         novaDuvida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +111,7 @@ public class MainTestActivity extends Activity {
             }
         });
 
-        this.recList.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        recycleView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             int mLastFirstVisibleItem = 0;
 
             @Override
@@ -158,7 +121,7 @@ public class MainTestActivity extends Activity {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                final int currentFirstVisibleItem = llm.findFirstVisibleItemPosition();
+                final int currentFirstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
 
                 if (currentFirstVisibleItem > this.mLastFirstVisibleItem) {
                     MainTestActivity.this.getActionBar().hide();
@@ -169,14 +132,21 @@ public class MainTestActivity extends Activity {
                 this.mLastFirstVisibleItem = currentFirstVisibleItem;
             }
         });
+
+        swipeRefreshDuivda.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                volleyRequest();
+            }
+        });
     }
 
     private void addDrawerItems() {
         String[] osArray = {"Meu Perfil", "Minhas Matérias", "Configurações"};
-        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
-        mDrawerList.setAdapter(mAdapter);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
+        drawerList.setAdapter(arrayAdapter);
 
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (id == 0) {
@@ -189,12 +159,10 @@ public class MainTestActivity extends Activity {
                 }
             }
         });
-
-
     }
 
     private void setupDrawer() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
                 R.string.drawer_open, R.string.drawer_close) {
 
             public void onDrawerOpened(View drawerView) {
@@ -208,55 +176,90 @@ public class MainTestActivity extends Activity {
             }
         };
 
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
+        actionBarDrawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+        actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings)
             return true;
-        }
 
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item))
             return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    protected void onPause () {
-        super.onPause();
-        Toast.makeText(getApplicationContext(), "On Pause", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onStop () {
-        super.onStop();
-        Toast.makeText(getApplicationContext(), "On Stop", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onDestroy () {
+    protected void onDestroy() {
         super.onDestroy();
         if (queue != null)
             queue.cancelAll(TAG);
-        Log.d("ON DESTROY","APLICAÇÃO SENDO DESTRUIDA");
-        Toast.makeText(getApplicationContext(), "On Destroy", Toast.LENGTH_SHORT).show();
+    }
+
+    public void findViewsByID() {
+        novaDuvida = (FloatingActionButton) findViewById(R.id.novaDuvida);
+        recycleView = (RecyclerView) findViewById(R.id.recycleViewDuvidas);
+        drawerList = (ListView) findViewById(R.id.drawerList);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        infoDuvida = (LinearLayout) findViewById(R.id.infoDuvida);
+        textInfoDuvida = (TextView) findViewById(R.id.textInfoDuvida);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        swipeRefreshDuivda = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshDuvida);
+    }
+
+    public void volleyRequest() {
+        infoDuvida.setBackgroundColor(Color.parseColor("#FFA726"));
+        textInfoDuvida.setText("Atualizando informações de dúvidas");
+
+        String server = getString(R.string.wstcc);
+        String url = server + "wstcc/duvidas/buscarDuvidas";
+
+        queue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Type listType = new TypeToken<ArrayList<Duvida>>() {
+                        }.getType();
+                        jsonDuvidas.clear();
+                        jsonDuvidas = new Gson().fromJson(response, listType);
+                        duvidaAdapter.swap(jsonDuvidas);
+                        sharedPrefEdit.putString("jsonDuvidas", response);
+                        sharedPrefEdit.commit();
+
+                        //Toast.makeText(getApplicationContext(), "Lista atualizada.", Toast.LENGTH_SHORT).show();
+                        infoDuvida.setVisibility(View.GONE);
+                        swipeRefreshDuivda.setRefreshing(false);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //Toast.makeText(getApplicationContext(), "Erro ao se conectar com o WebService. Tente Novamente.", Toast.LENGTH_SHORT).show();
+                infoDuvida.setBackgroundColor(Color.parseColor("#ff4444"));
+                textInfoDuvida.setText("Não foi possível se conectar com o servidor");
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshDuivda.setRefreshing(false);
+            }
+        });
+
+        queue.add(stringRequest);
+        stringRequest.setTag(TAG);
     }
 }
