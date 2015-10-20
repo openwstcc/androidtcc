@@ -52,7 +52,7 @@ public class MainTestActivity extends Activity {
     private ArrayAdapter<String> arrayAdapter;
     private RecyclerView recycleView;
     private LinearLayoutManager linearLayoutManager;
-    private SwipeRefreshLayout swipeRefreshDuivda;
+    private SwipeRefreshLayout swipeRefreshDuvida;
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout drawerLayout;
@@ -133,7 +133,7 @@ public class MainTestActivity extends Activity {
             }
         });
 
-        swipeRefreshDuivda.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipeRefreshDuvida.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 volleyRequest();
@@ -220,7 +220,7 @@ public class MainTestActivity extends Activity {
         infoDuvida = (LinearLayout) findViewById(R.id.infoDuvida);
         textInfoDuvida = (TextView) findViewById(R.id.textInfoDuvida);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        swipeRefreshDuivda = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshDuvida);
+        swipeRefreshDuvida = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshDuvida);
     }
 
     public void volleyRequest() {
@@ -246,7 +246,7 @@ public class MainTestActivity extends Activity {
 
                         //Toast.makeText(getApplicationContext(), "Lista atualizada.", Toast.LENGTH_SHORT).show();
                         infoDuvida.setVisibility(View.GONE);
-                        swipeRefreshDuivda.setRefreshing(false);
+                        swipeRefreshDuvida.setRefreshing(false);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -255,7 +255,7 @@ public class MainTestActivity extends Activity {
                 infoDuvida.setBackgroundColor(Color.parseColor("#ff4444"));
                 textInfoDuvida.setText("Não foi possível se conectar com o servidor");
                 progressBar.setVisibility(View.GONE);
-                swipeRefreshDuivda.setRefreshing(false);
+                swipeRefreshDuvida.setRefreshing(false);
             }
         });
 
