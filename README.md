@@ -3,7 +3,7 @@
 
 Protótipo de aplicativo Android, para trabalho de conclusão de curso, consumindo por enquanto um **WebService local** (https://github.com/gabrielqueiroz/wstcc).
 
-* **O que você encontrar neste projeto?**
+* **O que você pode encontrar neste projeto?**
 
 1. Utilização de Android Volley para requisições HTTP GET e POST com parametro, gerenciadas no ciclo de vida do aplicativo.
 2. Utilização do Framework GSon para gerenciamento de JSon, recebendo objetos e listas.
