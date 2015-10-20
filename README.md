@@ -14,3 +14,12 @@ Protótipo de aplicativo Android, para trabalho de conclusão de curso, consumin
 7. NavigationDrawer com animação do Lollipop para exibição do menu lateral.
 8. ActionFloatingButton para criação e confirmação de novas atividades.
 9. ProgressBar customizada.
+
+* **Screenshots**
+
+O projeto continua em andamento, mas ja está em um modelo estável. Os seguintes screenshots serão atualizados conforme novas modificações surgirem.
+
+![View Principal](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/20151019115862.jpg)
+![NavigationDrawer](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/20151019115859.jpg)
+![Ocultando Action Bar](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/20151019115860.jpg)
+![View de Resposta](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/20151019115861.jpg)
