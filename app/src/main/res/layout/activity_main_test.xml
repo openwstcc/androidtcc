@@ -75,11 +75,46 @@
             app:rippleColor="@color/colorPrimary" />
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/drawerList"
-        android:layout_width="260dp"
+    <LinearLayout
+        android:id="@+id/backgroundList"
+        android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="left|start"
-        android:background="#ffeeeeee" />
+        android:background="#ffeeeeee"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/infoNomeUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nome do Usuario"
+                android:textSize="20dp"
+                android:layout_centerVertical="true"
+                android:paddingLeft="15dp"/>
+
+            <TextView
+                android:id="@+id/infoEmailUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="usuario@email.com.br"
+                android:textSize="15dp"
+                android:layout_below="@id/infoNomeUsuario"
+                android:paddingLeft="15dp" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/drawerList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffeeeeee"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:paddingTop="10dp"/>
+    </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>

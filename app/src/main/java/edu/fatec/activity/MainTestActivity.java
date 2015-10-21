@@ -6,22 +6,22 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -48,6 +48,8 @@ public class MainTestActivity extends Activity {
     private TextView textInfoDuvida;
     private ProgressBar progressBar;
 
+    private TextView infoNomeUsuario;
+    private TextView infoEmailUsuario;
     private ListView drawerList;
     private ArrayAdapter<String> arrayAdapter;
     private RecyclerView recycleView;
@@ -80,7 +82,7 @@ public class MainTestActivity extends Activity {
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        sharedPref = getPreferences(MODE_PRIVATE);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedPrefEdit = sharedPref.edit();
 
         volleyRequest();
@@ -142,6 +144,7 @@ public class MainTestActivity extends Activity {
     }
 
     private void addDrawerItems() {
+
         String[] osArray = {"Meu Perfil", "Minhas Matérias", "Configurações"};
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         drawerList.setAdapter(arrayAdapter);
@@ -215,6 +218,8 @@ public class MainTestActivity extends Activity {
     public void findViewsByID() {
         novaDuvida = (FloatingActionButton) findViewById(R.id.novaDuvida);
         recycleView = (RecyclerView) findViewById(R.id.recycleViewDuvidas);
+        infoNomeUsuario = (TextView) findViewById(R.id.infoNomeUsuario);
+        infoEmailUsuario = (TextView) findViewById(R.id.infoEmailUsuario);
         drawerList = (ListView) findViewById(R.id.drawerList);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         infoDuvida = (LinearLayout) findViewById(R.id.infoDuvida);

@@ -3,12 +3,13 @@ package edu.fatec.activity;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,16 +34,16 @@ import edu.fatec.model.Duvida;
 import edu.fatec.util.RespostaAdapter;
 
 public class RespostaTestActivity extends Activity {
-    private String server;
-    private String jsonDuvida;
     private String idDuvida;
 
     private TextView conteudoDuvida;
+    private EditText resposta;
     private LinearLayout backgroundDuvida;
     private RecyclerView recyclerView;
     private RespostaAdapter respostaAdapter;
     private LinearLayoutManager linearLayoutManager;
     private SwipeRefreshLayout swiperRefreshResposta;
+    private FloatingActionButton novaResposta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class RespostaTestActivity extends Activity {
 
         Bundle extras = getIntent().getExtras();
 
-        jsonDuvida = "";
+        String jsonDuvida = "";
         if (extras != null)
             jsonDuvida = extras.getString("duvida");
 
@@ -66,7 +67,6 @@ public class RespostaTestActivity extends Activity {
         idDuvida = "{idDuvida:"+d.getIdDuvida()+"}";
 
         volleyRequest();
-        swiperRefreshResposta.setRefreshing(true);
 
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(RespostaTestActivity.this);
@@ -118,6 +118,8 @@ public class RespostaTestActivity extends Activity {
     }
 
     public void findViewsByID(){
+        resposta = (EditText) findViewById(R.id.resposta);
+        novaResposta = (FloatingActionButton) findViewById(R.id.novaResposta);
         backgroundDuvida = (LinearLayout)findViewById(R.id.backgroundDuvidaResposta);
         recyclerView = (RecyclerView) findViewById(R.id.cardList);
         conteudoDuvida = (TextView)findViewById(R.id.textConteudoDuvida);
@@ -125,8 +127,7 @@ public class RespostaTestActivity extends Activity {
     }
 
     public void volleyRequest(){
-        server = getString(R.string.wstcc);
-
+        String server = getString(R.string.wstcc);
         String url = server + "wstcc/respostas/buscarRespostas";
 
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -141,6 +142,7 @@ public class RespostaTestActivity extends Activity {
                         respostaAdapter.swap(respostasJson);
                         backgroundDuvida.setBackgroundColor(Color.parseColor("#00838F"));
                         swiperRefreshResposta.setRefreshing(false);
+                        resposta.setEnabled(true);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -148,6 +150,7 @@ public class RespostaTestActivity extends Activity {
                 Toast.makeText(getApplicationContext(), "Erro ao buscar Respostas.", Toast.LENGTH_SHORT).show();
                 backgroundDuvida.setBackgroundColor(Color.parseColor("#FFA726"));
                 swiperRefreshResposta.setRefreshing(false);
+                resposta.setEnabled(false);
             }
         }) {
             @Override

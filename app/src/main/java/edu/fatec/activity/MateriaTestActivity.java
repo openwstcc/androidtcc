@@ -3,6 +3,7 @@ package edu.fatec.activity;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ public class MateriaTestActivity extends Activity {
     private ExpandableListAdapter listAdapter;
     private ExpandableListView expListView;
 
-    private SharedPreferences SharedPref;
+    private SharedPreferences sharedPref;
     private SharedPreferences.Editor SharedPrefEdit;
 
     private String server;
@@ -41,10 +42,10 @@ public class MateriaTestActivity extends Activity {
 
         expListView = (ExpandableListView) findViewById(R.id.listaMaterias);
 
-        SharedPref = getPreferences(MODE_PRIVATE);
-        SharedPrefEdit = SharedPref.edit();
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPrefEdit = sharedPref.edit();
 
-        String todasMaterias = SharedPref.getString("jsonMaterias","");
+        String todasMaterias = sharedPref.getString("jsonMaterias","");
         if(todasMaterias.length()<1){
             server = getString(R.string.wstcc);
 

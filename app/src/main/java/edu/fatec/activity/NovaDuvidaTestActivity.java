@@ -3,6 +3,7 @@ package edu.fatec.activity;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -18,7 +19,7 @@ import edu.fatec.model.Materia;
 
 public class NovaDuvidaTestActivity extends Activity {
     private Spinner spinnerMaterias;
-    private SharedPreferences SharedPref;
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +28,9 @@ public class NovaDuvidaTestActivity extends Activity {
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        SharedPref = getPreferences(MODE_PRIVATE);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        String todasMaterias = SharedPref.getString("jsonMaterias","");
+        String todasMaterias = sharedPref.getString("jsonMaterias","");
         List<String> materias =  new ArrayList<>();
 
         if(todasMaterias.length()>1){
