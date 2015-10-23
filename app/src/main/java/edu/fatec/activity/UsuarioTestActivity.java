@@ -2,11 +2,14 @@ package edu.fatec.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.InputType;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -74,8 +77,6 @@ public class UsuarioTestActivity extends Activity {
               @Override
               public void onClick(View v) {
 
-                  Toast.makeText(getApplicationContext(), novoUsuario(), Toast.LENGTH_LONG).show();
-
                   RequestQueue queue = Volley.newRequestQueue(UsuarioTestActivity.this);
                   String url = server + "wstcc/usuarios/inserirUsuario";
 
@@ -83,7 +84,9 @@ public class UsuarioTestActivity extends Activity {
                           new Response.Listener<String>() {
                               @Override
                               public void onResponse(String response) {
-                                  Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                                  Log.i("## RESPONSE USUARIO:",response);
+                                  Intent i = new Intent(UsuarioTestActivity.this, LoginActivity.class);
+                                  startActivity(i);
                               }
                           }, new Response.ErrorListener() {
                       @Override
@@ -108,6 +111,7 @@ public class UsuarioTestActivity extends Activity {
         usuario.setEmail(email.getText().toString());
         usuario.setSenha(senha.getText().toString());
         usuario.setTelefone(telefone.getText().toString());
+
         try {
             String myFormat = "dd/MM/yyyy";
             SimpleDateFormat sdf = new SimpleDateFormat(myFormat);

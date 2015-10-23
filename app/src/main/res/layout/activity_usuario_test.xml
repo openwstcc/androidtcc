@@ -139,7 +139,17 @@
                     android:ems="10"
                     android:hint="Senha"
                     android:inputType="textPassword" />
+
             </LinearLayout>
+
+            <EditText
+                android:id="@+id/senhaConfirma"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Confirmar Senha"
+                android:inputType="textPassword"
+                android:layout_marginLeft="29dp"/>
 
             <Space
                 android:layout_width="match_parent"
@@ -156,6 +166,4 @@
 
         </LinearLayout>
     </ScrollView>
-
-
 </RelativeLayout>

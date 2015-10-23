@@ -13,6 +13,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,6 +33,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gqueiroz.androidtcc.R;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -38,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.fatec.model.Duvida;
+import edu.fatec.model.Usuario;
 import edu.fatec.util.DuvidaAdapter;
 
 public class MainTestActivity extends Activity {
@@ -68,6 +72,7 @@ public class MainTestActivity extends Activity {
     private RequestQueue queue;
 
     private List<Duvida> jsonDuvidas;
+    private Usuario usuario;
 
 
     @Override
@@ -81,6 +86,7 @@ public class MainTestActivity extends Activity {
         setupDrawer();
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedPrefEdit = sharedPref.edit();
@@ -144,17 +150,24 @@ public class MainTestActivity extends Activity {
     }
 
     private void addDrawerItems() {
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String sharedUsuario = sharedPref.getString("jsonUsuario", "");
+        usuario = new Gson().fromJson(sharedUsuario, Usuario.class);
+        infoNomeUsuario.setText(usuario.getNome()+" "+usuario.getSobrenome());
+        infoEmailUsuario.setText(usuario.getEmail());
+        Log.i("JSON:", sharedUsuario);
 
         String[] osArray = {"Meu Perfil", "Minhas Matérias", "Configurações"};
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         drawerList.setAdapter(arrayAdapter);
 
+
         drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (id == 0) {
-                    Intent i = new Intent(MainTestActivity.this, LoginActivity.class);
-                    startActivity(i);
+                    Intent i = new Intent(MainTestActivity.this, UsuarioTestActivity.class);
+
                 }
                 if (id == 1) {
                     Intent i = new Intent(MainTestActivity.this, MateriaTestActivity.class);

@@ -9,7 +9,7 @@
     <string name="title_activity_resposta_test">Titulo da Dúvida</string>
     <string name="title_activity_nova_duvida_test">Criar uma nova Dúvida</string>
     <string name="title_activity_main_navigation">androidtcc</string>
-    <string name="title_activity_login">Login</string>
+    <string name="title_activity_login">androidtcc</string>
     <string name="title_activity_apresentacao">Apresentacao Activity</string>
     <string name="title_activity_feed_duvidas">Feed de Dúvidas</string>
 
