@@ -3,19 +3,21 @@ package edu.fatec.activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.InputType;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -35,9 +37,8 @@ import java.util.Calendar;
 
 import edu.fatec.model.Usuario;
 
-public class UsuarioTestActivity extends Activity {
-    private Usuario usuario = new Usuario();
-
+public class NovoUsuarioActivity extends Activity {
+    //View Objects
     private Button inserirUsuario;
     private EditText nome;
     private EditText sobreNome;
@@ -45,16 +46,18 @@ public class UsuarioTestActivity extends Activity {
     private EditText dataNasc;
     private EditText email;
     private EditText senha;
+    private ProgressBar progressBar;
+    private LinearLayout infoNovoUsuario;
+    private TextView textInfoNovoUsuario;
 
+    //Date Objects
     private DatePickerDialog dataPicker;
     private SimpleDateFormat dateFormatter;
-
-    private String server;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_usuario_test);
+        setContentView(R.layout.activity_novo_usuario);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -62,8 +65,6 @@ public class UsuarioTestActivity extends Activity {
 
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
         setDateTimeField();
-
-        server = getString(R.string.wstcc);
 
         dataNasc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,36 +77,24 @@ public class UsuarioTestActivity extends Activity {
         inserirUsuario.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View v) {
+                  if(!validaCampos(novoUsuario()))
+                      return;
 
-                  RequestQueue queue = Volley.newRequestQueue(UsuarioTestActivity.this);
-                  String url = server + "wstcc/usuarios/inserirUsuario";
+                  infoNovoUsuario.setVisibility(View.VISIBLE);
+                  progressBar.setVisibility(View.VISIBLE);
+                  textInfoNovoUsuario.setText("Seu usuário está sendo criado.");
+                  infoNovoUsuario.setBackgroundColor(Color.parseColor("#FFA726"));
+                  inserirUsuario.setEnabled(false);
 
-                  StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                          new Response.Listener<String>() {
-                              @Override
-                              public void onResponse(String response) {
-                                  Log.i("## RESPONSE USUARIO:",response);
-                                  Intent i = new Intent(UsuarioTestActivity.this, LoginActivity.class);
-                                  startActivity(i);
-                              }
-                          }, new Response.ErrorListener() {
-                      @Override
-                      public void onErrorResponse(VolleyError error) {
-                          Toast.makeText(getApplicationContext(), "Erro ao se conectar com o WebService:" + error.toString(), Toast.LENGTH_SHORT).show();
-                      }
-                  }) {
-                      @Override
-                      public byte[] getBody() throws AuthFailureError {
-                          return novoUsuario().getBytes();
-                      }
-                  };
-                  queue.add(stringRequest);
+                  volleyRequest();
               }
           }
         );
     }
 
-    public String novoUsuario() {
+    public Usuario novoUsuario() {
+        Usuario usuario = new Usuario();
+
         usuario.setNome(nome.getText().toString());
         usuario.setSobrenome(sobreNome.getText().toString());
         usuario.setEmail(email.getText().toString());
@@ -122,8 +111,7 @@ public class UsuarioTestActivity extends Activity {
 
         usuario.setPerfil("A");
 
-        Gson gson = new GsonBuilder().create();
-        return gson.toJson(usuario);
+        return usuario;
     }
 
     private void findViewsById() {
@@ -136,22 +124,25 @@ public class UsuarioTestActivity extends Activity {
         dataNasc = (EditText) findViewById(R.id.dataNasc);
         dataNasc.setInputType(InputType.TYPE_NULL);
         inserirUsuario = (Button) findViewById(R.id.inserirUsuario);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarNovoUsuario);
+        infoNovoUsuario = (LinearLayout) findViewById(R.id.infoNovoUsuario);
+        textInfoNovoUsuario = (TextView) findViewById(R.id.textInfoNovoUsuario);
     }
 
     public void setDateTimeField() {
-        Calendar newCalendar = Calendar.getInstance();
-        dataPicker = new DatePickerDialog(UsuarioTestActivity.this, new DatePickerDialog.OnDateSetListener() {
+        Calendar calendar = Calendar.getInstance();
+        dataPicker = new DatePickerDialog(NovoUsuarioActivity.this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 dataNasc.setText(dateFormatter.format(newDate.getTime()));
             }
-        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
     }
 
-    private void hideSoftKeyboard(){
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(dataNasc.getWindowToken(),0);
+    private void hideSoftKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(dataNasc.getWindowToken(), 0);
     }
 
     @Override
@@ -162,6 +153,43 @@ public class UsuarioTestActivity extends Activity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void volleyRequest() {
+        String server = getString(R.string.wstcc);
+
+        RequestQueue queue = Volley.newRequestQueue(NovoUsuarioActivity.this);
+        String url = server + "wstcc/usuarios/inserirUsuario";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(getApplicationContext(), "Usuário criado com sucesso!", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(NovoUsuarioActivity.this, LoginActivity.class);
+                        startActivity(i);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                inserirUsuario.setEnabled(true);
+                textInfoNovoUsuario.setText("Por favor, tente novamente.");
+                infoNovoUsuario.setBackgroundColor(Color.parseColor("#ff4444"));
+                progressBar.setVisibility(View.GONE);
+            }
+        }) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                Gson gson = new GsonBuilder().create();
+                String body = gson.toJson(novoUsuario());
+                return body.getBytes();
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    public boolean validaCampos(Usuario u){
+        return true;
     }
 
 }

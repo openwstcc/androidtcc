@@ -7,8 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -28,7 +26,6 @@ import com.google.gson.GsonBuilder;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import edu.fatec.model.Usuario;
 
@@ -58,7 +55,7 @@ public class LoginActivity extends Activity {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String sharedUsuario = sharedPref.getString("jsonUsuario", "");
         if (sharedUsuario.length() > 1) {
-            Intent i = new Intent(LoginActivity.this, MainTestActivity.class);
+            Intent i = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(i);
         }
 
@@ -67,7 +64,7 @@ public class LoginActivity extends Activity {
         registre.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, UsuarioTestActivity.class);
+                Intent i = new Intent(LoginActivity.this, NovoUsuarioActivity.class);
                 startActivity(i);
             }
         });
@@ -90,7 +87,7 @@ public class LoginActivity extends Activity {
                                 Usuario usuario = new Gson().fromJson(response, Usuario.class);
                                 if (usuario.getNome()!=null) {
                                     persisteSharedPref(response);
-                                    Intent i = new Intent(LoginActivity.this, MainTestActivity.class);
+                                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(i);
                                 } else {
                                     infoLogin.setBackgroundColor(Color.parseColor("#ff4444"));

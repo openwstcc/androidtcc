@@ -17,14 +17,14 @@ import java.util.List;
 
 import edu.fatec.model.Materia;
 
-public class NovaDuvidaTestActivity extends Activity {
+public class NovaDuvidaActivity extends Activity {
     private Spinner spinnerMaterias;
     private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nova_duvida_test);
+        setContentView(R.layout.activity_nova_duvida);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 

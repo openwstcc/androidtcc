@@ -25,7 +25,7 @@ import java.lang.reflect.Type;
 import edu.fatec.model.Materia;
 import edu.fatec.util.ExpandableListAdapter;
 
-public class MateriaTestActivity extends Activity {
+public class MateriaActivity extends Activity {
     private ExpandableListAdapter listAdapter;
     private ExpandableListView expListView;
 
@@ -38,7 +38,7 @@ public class MateriaTestActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_materia_test);
+        setContentView(R.layout.activity_materia);
 
         expListView = (ExpandableListView) findViewById(R.id.listaMaterias);
 
@@ -59,7 +59,7 @@ public class MateriaTestActivity extends Activity {
                             Type listType = new TypeToken<ArrayList<Materia>>(){}.getType();
                             materiasJson = new Gson().fromJson(response, listType);
                             Toast.makeText(getApplicationContext(), "Materias atualizadas.", Toast.LENGTH_SHORT).show();
-                            listAdapter = new ExpandableListAdapter(MateriaTestActivity.this, materiasJson);
+                            listAdapter = new ExpandableListAdapter(MateriaActivity.this, materiasJson);
                             expListView.setAdapter(listAdapter);
                             SharedPrefEdit.putString("jsonMaterias", response);
                             SharedPrefEdit.commit();
@@ -74,7 +74,7 @@ public class MateriaTestActivity extends Activity {
         } else {
             Type listType = new TypeToken<ArrayList<Materia>>(){}.getType();
             materiasJson = new Gson().fromJson(todasMaterias, listType);
-            listAdapter = new ExpandableListAdapter(MateriaTestActivity.this, materiasJson);
+            listAdapter = new ExpandableListAdapter(MateriaActivity.this, materiasJson);
             expListView.setAdapter(listAdapter);
         }
 

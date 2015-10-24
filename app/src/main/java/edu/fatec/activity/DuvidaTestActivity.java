@@ -3,7 +3,6 @@ package edu.fatec.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
@@ -113,7 +112,7 @@ public class DuvidaTestActivity extends Activity {
         novaDuvida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(DuvidaTestActivity.this,NovaDuvidaTestActivity.class);
+                Intent i = new Intent(DuvidaTestActivity.this,NovaDuvidaActivity.class);
                 startActivity(i);
             }
         });

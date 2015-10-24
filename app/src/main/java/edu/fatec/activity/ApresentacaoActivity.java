@@ -26,7 +26,7 @@ public class ApresentacaoActivity extends Activity {
         cadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ApresentacaoActivity.this, UsuarioTestActivity.class);
+                Intent i = new Intent(ApresentacaoActivity.this, NovoUsuarioActivity.class);
                 startActivity(i);
             }
         });

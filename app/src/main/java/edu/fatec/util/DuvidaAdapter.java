@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.gqueiroz.androidtcc.R;
 import com.google.gson.Gson;
@@ -16,7 +15,7 @@ import com.google.gson.GsonBuilder;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import edu.fatec.activity.RespostaTestActivity;
+import edu.fatec.activity.RespostaActivity;
 import edu.fatec.model.Duvida;
 
 public class DuvidaAdapter extends RecyclerView.Adapter<DuvidaAdapter.DuvidaViewHolder> {
@@ -43,7 +42,7 @@ public class DuvidaAdapter extends RecyclerView.Adapter<DuvidaAdapter.DuvidaView
         duvidaViewHolder.replyDuvida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), RespostaTestActivity.class);
+                Intent i = new Intent(v.getContext(), RespostaActivity.class);
                 Gson gson = new GsonBuilder().create();
                 String jsonDuvida = gson.toJson(d);
                 i.putExtra("duvida", jsonDuvida);

@@ -1,5 +1,7 @@
 package edu.fatec.model;
 
+import java.util.Date;
+
 /**
  * Entity Resposta responsável pelo gerenciamento de atributos de respostas.
  *
@@ -7,20 +9,22 @@ package edu.fatec.model;
  *
  */
 public class Resposta {
-    private int idResposta;
-    private String resposta;
     private String criador;
-    private String dataCriacao;
-    private int rank;
-    private boolean flagProfessor;
+    private String resposta;
+    private Date dataCriacao;
     private boolean flagCriador;
+    private boolean flagProfessor;
+    private int idResposta;
+    private int rank;
+    private int idUsuario;
+    private int idDuvida;
 
-    public int getIdResposta() {
-        return idResposta;
+    public String getCriador() {
+        return criador;
     }
 
-    public void setIdResposta(int idResposta) {
-        this.idResposta = idResposta;
+    public void setCriador(String criador) {
+        this.criador = criador;
     }
 
     public String getResposta() {
@@ -31,28 +35,12 @@ public class Resposta {
         this.resposta = resposta;
     }
 
-    public String getDataCriacao() {
+    public Date getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(String dataCriacao) {
+    public void setDataCriacao(Date dataCriacao) {
         this.dataCriacao = dataCriacao;
-    }
-
-    public int getRank() {
-        return rank;
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
-    }
-
-    public boolean isFlagProfessor() {
-        return flagProfessor;
-    }
-
-    public void setFlagProfessor(boolean flagProfessor) {
-        this.flagProfessor = flagProfessor;
     }
 
     public boolean isFlagCriador() {
@@ -63,68 +51,43 @@ public class Resposta {
         this.flagCriador = flagCriador;
     }
 
-    public String getCriador() {
-        return criador;
+    public boolean isFlagProfessor() {
+        return flagProfessor;
     }
 
-    public void setCriador(String criador) {
-        this.criador = criador;
+    public void setFlagProfessor(boolean flagProfessor) {
+        this.flagProfessor = flagProfessor;
     }
 
-    @Override
-    public String toString() {
-        return "Resposta [idResposta=" + idResposta + ", resposta=" + resposta + ", criador=" + criador
-                + ", dataCriacao=" + dataCriacao + ", rank=" + rank + ", flagProfessor=" + flagProfessor
-                + ", flagCriador=" + flagCriador + "]";
+    public int getIdResposta() {
+        return idResposta;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((criador == null) ? 0 : criador.hashCode());
-        result = prime * result + ((dataCriacao == null) ? 0 : dataCriacao.hashCode());
-        result = prime * result + (flagCriador ? 1231 : 1237);
-        result = prime * result + (flagProfessor ? 1231 : 1237);
-        result = prime * result + idResposta;
-        result = prime * result + rank;
-        result = prime * result + ((resposta == null) ? 0 : resposta.hashCode());
-        return result;
+    public void setIdResposta(int idResposta) {
+        this.idResposta = idResposta;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Resposta other = (Resposta) obj;
-        if (criador == null) {
-            if (other.criador != null)
-                return false;
-        } else if (!criador.equals(other.criador))
-            return false;
-        if (dataCriacao == null) {
-            if (other.dataCriacao != null)
-                return false;
-        } else if (!dataCriacao.equals(other.dataCriacao))
-            return false;
-        if (flagCriador != other.flagCriador)
-            return false;
-        if (flagProfessor != other.flagProfessor)
-            return false;
-        if (idResposta != other.idResposta)
-            return false;
-        if (rank != other.rank)
-            return false;
-        if (resposta == null) {
-            if (other.resposta != null)
-                return false;
-        } else if (!resposta.equals(other.resposta))
-            return false;
-        return true;
+    public int getRank() {
+        return rank;
     }
 
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public int getIdDuvida() {
+        return idDuvida;
+    }
+
+    public void setIdDuvida(int idDuvida) {
+        this.idDuvida = idDuvida;
+    }
 }

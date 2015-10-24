@@ -6,7 +6,7 @@
     android:layout_marginTop="@dimen/activity_margin_recycle"
     android:layout_marginLeft="@dimen/activity_margin_recycle"
     android:layout_marginRight="@dimen/activity_margin_recycle"
-    tools:context="edu.fatec.activity.MateriaTestActivity">
+    tools:context="edu.fatec.activity.MateriaActivity">
 
     <ExpandableListView
         android:id="@+id/listaMaterias"

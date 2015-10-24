@@ -1,8 +1,10 @@
 package edu.fatec.activity;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -27,14 +29,19 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import edu.fatec.json.JsonResposta;
 import edu.fatec.model.Duvida;
+import edu.fatec.model.Resposta;
+import edu.fatec.model.Usuario;
 import edu.fatec.util.RespostaAdapter;
 
-public class RespostaTestActivity extends Activity {
-    private String idDuvida;
+public class RespostaActivity extends Activity {
+    private Usuario usuario;
+    private Duvida duvida;
 
     private TextView conteudoDuvida;
     private EditText resposta;
@@ -48,7 +55,7 @@ public class RespostaTestActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resposta_test);
+        setContentView(R.layout.activity_resposta);
 
         findViewsByID();
 
@@ -58,18 +65,17 @@ public class RespostaTestActivity extends Activity {
         if (extras != null)
             jsonDuvida = extras.getString("duvida");
 
-        Duvida d = new Gson().fromJson(jsonDuvida, Duvida.class);
+        duvida = new Gson().fromJson(jsonDuvida, Duvida.class);
 
-        getActionBar().setTitle(d.getTitulo());
+        conteudoDuvida.setText(duvida.getConteudo());
+
+        getActionBar().setTitle(duvida.getTitulo());
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        conteudoDuvida.setText(d.getConteudo());
-        idDuvida = "{idDuvida:"+d.getIdDuvida()+"}";
-
-        volleyRequest();
+        volleyBuscarDuvidas();
 
         recyclerView.setHasFixedSize(true);
-        linearLayoutManager = new LinearLayoutManager(RespostaTestActivity.this);
+        linearLayoutManager = new LinearLayoutManager(RespostaActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -90,9 +96,9 @@ public class RespostaTestActivity extends Activity {
                 final int currentFirstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
 
                 if (currentFirstVisibleItem > this.mLastFirstVisibleItem) {
-                    RespostaTestActivity.this.getActionBar().hide();
+                    RespostaActivity.this.getActionBar().hide();
                 } else if (currentFirstVisibleItem < this.mLastFirstVisibleItem) {
-                    RespostaTestActivity.this.getActionBar().show();
+                    RespostaActivity.this.getActionBar().show();
                 }
 
                 this.mLastFirstVisibleItem = currentFirstVisibleItem;
@@ -102,7 +108,7 @@ public class RespostaTestActivity extends Activity {
         swiperRefreshResposta.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                volleyRequest();
+                volleyBuscarDuvidas();
             }
         });
     }
@@ -126,7 +132,7 @@ public class RespostaTestActivity extends Activity {
         swiperRefreshResposta = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshResposta);
     }
 
-    public void volleyRequest(){
+    public void volleyBuscarDuvidas(){
         String server = getString(R.string.wstcc);
         String url = server + "wstcc/respostas/buscarRespostas";
 
@@ -155,10 +161,63 @@ public class RespostaTestActivity extends Activity {
         }) {
             @Override
             public byte[] getBody() throws AuthFailureError {
+                String idDuvida = "{idDuvida:"+duvida.getIdDuvida()+"}";
                 return idDuvida.getBytes();
             }
         };
         queue.add(stringRequest);
-
     }
+
+    public Resposta novaResposta(){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String sharedUsuario = sharedPref.getString("jsonUsuario", "");
+        usuario = new Gson().fromJson(sharedUsuario, Usuario.class);
+
+        Resposta r = new Resposta();
+
+        r.setResposta(resposta.getText().toString());
+        r.setIdUsuario(usuario.getIdUsuario());
+        r.setCriador(usuario.getNome());
+        r.setIdDuvida(duvida.getIdDuvida());
+        r.getDataCriacao();
+
+        return r;
+    }
+
+    public void volleyNovaResposta(){
+        String server = getString(R.string.wstcc);
+        String url = server + "wstcc/respostas/adicionarResposta";
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Type listType = new TypeToken<ArrayList<JsonResposta>>() {
+                        }.getType();
+                        List<JsonResposta> respostasJson = new Gson().fromJson(response, listType);
+                        respostaAdapter.swap(respostasJson);
+                        backgroundDuvida.setBackgroundColor(Color.parseColor("#00838F"));
+                        swiperRefreshResposta.setRefreshing(false);
+                        resposta.setEnabled(true);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Erro ao buscar Respostas.", Toast.LENGTH_SHORT).show();
+                backgroundDuvida.setBackgroundColor(Color.parseColor("#FFA726"));
+                swiperRefreshResposta.setRefreshing(false);
+                resposta.setEnabled(false);
+            }
+        }) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                String idDuvida = "{idDuvida:"+duvida.getIdDuvida()+"}";
+                return idDuvida.getBytes();
+            }
+        };
+        queue.add(stringRequest);
+    }
+
 }
