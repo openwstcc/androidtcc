@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,8 +30,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import edu.fatec.json.JsonResposta;
@@ -40,7 +39,6 @@ import edu.fatec.model.Usuario;
 import edu.fatec.util.RespostaAdapter;
 
 public class RespostaActivity extends Activity {
-    private Usuario usuario;
     private Duvida duvida;
 
     private TextView conteudoDuvida;
@@ -50,7 +48,7 @@ public class RespostaActivity extends Activity {
     private RespostaAdapter respostaAdapter;
     private LinearLayoutManager linearLayoutManager;
     private SwipeRefreshLayout swiperRefreshResposta;
-    private FloatingActionButton novaResposta;
+    private FloatingActionButton inserirResposta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +109,13 @@ public class RespostaActivity extends Activity {
                 volleyBuscarDuvidas();
             }
         });
+
+        inserirResposta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                volleyNovaResposta();
+            }
+        });
     }
 
     @Override
@@ -123,16 +128,16 @@ public class RespostaActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void findViewsByID(){
+    public void findViewsByID() {
         resposta = (EditText) findViewById(R.id.resposta);
-        novaResposta = (FloatingActionButton) findViewById(R.id.novaResposta);
-        backgroundDuvida = (LinearLayout)findViewById(R.id.backgroundDuvidaResposta);
+        inserirResposta = (FloatingActionButton) findViewById(R.id.novaResposta);
+        backgroundDuvida = (LinearLayout) findViewById(R.id.backgroundDuvidaResposta);
         recyclerView = (RecyclerView) findViewById(R.id.cardList);
-        conteudoDuvida = (TextView)findViewById(R.id.textConteudoDuvida);
-        swiperRefreshResposta = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshResposta);
+        conteudoDuvida = (TextView) findViewById(R.id.textConteudoDuvida);
+        swiperRefreshResposta = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshResposta);
     }
 
-    public void volleyBuscarDuvidas(){
+    public void volleyBuscarDuvidas() {
         String server = getString(R.string.wstcc);
         String url = server + "wstcc/respostas/buscarRespostas";
 
@@ -161,17 +166,17 @@ public class RespostaActivity extends Activity {
         }) {
             @Override
             public byte[] getBody() throws AuthFailureError {
-                String idDuvida = "{idDuvida:"+duvida.getIdDuvida()+"}";
+                String idDuvida = "{idDuvida:" + duvida.getIdDuvida() + "}";
                 return idDuvida.getBytes();
             }
         };
         queue.add(stringRequest);
     }
 
-    public Resposta novaResposta(){
+    public Resposta novaResposta() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String sharedUsuario = sharedPref.getString("jsonUsuario", "");
-        usuario = new Gson().fromJson(sharedUsuario, Usuario.class);
+        Usuario usuario = new Gson().fromJson(sharedUsuario, Usuario.class);
 
         Resposta r = new Resposta();
 
@@ -184,7 +189,7 @@ public class RespostaActivity extends Activity {
         return r;
     }
 
-    public void volleyNovaResposta(){
+    public void volleyNovaResposta() {
         String server = getString(R.string.wstcc);
         String url = server + "wstcc/respostas/adicionarResposta";
 
@@ -194,27 +199,18 @@ public class RespostaActivity extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Type listType = new TypeToken<ArrayList<JsonResposta>>() {
-                        }.getType();
-                        List<JsonResposta> respostasJson = new Gson().fromJson(response, listType);
-                        respostaAdapter.swap(respostasJson);
-                        backgroundDuvida.setBackgroundColor(Color.parseColor("#00838F"));
-                        swiperRefreshResposta.setRefreshing(false);
-                        resposta.setEnabled(true);
+                        //On Response
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Erro ao buscar Respostas.", Toast.LENGTH_SHORT).show();
-                backgroundDuvida.setBackgroundColor(Color.parseColor("#FFA726"));
-                swiperRefreshResposta.setRefreshing(false);
-                resposta.setEnabled(false);
+                //On error
             }
         }) {
             @Override
             public byte[] getBody() throws AuthFailureError {
-                String idDuvida = "{idDuvida:"+duvida.getIdDuvida()+"}";
-                return idDuvida.getBytes();
+                String resposta = new Gson().toJson(novaResposta());
+                return resposta.getBytes();
             }
         };
         queue.add(stringRequest);

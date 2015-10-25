@@ -49,6 +49,8 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_below="@id/duvidaConteudo"
             android:background="@android:color/darker_gray" />
 
