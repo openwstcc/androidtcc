@@ -213,7 +213,6 @@ public class MainActivity extends Activity {
 
         if (actionBarDrawerToggle.onOptionsItemSelected(item))
             return true;
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -252,13 +251,13 @@ public class MainActivity extends Activity {
                     public void onResponse(String response) {
                         Type listType = new TypeToken<ArrayList<Duvida>>() {
                         }.getType();
-                        jsonDuvidas.clear();
                         jsonDuvidas = new Gson().fromJson(response, listType);
-                        if(jsonDuvidas!=null)
+                        if(jsonDuvidas!=null){
+                            jsonDuvidas.clear();
                             duvidaAdapter.swap(jsonDuvidas);
-                        sharedPrefEdit.putString("jsonDuvidas", response);
-                        sharedPrefEdit.commit();
-
+                            sharedPrefEdit.putString("jsonDuvidas", response);
+                            sharedPrefEdit.commit();
+                        }
                         //Toast.makeText(getApplicationContext(), "Lista atualizada.", Toast.LENGTH_SHORT).show();
                         infoDuvida.setVisibility(View.GONE);
                         swipeRefreshDuvida.setRefreshing(false);
