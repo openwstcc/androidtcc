@@ -254,7 +254,8 @@ public class MainActivity extends Activity {
                         }.getType();
                         jsonDuvidas.clear();
                         jsonDuvidas = new Gson().fromJson(response, listType);
-                        duvidaAdapter.swap(jsonDuvidas);
+                        if(jsonDuvidas!=null)
+                            duvidaAdapter.swap(jsonDuvidas);
                         sharedPrefEdit.putString("jsonDuvidas", response);
                         sharedPrefEdit.commit();
 
