@@ -191,7 +191,7 @@ public class RespostaActivity extends Activity {
 
     public void volleyNovaResposta() {
         String server = getString(R.string.wstcc);
-        String url = server + "wstcc/respostas/adicionarResposta";
+        String url = server + "respostas/adicionarResposta";
 
         RequestQueue queue = Volley.newRequestQueue(this);
 

@@ -77,7 +77,7 @@ public class LoginActivity extends Activity {
 
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
 
-                String url = server + "wstcc/usuarios/loginUsuario";
+                String url = server + "usuarios/loginUsuario";
 
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                         new Response.Listener<String>() {

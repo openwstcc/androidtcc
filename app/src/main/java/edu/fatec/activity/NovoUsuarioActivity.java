@@ -159,7 +159,7 @@ public class NovoUsuarioActivity extends Activity {
         String server = getString(R.string.wstcc);
 
         RequestQueue queue = Volley.newRequestQueue(NovoUsuarioActivity.this);
-        String url = server + "wstcc/usuarios/inserirUsuario";
+        String url = server + "usuarios/inserirUsuario";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {

@@ -51,7 +51,7 @@ public class MateriaActivity extends Activity {
 
             RequestQueue queue = Volley.newRequestQueue(this);
 
-            String url = server + "wstcc/materias/buscarMaterias";
+            String url = server + "materias/buscarMaterias";
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
                         @Override

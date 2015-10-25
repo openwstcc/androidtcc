@@ -242,7 +242,7 @@ public class MainActivity extends Activity {
         textInfoDuvida.setText("Atualizando informações de dúvidas");
 
         String server = getString(R.string.wstcc);
-        String url = server + "wstcc/duvidas/buscarDuvidas";
+        String url = server + "duvidas/buscarDuvidas";
 
         queue = Volley.newRequestQueue(this);
 

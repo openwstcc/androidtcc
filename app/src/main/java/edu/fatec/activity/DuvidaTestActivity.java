@@ -61,7 +61,7 @@ public class DuvidaTestActivity extends Activity {
 
         server = getString(R.string.wstcc);
 
-        String url = server + "wstcc/duvidas/buscarDuvidas";
+        String url = server + "duvidas/buscarDuvidas";
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
