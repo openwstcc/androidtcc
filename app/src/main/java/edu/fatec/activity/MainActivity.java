@@ -239,6 +239,8 @@ public class MainActivity extends Activity {
     public void volleyRequest() {
         infoDuvida.setBackgroundColor(Color.parseColor("#FFA726"));
         textInfoDuvida.setText("Atualizando informações de dúvidas");
+        infoDuvida.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
 
         String server = getString(R.string.wstcc);
         String url = server + "duvidas/buscarDuvidas";

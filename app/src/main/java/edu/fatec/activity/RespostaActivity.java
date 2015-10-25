@@ -139,7 +139,7 @@ public class RespostaActivity extends Activity {
 
     public void volleyBuscarDuvidas() {
         String server = getString(R.string.wstcc);
-        String url = server + "wstcc/respostas/buscarRespostas";
+        String url = server + "respostas/buscarRespostas";
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
