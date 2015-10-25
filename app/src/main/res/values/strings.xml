@@ -13,7 +13,7 @@
     <string name="title_activity_apresentacao">Apresentacao Activity</string>
     <string name="title_activity_feed_duvidas">Feed de Dúvidas</string>
 
-    <string name="wstcc">http://http://openwstcc-devbr.rhcloud.com/rest/</string>
+    <string name="wstcc">http://openwstcc-devbr.rhcloud.com/rest/</string>
 
     <string-array name="navigation_drawer_items_array">
         <item>Meu Perfil</item>
