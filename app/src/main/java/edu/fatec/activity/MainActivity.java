@@ -150,7 +150,7 @@ public class MainActivity extends Activity {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String sharedUsuario = sharedPref.getString("jsonUsuario", "");
         usuario = new Gson().fromJson(sharedUsuario, Usuario.class);
-        infoNomeUsuario.setText(usuario.getNome()+" "+usuario.getSobrenome());
+        infoNomeUsuario.setText(usuario.getNome() + " " + usuario.getSobrenome());
         infoEmailUsuario.setText(usuario.getEmail());
 
         String[] osArray = {"Meu Perfil", "Minhas Matérias", "Configurações"};
@@ -249,16 +249,14 @@ public class MainActivity extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Type listType = new TypeToken<ArrayList<Duvida>>() {
-                        }.getType();
+                        if(response==null)
+                            return;
+                        Type listType = new TypeToken<ArrayList<Duvida>>() {}.getType();
+                        jsonDuvidas.clear();
                         jsonDuvidas = new Gson().fromJson(response, listType);
-                        if(jsonDuvidas!=null){
-                            jsonDuvidas.clear();
-                            duvidaAdapter.swap(jsonDuvidas);
-                            sharedPrefEdit.putString("jsonDuvidas", response);
-                            sharedPrefEdit.commit();
-                        }
-                        //Toast.makeText(getApplicationContext(), "Lista atualizada.", Toast.LENGTH_SHORT).show();
+                        duvidaAdapter.swap(jsonDuvidas);
+                        sharedPrefEdit.putString("jsonDuvidas", response);
+                        sharedPrefEdit.commit();
                         infoDuvida.setVisibility(View.GONE);
                         swipeRefreshDuvida.setRefreshing(false);
                     }
