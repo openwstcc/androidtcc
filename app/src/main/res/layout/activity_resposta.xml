@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="70dp"
+            android:paddingBottom="90dp"
             android:paddingLeft="@dimen/activity_margin_recycle"
             android:paddingRight="@dimen/activity_margin_recycle"
             android:paddingTop="@dimen/activity_margin_recycle"

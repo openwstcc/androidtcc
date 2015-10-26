@@ -1,17 +1,17 @@
 package edu.fatec.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -83,12 +83,10 @@ public class MateriaActivity extends Activity {
                         String todasMaterias = sharedPref.getString("jsonMaterias", "");
                         Type listType = new TypeToken<ArrayList<Materia>>(){}.getType();
 
-                        materiasJson.clear();
-                        materiasJson = new Gson().fromJson(todasMaterias, listType);
                         materiasUsuario.clear();
                         materiasUsuario = new Gson().fromJson(response, listType);
 
-                        listAdapter.swap(materiasJson, materiasUsuario);
+                        listAdapter.swap(materiasUsuario);
                         textInfoMateria.setText(response);
                         infoMateria.setVisibility(View.GONE);
                     }
@@ -105,8 +103,12 @@ public class MateriaActivity extends Activity {
                 return sharedUsuario.getBytes();
             }
         };
-
         queue.add(stringRequest);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        listAdapter.volleyAtualizarMateriasUsuario(getApplicationContext());
+    }
 }

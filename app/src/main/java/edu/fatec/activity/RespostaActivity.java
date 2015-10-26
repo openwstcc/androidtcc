@@ -70,7 +70,20 @@ public class RespostaActivity extends Activity {
         getActionBar().setTitle(duvida.getTitulo());
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        volleyBuscarDuvidas();
+        swiperRefreshResposta.post(new Runnable() {
+            @Override
+            public void run() {
+                swiperRefreshResposta.setRefreshing(true);
+                volleyBuscarDuvidas();
+            }
+        });
+
+        swiperRefreshResposta.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                volleyBuscarDuvidas();
+            }
+        });
 
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(RespostaActivity.this);
@@ -100,13 +113,6 @@ public class RespostaActivity extends Activity {
                 }
 
                 this.mLastFirstVisibleItem = currentFirstVisibleItem;
-            }
-        });
-
-        swiperRefreshResposta.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                volleyBuscarDuvidas();
             }
         });
 
@@ -192,6 +198,9 @@ public class RespostaActivity extends Activity {
     public void volleyNovaResposta() {
         String server = getString(R.string.wstcc);
         String url = server + "respostas/adicionarResposta";
+
+        String resposta = new Gson().toJson(novaResposta());
+        Toast.makeText(getApplicationContext(),"JSON: "+resposta,Toast.LENGTH_LONG).show();
 
         RequestQueue queue = Volley.newRequestQueue(this);
 

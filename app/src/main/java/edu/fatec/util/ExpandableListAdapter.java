@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -59,8 +60,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         server = context.getString(R.string.wstcc);
 
-        iniciaHashMap();
-        materiasPorSemestre();
+        carregaListView();
     }
 
     @Override
@@ -111,7 +111,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         itemMateria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    controleMaterias.put(materia, itemMateria.isChecked());
+                controleMaterias.put(materia, itemMateria.isChecked());
             }
         });
 
@@ -147,7 +147,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
-    public void materiasPorSemestre() {
+    public void carregaListView() {
         List<String> mat1Semestre = new ArrayList<>();
         List<String> mat2Semestre = new ArrayList<>();
         List<String> mat3Semestre = new ArrayList<>();
@@ -178,56 +178,20 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         listValues.put(semestres[5], mat6Semestre);
     }
 
-    public void iniciaHashMap(){
-        String todasMaterias = sharedPref.getString("jsonMaterias", "");
-        Type listType = new TypeToken<ArrayList<Materia>>() {
-        }.getType();
-        List<Materia> materiasJson = new Gson().fromJson(todasMaterias, listType);
-
-        for(Materia m : materiasJson)
-            controleMaterias.put(m.getMateria(),false);
-
-        for(Materia m : materiasUsuario)
-            controleMaterias.put(m.getMateria(),true);
-    }
-
-    public void volleyAtualizarMateriasUsuario() {
-        final List<Materia> materias = new ArrayList<>();
-        for(Map.Entry<String, Boolean> entry : controleMaterias.entrySet()) {
-            String key = entry.getKey();
-            Boolean value = entry.getValue();
-
-            String todasMaterias = sharedPref.getString("jsonMaterias", "");
-            Type listType = new TypeToken<ArrayList<Materia>>() {}.getType();
-            List<Materia> materiasJson = new Gson().fromJson(todasMaterias, listType);
-
-            if(value){
-                Materia materia = new Materia();
-                materia.setMateria(key);
-                int id;
-                for(Materia m : materiasJson){
-                    if(m.getMateria()==key)
-                        id = m.getIdMateria();
-                }
-                materias.add(materia);
-            }
-
-        }
-
+    public void volleyAtualizarMateriasUsuario(final Context context) {
         RequestQueue queue = Volley.newRequestQueue(context);
-
         String url = server + "materias/atualizarMaterias";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("ON RESPONSE:",response);
+                        Toast.makeText(context,"Lista Atualizada",Toast.LENGTH_LONG);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("ON ERROR:",error.toString());
+                Toast.makeText(context, "Problemas ao atualizar a lista", Toast.LENGTH_LONG);
             }
         }) {
             @Override
@@ -240,11 +204,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         queue.add(stringRequest);
     }
 
-    public void swap(List<Materia> materias, List<Materia> materiasUsuario){
+    public void swap(List<Materia> materiasUsuario) {
         this.materias.clear();
-        this.materias.addAll(materias);
-        this.materiasUsuario.clear();
-        this.materiasUsuario.addAll(materiasUsuario);
+        this.materias.addAll(materiasUsuario);
+
+        for (Materia m : materiasUsuario)
+            controleMaterias.put(m.getMateria(),m.getMarcado());
+
+        carregaListView();
+
         this.notifyDataSetChanged();
     }
 

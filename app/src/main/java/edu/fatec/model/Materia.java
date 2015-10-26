@@ -10,6 +10,7 @@ public class Materia {
     private int idMateria;
     private String materia;
     private int semestre;
+    private Boolean marcado;
 
     public int getIdMateria() {
         return idMateria;
@@ -69,5 +70,13 @@ public class Materia {
         if (semestre != other.semestre)
             return false;
         return true;
+    }
+
+    public Boolean getMarcado() {
+        return marcado;
+    }
+
+    public void setMarcado(Boolean marcado) {
+        this.marcado = marcado;
     }
 }
