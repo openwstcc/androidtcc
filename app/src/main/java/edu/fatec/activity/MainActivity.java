@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -240,7 +241,6 @@ public class MainActivity extends Activity {
         infoDuvida.setBackgroundColor(Color.parseColor("#FFA726"));
         textInfoDuvida.setText("Atualizando informações de dúvidas");
         infoDuvida.setVisibility(View.VISIBLE);
-        progressBar.setVisibility(View.VISIBLE);
 
         String server = getString(R.string.wstcc);
         String url = server + "duvidas/buscarDuvidas";
@@ -260,12 +260,13 @@ public class MainActivity extends Activity {
                         sharedPrefEdit.putString("jsonDuvidas", response);
                         sharedPrefEdit.commit();
                         infoDuvida.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
                         swipeRefreshDuvida.setRefreshing(false);
+                        Toast.makeText(getApplicationContext(), "Lista de dúvidas atualizadas.", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Toast.makeText(getApplicationContext(), "Erro ao se conectar com o WebService. Tente Novamente.", Toast.LENGTH_SHORT).show();
                 infoDuvida.setBackgroundColor(Color.parseColor("#ff4444"));
                 textInfoDuvida.setText("Não foi possível se conectar com o servidor");
                 progressBar.setVisibility(View.GONE);

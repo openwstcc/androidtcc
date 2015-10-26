@@ -130,7 +130,7 @@ public class RespostaActivity extends Activity {
 
     public void findViewsByID() {
         resposta = (EditText) findViewById(R.id.resposta);
-        inserirResposta = (FloatingActionButton) findViewById(R.id.novaResposta);
+        inserirResposta = (FloatingActionButton) findViewById(R.id.inserirResposta);
         backgroundDuvida = (LinearLayout) findViewById(R.id.backgroundDuvidaResposta);
         recyclerView = (RecyclerView) findViewById(R.id.cardList);
         conteudoDuvida = (TextView) findViewById(R.id.textConteudoDuvida);

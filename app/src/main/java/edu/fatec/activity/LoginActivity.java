@@ -22,12 +22,20 @@ import com.android.volley.toolbox.Volley;
 import com.example.gqueiroz.androidtcc.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.fatec.model.Materia;
 import edu.fatec.model.Usuario;
+import edu.fatec.util.ExpandableListAdapter;
 
 public class LoginActivity extends Activity {
 
@@ -44,6 +52,7 @@ public class LoginActivity extends Activity {
     private String server;
 
     private SharedPreferences sharedPref;
+    private SharedPreferences.Editor SharedPrefEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +62,13 @@ public class LoginActivity extends Activity {
         findViewsByID();
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPrefEdit = sharedPref.edit();
+
+        String todasMaterias = sharedPref.getString("jsonMaterias","");
+        if(todasMaterias.length()<1){
+            volleyBuscarMaterias();
+        }
+
         String sharedUsuario = sharedPref.getString("jsonUsuario", "");
         if (sharedUsuario.length() > 1) {
             Intent i = new Intent(LoginActivity.this, MainActivity.class);
@@ -72,43 +88,7 @@ public class LoginActivity extends Activity {
         login.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                infoLogin.setVisibility(View.VISIBLE);
-                progressBarLogin.setVisibility(View.VISIBLE);
-
-                RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-
-                String url = server + "usuarios/loginUsuario";
-
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Log.i("RESPONSE", response);
-                                Usuario usuario = new Gson().fromJson(response, Usuario.class);
-                                if (usuario.getNome()!=null) {
-                                    persisteSharedPref(response);
-                                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(i);
-                                } else {
-                                    infoLogin.setBackgroundColor(Color.parseColor("#ff4444"));
-                                    textInfoLogin.setText("Usuário e senha incorretos");
-                                    progressBarLogin.setVisibility(View.GONE);
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        infoLogin.setBackgroundColor(Color.parseColor("#ff4444"));
-                        textInfoLogin.setText("Não foi possível realizar o login, tente novamente");
-                        progressBarLogin.setVisibility(View.GONE);
-                    }
-                }) {
-                    @Override
-                    public byte[] getBody() throws AuthFailureError {
-                        return jsonUsuario().getBytes();
-                    }
-                };
-                queue.add(stringRequest);
+                volleyLogin();
             }
         });
     }
@@ -136,6 +116,72 @@ public class LoginActivity extends Activity {
         SharedPreferences.Editor SharedPrefEdit = sharedPref.edit();
         SharedPrefEdit.putString("jsonUsuario", response);
         SharedPrefEdit.commit();
+    }
+
+    public void volleyBuscarMaterias(){
+        server = getString(R.string.wstcc);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        String url = server + "materias/buscarMaterias";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Type listType = new TypeToken<ArrayList<Materia>>(){}.getType();
+                        List<Materia> materiasJson = new Gson().fromJson(response, listType);
+                        Toast.makeText(getApplicationContext(), "Materias atualizadas.", Toast.LENGTH_SHORT).show();
+                        SharedPrefEdit.putString("jsonMaterias", response);
+                        SharedPrefEdit.commit();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Erro ao se conectar com o WebService. Tente Novamente.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(stringRequest);
+    }
+
+
+    public void volleyLogin(){
+        infoLogin.setVisibility(View.VISIBLE);
+        progressBarLogin.setVisibility(View.VISIBLE);
+
+        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+
+        String url = server + "usuarios/loginUsuario";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("RESPONSE", response);
+                        Usuario usuario = new Gson().fromJson(response, Usuario.class);
+                        if (usuario.getNome()!=null) {
+                            persisteSharedPref(response);
+                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(i);
+                        } else {
+                            infoLogin.setBackgroundColor(Color.parseColor("#ff4444"));
+                            textInfoLogin.setText("Usuário e senha incorretos");
+                            progressBarLogin.setVisibility(View.GONE);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                infoLogin.setBackgroundColor(Color.parseColor("#ff4444"));
+                textInfoLogin.setText("Não foi possível realizar o login, tente novamente");
+                progressBarLogin.setVisibility(View.GONE);
+            }
+        }) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return jsonUsuario().getBytes();
+            }
+        };
+        queue.add(stringRequest);
     }
 
 }
