@@ -8,6 +8,7 @@ package edu.fatec.model;
  */
 public class Materia {
     private int idMateria;
+    private int idUsuario;
     private String materia;
     private int semestre;
     private Boolean marcado;
@@ -38,7 +39,7 @@ public class Materia {
 
     @Override
     public String toString() {
-        return "Materia [idMateria=" + idMateria + ", materia=" + materia + ", semestre=" + semestre + "]";
+        return "Materia [idMateria=" + idMateria + ", materia=" + materia + ", semestre=" + semestre + ", idUsuario=" + idUsuario + ", marcado=" + marcado +"]";
     }
 
     @Override
@@ -78,5 +79,13 @@ public class Materia {
 
     public void setMarcado(Boolean marcado) {
         this.marcado = marcado;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 }

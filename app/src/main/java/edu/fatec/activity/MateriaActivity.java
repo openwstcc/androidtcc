@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -42,7 +41,6 @@ public class MateriaActivity extends Activity {
     private SharedPreferences.Editor SharedPrefEdit;
 
     private List<Materia> materiasJson = new ArrayList<>();
-    private List<Materia> materiasUsuario = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +54,7 @@ public class MateriaActivity extends Activity {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPrefEdit = sharedPref.edit();
 
-        listAdapter = new ExpandableListAdapter(MateriaActivity.this, materiasJson, materiasUsuario);
+        listAdapter = new ExpandableListAdapter(MateriaActivity.this, materiasJson);
         expListView.setAdapter(listAdapter);
 
         volleyBuscarMateriasUsuario();
@@ -80,11 +78,8 @@ public class MateriaActivity extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        String todasMaterias = sharedPref.getString("jsonMaterias", "");
                         Type listType = new TypeToken<ArrayList<Materia>>(){}.getType();
-
-                        materiasUsuario.clear();
-                        materiasUsuario = new Gson().fromJson(response, listType);
+                        List<Materia> materiasUsuario = new Gson().fromJson(response, listType);
 
                         listAdapter.swap(materiasUsuario);
                         textInfoMateria.setText(response);

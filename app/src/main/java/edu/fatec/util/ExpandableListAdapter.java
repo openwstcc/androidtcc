@@ -43,17 +43,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private String server;
     private String[] semestres = {"1º Semestre", "2º Semestre", "3º Semestre", "4º Semestre", "5º Semestre", "6º Semestre"};
     private List<Materia> materias;
-    private List<Materia> materiasUsuario;
     private HashMap<String, List<String>> listValues = new HashMap<>();
     private HashMap<String, Boolean> controleMaterias = new HashMap<>();
 
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor SharedPrefEdit;
 
-    public ExpandableListAdapter(Context context, List<Materia> materias, List<Materia> materiasUsuario) {
+    public ExpandableListAdapter(Context context, List<Materia> materias) {
         this.context = context;
         this.materias = materias;
-        this.materiasUsuario = materiasUsuario;
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPrefEdit = sharedPref.edit();
@@ -182,22 +180,35 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         RequestQueue queue = Volley.newRequestQueue(context);
         String url = server + "materias/atualizarMaterias";
 
+        final List<Materia> materiasAtualizadas = new ArrayList<>();
+
+        for (Materia m : materias){
+            Materia novaMateria = new Materia();
+            novaMateria.setMateria(m.getMateria());
+            novaMateria.setIdMateria(m.getIdMateria());
+            novaMateria.setSemestre(m.getSemestre());
+            novaMateria.setMarcado(controleMaterias.get(m.getMateria()));
+            materiasAtualizadas.add(m);
+        }
+
+        Toast.makeText(context, "LISTA DE MATERIAS "+materiasAtualizadas.toString(), Toast.LENGTH_LONG).show();
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(context,"Lista Atualizada",Toast.LENGTH_LONG);
+                        Toast.makeText(context,"Lista Atualizada",Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Problemas ao atualizar a lista", Toast.LENGTH_LONG);
+                Toast.makeText(context, "Problemas ao atualizar a lista", Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
             public byte[] getBody() throws AuthFailureError {
                 Gson gson = new GsonBuilder().create();
-                String json = gson.toJson(materias);
+                String json = gson.toJson(materiasAtualizadas);
                 return json.getBytes();
             }
         };
