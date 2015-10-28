@@ -110,6 +110,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 controleMaterias.put(materia, itemMateria.isChecked());
+                return;
             }
         });
 
@@ -187,17 +188,16 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             novaMateria.setMateria(m.getMateria());
             novaMateria.setIdMateria(m.getIdMateria());
             novaMateria.setSemestre(m.getSemestre());
-            novaMateria.setMarcado(controleMaterias.get(m.getMateria()));
+            controleMaterias.entrySet().equals(m.getMateria());
+
             materiasAtualizadas.add(m);
         }
-
-        Toast.makeText(context, "LISTA DE MATERIAS "+materiasAtualizadas.toString(), Toast.LENGTH_LONG).show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(context,"Lista Atualizada",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"Materias Atualizadas: "+response,Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
             @Override
