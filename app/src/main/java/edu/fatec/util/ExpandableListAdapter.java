@@ -110,7 +110,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 controleMaterias.put(materia, itemMateria.isChecked());
-                return;
             }
         });
 
@@ -189,7 +188,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             novaMateria.setIdMateria(m.getIdMateria());
             novaMateria.setSemestre(m.getSemestre());
             controleMaterias.entrySet().equals(m.getMateria());
-
             materiasAtualizadas.add(m);
         }
 

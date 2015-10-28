@@ -3,6 +3,7 @@ package edu.fatec.activity;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -70,13 +71,7 @@ public class RespostaActivity extends Activity {
         getActionBar().setTitle(duvida.getTitulo());
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        swiperRefreshResposta.post(new Runnable() {
-            @Override
-            public void run() {
-                swiperRefreshResposta.setRefreshing(true);
-                volleyBuscarDuvidas();
-            }
-        });
+        showViewRefresh();
 
         swiperRefreshResposta.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -143,6 +138,15 @@ public class RespostaActivity extends Activity {
         swiperRefreshResposta = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshResposta);
     }
 
+    public void showViewRefresh(){
+        swiperRefreshResposta.post(new Runnable() {
+            @Override
+            public void run() {
+                swiperRefreshResposta.setRefreshing(true);
+                volleyBuscarDuvidas();
+            }
+        });
+    }
     public void volleyBuscarDuvidas() {
         String server = getString(R.string.wstcc);
         String url = server + "respostas/buscarRespostas";
@@ -199,16 +203,19 @@ public class RespostaActivity extends Activity {
         String server = getString(R.string.wstcc);
         String url = server + "respostas/adicionarResposta";
 
-        String resposta = new Gson().toJson(novaResposta());
-        Toast.makeText(getApplicationContext(),"JSON: "+resposta,Toast.LENGTH_LONG).show();
-
         RequestQueue queue = Volley.newRequestQueue(this);
+        Drawable loop = getResources().getDrawable(R.drawable.ic_loop_white_24dp);
+        inserirResposta.setImageDrawable(loop);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //On Response
+                        Toast.makeText(getApplicationContext(), "Resposta enviada com sucesso!", Toast.LENGTH_SHORT).show();
+                        resposta.setText("");
+                        Drawable send = getResources().getDrawable(R.drawable.ic_send_white_24dp);
+                        inserirResposta.setImageDrawable(send);
+                        showViewRefresh();
                     }
                 }, new Response.ErrorListener() {
             @Override

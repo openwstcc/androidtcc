@@ -101,9 +101,5 @@ public class MateriaActivity extends Activity {
         queue.add(stringRequest);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        listAdapter.volleyAtualizarMateriasUsuario(getApplicationContext());
-    }
+
 }
