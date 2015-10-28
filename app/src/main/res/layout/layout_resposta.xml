@@ -5,20 +5,48 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    card_view:cardCornerRadius="2dp"
-    android:elevation="5dp">
+    android:elevation="5dp"
+    card_view:cardCornerRadius="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:id="@+id/backgroundReposta"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#00ACC1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/infoResposta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Criador em Jan 00, 0000"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/backgroundReposta"
+            android:background="@android:color/darker_gray" />
+
         <TextView
             android:id="@+id/respostaConteudo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/backgroundReposta"
+            android:layout_marginBottom="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
             android:text="Conteudo da Resposta"
@@ -30,45 +58,34 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_below="@id/respostaConteudo"
-            android:background="@android:color/darker_gray"
-            android:id="@+id/view" />
+            android:background="@android:color/darker_gray" />
 
-        <TextView
-            android:id="@+id/infoResposta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Info Resposta"
-            android:textSize="15dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_below="@+id/respostaConteudo"
-            android:layout_alignParentLeft="true" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:layout_below="@id/respostaConteudo"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/curtirResposta"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".50"
+                android:textSize="13dp"
+                android:drawableLeft="@drawable/ic_star_border_black_24dp"
+                android:text="Curtir" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:textSize="15dp"
-            android:text="0"
-            android:id="@+id/qtdFavorita"
-            android:layout_alignTop="@+id/view"
-            android:layout_alignParentRight="true" />
-
-        <Button
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginRight="2dp"
-            style="?android:attr/borderlessButtonStyle"
-            android:id="@+id/respostaFavorita"
-            android:layout_below="@+id/respostaConteudo"
-            android:background="@drawable/ic_star_border_black_24dp"
-            android:layout_toLeftOf="@id/qtdFavorita"/>
-
+            <TextView
+                android:id="@+id/compartilharResposta"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".50"
+                android:textSize="13dp"
+                android:drawableLeft="@drawable/ic_share_black_24dp"
+                android:text="Compartilhar" />
+        </LinearLayout>
 
     </RelativeLayout>
 

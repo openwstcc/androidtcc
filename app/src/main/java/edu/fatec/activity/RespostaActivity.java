@@ -89,6 +89,7 @@ public class RespostaActivity extends Activity {
         respostaAdapter = new RespostaAdapter(respostas);
         recyclerView.setAdapter(respostaAdapter);
 
+        /**
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             int mLastFirstVisibleItem = 0;
 
@@ -109,7 +110,7 @@ public class RespostaActivity extends Activity {
 
                 this.mLastFirstVisibleItem = currentFirstVisibleItem;
             }
-        });
+        });*/
 
         inserirResposta.setOnClickListener(new View.OnClickListener() {
             @Override

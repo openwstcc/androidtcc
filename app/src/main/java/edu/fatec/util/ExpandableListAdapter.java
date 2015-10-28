@@ -184,18 +184,19 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         for (Materia m : materias){
             Materia novaMateria = new Materia();
-            novaMateria.setMateria(m.getMateria());
+            novaMateria.setIdUsuario(m.getIdUsuario());
             novaMateria.setIdMateria(m.getIdMateria());
+            novaMateria.setMateria(m.getMateria());
             novaMateria.setSemestre(m.getSemestre());
-            controleMaterias.entrySet().equals(m.getMateria());
-            materiasAtualizadas.add(m);
+            novaMateria.setMarcado(controleMaterias.get(m.getMateria()));
+            materiasAtualizadas.add(novaMateria);
         }
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(context,"Materias Atualizadas: "+response,Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"Materias Atualizadas",Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
             @Override

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
@@ -36,6 +37,7 @@ public class MateriaActivity extends Activity {
     private LinearLayout infoMateria;
     private TextView textInfoMateria;
     private ProgressBar progressBarMateria;
+    private FloatingActionButton atualizarMaterias;
 
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor SharedPrefEdit;
@@ -58,12 +60,20 @@ public class MateriaActivity extends Activity {
         expListView.setAdapter(listAdapter);
 
         volleyBuscarMateriasUsuario();
+
+        atualizarMaterias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listAdapter.volleyAtualizarMateriasUsuario(getApplicationContext());
+            }
+        });
     }
 
     public void findViewsById(){
         infoMateria = (LinearLayout) findViewById(R.id.infoMateria);
         textInfoMateria = (TextView) findViewById(R.id.textInfoMateria);
         progressBarMateria = (ProgressBar) findViewById(R.id.progressBarMateria);
+        atualizarMaterias = (FloatingActionButton) findViewById(R.id.atualizarMaterias);
     }
 
     public void volleyBuscarMateriasUsuario() {
@@ -101,5 +111,9 @@ public class MateriaActivity extends Activity {
         queue.add(stringRequest);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
 
+    }
 }
