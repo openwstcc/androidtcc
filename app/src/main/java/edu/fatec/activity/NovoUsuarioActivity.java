@@ -209,14 +209,14 @@ public class NovoUsuarioActivity extends Activity {
             return true;
     }
 
-    public final static boolean validaNome(View v) {
+    public static boolean validaNome(View v) {
         EditText nome = (EditText) v;
         if (TextUtils.isEmpty(nome.getText())) {
             nome.setError("Nome inválido");
             nome.setFocusable(true);
             return false;
-        } else if (nome.getText().length() < 5) {
-            nome.setError("Nome inválido. Tamanho mínimo de 5 caracteres.");
+        } else if (nome.getText().length() < 3) {
+            nome.setError("Nome inválido. Tamanho mínimo de 3 caracteres.");
             nome.setFocusable(true);
             return false;
         } else if (nome.getText().length() > 60) {
@@ -227,7 +227,7 @@ public class NovoUsuarioActivity extends Activity {
             return true;
     }
 
-    public final static boolean validaSobreNome(View v) {
+    public static boolean validaSobreNome(View v) {
         EditText sobreNome = (EditText) v;
         if (TextUtils.isEmpty(sobreNome.getText())) {
             sobreNome.setError("Sobrenome inválido");
@@ -245,7 +245,7 @@ public class NovoUsuarioActivity extends Activity {
             return true;
     }
 
-    public final static boolean validaTelefone(View view) {
+    public static boolean validaTelefone(View view) {
         EditText telefone = (EditText) view;
         if (TextUtils.isEmpty(telefone.getText())) {
             telefone.setError("Telefone inválido");
@@ -263,7 +263,7 @@ public class NovoUsuarioActivity extends Activity {
             return true;
     }
 
-    public final static boolean validaSenha(View view) {
+    public static boolean validaSenha(View view) {
         EditText senha = (EditText) view;
         if (TextUtils.isEmpty(senha.getText())) {
             senha.setError("Senha inválida");
@@ -281,7 +281,7 @@ public class NovoUsuarioActivity extends Activity {
             return true;
     }
 
-    public final static boolean validaConfirmaSenha(View view) {
+    public static boolean validaConfirmaSenha(View view) {
         EditText senha = (EditText) view;
         if (TextUtils.isEmpty(senha.getText())) {
             senha.setError("Senha inválida");
@@ -299,7 +299,7 @@ public class NovoUsuarioActivity extends Activity {
             return true;
     }
 
-    public final static boolean validaEmail(View view) {
+    public static boolean validaEmail(View view) {
         EditText email = (EditText) view;
         if (TextUtils.isEmpty(email.getText())) {
             email.setError("Email inválido");

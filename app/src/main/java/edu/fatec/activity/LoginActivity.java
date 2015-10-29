@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -88,6 +89,10 @@ public class LoginActivity extends Activity {
         login.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!validaEmail(email))
+                    return;
+                else if(!validaSenha(senha))
+                    return;
                 volleyLogin();
             }
         });
@@ -101,7 +106,6 @@ public class LoginActivity extends Activity {
         infoLogin = (LinearLayout) findViewById(R.id.infoLogin);
         textInfoLogin = (TextView) findViewById(R.id.textInfoLogin);
         progressBarLogin = (ProgressBar) findViewById(R.id.progressBarLogin);
-
     }
 
     private String jsonUsuario() {
@@ -182,6 +186,42 @@ public class LoginActivity extends Activity {
             }
         };
         queue.add(stringRequest);
+    }
+
+    public static boolean validaEmail(View view) {
+        EditText email = (EditText) view;
+        if (TextUtils.isEmpty(email.getText())) {
+            email.setError("Email inválido");
+            email.setFocusable(true);
+            return false;
+        } else if (email.getText().length() < 5) {
+            email.setError("Email inválido. Tamanho mínimo de 5 caracteres.");
+            email.setFocusable(true);
+            return false;
+        } else if (email.getText().length() > 60) {
+            email.setError("Email inválido. Tamanho máximo de 60 caracteres");
+            email.setFocusable(true);
+            return false;
+        } else
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches();
+    }
+
+    public static boolean validaSenha(View view) {
+        EditText senha = (EditText) view;
+        if (TextUtils.isEmpty(senha.getText())) {
+            senha.setError("Senha inválida");
+            senha.setFocusable(true);
+            return false;
+        } else if (senha.getText().length() < 5) {
+            senha.setError("Senha inválida. Tamanho mínimo de 5 caracteres.");
+            senha.setFocusable(true);
+            return false;
+        } else if (senha.getText().length() > 60) {
+            senha.setError("Senha inválida. Tamanho máximo de 60 caracteres");
+            senha.setFocusable(true);
+            return false;
+        } else
+            return true;
     }
 
 }

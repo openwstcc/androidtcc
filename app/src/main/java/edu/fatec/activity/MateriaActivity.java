@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
@@ -33,14 +32,11 @@ import edu.fatec.util.ExpandableListAdapter;
 
 public class MateriaActivity extends Activity {
     private ExpandableListAdapter listAdapter;
-    private ExpandableListView expListView;
     private LinearLayout infoMateria;
     private TextView textInfoMateria;
     private ProgressBar progressBarMateria;
-    private FloatingActionButton atualizarMaterias;
 
     private SharedPreferences sharedPref;
-    private SharedPreferences.Editor SharedPrefEdit;
 
     private List<Materia> materiasJson = new ArrayList<>();
 
@@ -51,32 +47,22 @@ public class MateriaActivity extends Activity {
 
         findViewsById();
 
-        expListView = (ExpandableListView) findViewById(R.id.listaMaterias);
-
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPrefEdit = sharedPref.edit();
-
+        ExpandableListView expListView = (ExpandableListView) findViewById(R.id.listaMaterias);
         listAdapter = new ExpandableListAdapter(MateriaActivity.this, materiasJson);
         expListView.setAdapter(listAdapter);
 
         volleyBuscarMateriasUsuario();
-
-        atualizarMaterias.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listAdapter.volleyAtualizarMateriasUsuario(getApplicationContext());
-            }
-        });
     }
 
     public void findViewsById(){
         infoMateria = (LinearLayout) findViewById(R.id.infoMateria);
         textInfoMateria = (TextView) findViewById(R.id.textInfoMateria);
         progressBarMateria = (ProgressBar) findViewById(R.id.progressBarMateria);
-        atualizarMaterias = (FloatingActionButton) findViewById(R.id.atualizarMaterias);
     }
 
     public void volleyBuscarMateriasUsuario() {
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
         final String sharedUsuario = sharedPref.getString("jsonUsuario", "");
 
         RequestQueue queue = Volley.newRequestQueue(MateriaActivity.this);
@@ -114,6 +100,6 @@ public class MateriaActivity extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
-
+        listAdapter.volleyAtualizarMateriasUsuario(getApplicationContext());
     }
 }
