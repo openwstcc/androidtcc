@@ -1,7 +1,7 @@
 # Protótipo de aplicativo Android para trabalho de conclusão de curso.
 * **Sobre**
 
-Protótipo de aplicativo Android, para trabalho de conclusão de curso, consumindo por enquanto um **WebService local** (https://github.com/gabrielqueiroz/wstcc).
+Protótipo de aplicativo **Android**, para trabalho de conclusão de curso, consumindo um **WebService** hospedado na Amazon e gerenciado pelo **OpenShift** (http://openwstcc-devbr.rhcloud.com/). Copia Local do servidor WebService presente em (https://github.com/gabrielqueiroz/wstcc).
 
 * **O que você pode encontrar neste projeto?**
 
