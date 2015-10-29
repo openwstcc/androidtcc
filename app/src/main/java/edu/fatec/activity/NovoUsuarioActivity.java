@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.support.v4.app.NavUtils;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -75,20 +76,20 @@ public class NovoUsuarioActivity extends Activity {
         });
 
         inserirUsuario.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  if(!validaCampos(novoUsuario()))
-                      return;
+                                              @Override
+                                              public void onClick(View v) {
+                                                  if (!validator())
+                                                      return;
 
-                  infoNovoUsuario.setVisibility(View.VISIBLE);
-                  progressBar.setVisibility(View.VISIBLE);
-                  textInfoNovoUsuario.setText("Seu usuário está sendo criado.");
-                  infoNovoUsuario.setBackgroundColor(Color.parseColor("#FFA726"));
-                  inserirUsuario.setEnabled(false);
+                                                  infoNovoUsuario.setVisibility(View.VISIBLE);
+                                                  progressBar.setVisibility(View.VISIBLE);
+                                                  textInfoNovoUsuario.setText("Seu usuário está sendo criado.");
+                                                  infoNovoUsuario.setBackgroundColor(Color.parseColor("#FFA726"));
+                                                  inserirUsuario.setEnabled(false);
 
-                  volleyRequest();
-              }
-          }
+                                                  volleyRequest();
+                                              }
+                                          }
         );
     }
 
@@ -120,7 +121,6 @@ public class NovoUsuarioActivity extends Activity {
         email = (EditText) findViewById(R.id.email);
         senha = (EditText) findViewById(R.id.senha);
         telefone = (EditText) findViewById(R.id.telefone);
-        telefone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         dataNasc = (EditText) findViewById(R.id.dataNasc);
         dataNasc.setInputType(InputType.TYPE_NULL);
         inserirUsuario = (Button) findViewById(R.id.inserirUsuario);
@@ -188,8 +188,134 @@ public class NovoUsuarioActivity extends Activity {
         queue.add(stringRequest);
     }
 
-    public boolean validaCampos(Usuario u){
-        return true;
+    /**
+     * Validação de Campos
+     */
+
+    public boolean validator() {
+        if (!validaNome(nome))
+            return false;
+        else if (!validaSobreNome(sobreNome))
+            return false;
+        else if (!validaTelefone(telefone))
+            return false;
+        else if (!validaSenha(senha))
+            return false;
+        else if (!validaConfirmaSenha(senha))
+            return false;
+        else if (!validaEmail(email))
+            return false;
+        else
+            return true;
     }
+
+    public final static boolean validaNome(View v) {
+        EditText nome = (EditText) v;
+        if (TextUtils.isEmpty(nome.getText())) {
+            nome.setError("Nome inválido");
+            nome.setFocusable(true);
+            return false;
+        } else if (nome.getText().length() < 5) {
+            nome.setError("Nome inválido. Tamanho mínimo de 5 caracteres.");
+            nome.setFocusable(true);
+            return false;
+        } else if (nome.getText().length() > 60) {
+            nome.setError("Nome inválido. Tamanho máximo de 60 caracteres");
+            nome.setFocusable(true);
+            return false;
+        } else
+            return true;
+    }
+
+    public final static boolean validaSobreNome(View v) {
+        EditText sobreNome = (EditText) v;
+        if (TextUtils.isEmpty(sobreNome.getText())) {
+            sobreNome.setError("Sobrenome inválido");
+            sobreNome.setFocusable(true);
+            return false;
+        } else if (sobreNome.getText().length() < 5) {
+            sobreNome.setError("Sobrenome inválido. Tamanho mínimo de 5 caracteres.");
+            sobreNome.setFocusable(true);
+            return false;
+        } else if (sobreNome.getText().length() > 60) {
+            sobreNome.setError("Sobrenome inválido. Tamanho máximo de 60 caracteres");
+            sobreNome.setFocusable(true);
+            return false;
+        } else
+            return true;
+    }
+
+    public final static boolean validaTelefone(View view) {
+        EditText telefone = (EditText) view;
+        if (TextUtils.isEmpty(telefone.getText())) {
+            telefone.setError("Telefone inválido");
+            telefone.setFocusable(true);
+            return false;
+        } else if (telefone.getText().length() < 5) {
+            telefone.setError("Telefone inválido. Verifique o numero digitado");
+            telefone.setFocusable(true);
+            return false;
+        } else if (telefone.getText().length() > 15) {
+            telefone.setError("Telefone inválido. Verifique o numero digitado");
+            telefone.setFocusable(true);
+            return false;
+        } else
+            return true;
+    }
+
+    public final static boolean validaSenha(View view) {
+        EditText senha = (EditText) view;
+        if (TextUtils.isEmpty(senha.getText())) {
+            senha.setError("Senha inválida");
+            senha.setFocusable(true);
+            return false;
+        } else if (senha.getText().length() < 5) {
+            senha.setError("Senha inválida. Tamanho mínimo de 5 caracteres.");
+            senha.setFocusable(true);
+            return false;
+        } else if (senha.getText().length() > 60) {
+            senha.setError("Senha inválida. Tamanho máximo de 60 caracteres");
+            senha.setFocusable(true);
+            return false;
+        } else
+            return true;
+    }
+
+    public final static boolean validaConfirmaSenha(View view) {
+        EditText senha = (EditText) view;
+        if (TextUtils.isEmpty(senha.getText())) {
+            senha.setError("Senha inválida");
+            senha.setFocusable(true);
+            return false;
+        } else if (senha.getText().length() < 5) {
+            senha.setError("Senha inválida. Tamanho mínimo de 5 caracteres.");
+            senha.setFocusable(true);
+            return false;
+        } else if (senha.getText().length() > 60) {
+            senha.setError("Senha inválida. Tamanho mínimo de 6 caracteres");
+            senha.setFocusable(true);
+            return false;
+        } else
+            return true;
+    }
+
+    public final static boolean validaEmail(View view) {
+        EditText email = (EditText) view;
+        if (TextUtils.isEmpty(email.getText())) {
+            email.setError("Email inválido");
+            email.setFocusable(true);
+            return false;
+        } else if (email.getText().length() < 5) {
+            email.setError("Email inválido. Tamanho mínimo de 5 caracteres.");
+            email.setFocusable(true);
+            return false;
+        } else if (email.getText().length() > 60) {
+            email.setError("Email inválido. Tamanho máximo de 60 caracteres");
+            email.setFocusable(true);
+            return false;
+        } else
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches();
+    }
+
 
 }

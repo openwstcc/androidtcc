@@ -13,7 +13,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -53,7 +52,6 @@ public class MainActivity extends Activity {
     private TextView infoNomeUsuario;
     private TextView infoEmailUsuario;
     private ListView drawerList;
-    private ArrayAdapter<String> arrayAdapter;
     private RecyclerView recycleView;
     private LinearLayoutManager linearLayoutManager;
     private SwipeRefreshLayout swipeRefreshDuvida;
@@ -70,7 +68,6 @@ public class MainActivity extends Activity {
     private RequestQueue queue;
 
     private List<Duvida> jsonDuvidas;
-    private Usuario usuario;
 
 
     @Override
@@ -150,12 +147,12 @@ public class MainActivity extends Activity {
     private void addDrawerItems() {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String sharedUsuario = sharedPref.getString("jsonUsuario", "");
-        usuario = new Gson().fromJson(sharedUsuario, Usuario.class);
+        Usuario usuario = new Gson().fromJson(sharedUsuario, Usuario.class);
         infoNomeUsuario.setText(usuario.getNome() + " " + usuario.getSobrenome());
         infoEmailUsuario.setText(usuario.getEmail());
 
         String[] osArray = {"Meu Perfil", "Minhas Matérias", "Configurações"};
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         drawerList.setAdapter(arrayAdapter);
 
 
@@ -273,8 +270,13 @@ public class MainActivity extends Activity {
                 swipeRefreshDuvida.setRefreshing(false);
             }
         });
-
         queue.add(stringRequest);
         stringRequest.setTag(TAG);
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
 }
