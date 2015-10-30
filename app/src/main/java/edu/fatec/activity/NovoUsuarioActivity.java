@@ -120,8 +120,8 @@ public class NovoUsuarioActivity extends Activity {
         nome = (EditText) findViewById(R.id.nome);
         sobreNome = (EditText) findViewById(R.id.sobreNome);
         email = (EditText) findViewById(R.id.email);
-        senhaConfirma = (EditText) findViewById(R.id.senhaConfirma);
         senha = (EditText) findViewById(R.id.senha);
+        senhaConfirma = (EditText) findViewById(R.id.senhaConfirma);
         telefone = (EditText) findViewById(R.id.telefone);
         dataNasc = (EditText) findViewById(R.id.dataNasc);
         dataNasc.setInputType(InputType.TYPE_NULL);
@@ -201,11 +201,13 @@ public class NovoUsuarioActivity extends Activity {
             return false;
         else if (!validaTelefone(telefone))
             return false;
+        else if (!validaDataNasc(dataNasc))
+            return false;
+        else if (!validaEmail(email))
+            return false;
         else if (!validaSenha(senha))
             return false;
         else if (!validaConfirmaSenha(senha,senhaConfirma))
-            return false;
-        else if (!validaEmail(email))
             return false;
         else
             return true;
@@ -214,7 +216,7 @@ public class NovoUsuarioActivity extends Activity {
     public static boolean validaNome(View v) {
         EditText nome = (EditText) v;
         if (TextUtils.isEmpty(nome.getText())) {
-            nome.setError("Nome inválido");
+            nome.setError("Insira um nome");
             nome.setFocusable(true);
             return false;
         } else if (nome.getText().length() < 3) {
@@ -232,7 +234,7 @@ public class NovoUsuarioActivity extends Activity {
     public static boolean validaSobreNome(View v) {
         EditText sobreNome = (EditText) v;
         if (TextUtils.isEmpty(sobreNome.getText())) {
-            sobreNome.setError("Sobrenome inválido");
+            sobreNome.setError("Insira um sobrenome");
             sobreNome.setFocusable(true);
             return false;
         } else if (sobreNome.getText().length() < 5) {
@@ -250,7 +252,7 @@ public class NovoUsuarioActivity extends Activity {
     public static boolean validaTelefone(View view) {
         EditText telefone = (EditText) view;
         if (TextUtils.isEmpty(telefone.getText())) {
-            telefone.setError("Telefone inválido");
+            telefone.setError("Insira um telefone");
             telefone.setFocusable(true);
             return false;
         } else if (telefone.getText().length() < 5) {
@@ -265,10 +267,38 @@ public class NovoUsuarioActivity extends Activity {
             return true;
     }
 
+    public boolean validaDataNasc(View view){
+        EditText dataNasc = (EditText) view;
+        if(TextUtils.isEmpty(dataNasc.getText())){
+            dataNasc.setError("Insira uma data de nascimento");
+            dataNasc.setFocusable(true);
+            return false;
+        } else
+            return true;
+    }
+
+    public static boolean validaEmail(View view) {
+        EditText email = (EditText) view;
+        if (TextUtils.isEmpty(email.getText())) {
+            email.setError("Insira um email");
+            email.setFocusable(true);
+            return false;
+        } else if (email.getText().length() < 5) {
+            email.setError("Email inválido. Tamanho mínimo de 5 caracteres.");
+            email.setFocusable(true);
+            return false;
+        } else if (email.getText().length() > 60) {
+            email.setError("Email inválido. Tamanho máximo de 60 caracteres");
+            email.setFocusable(true);
+            return false;
+        } else
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches();
+    }
+
     public static boolean validaSenha(View view) {
         EditText senha = (EditText) view;
         if (TextUtils.isEmpty(senha.getText())) {
-            senha.setError("Senha inválida");
+            senha.setError("Insira uma senha");
             senha.setFocusable(true);
             return false;
         } else if (senha.getText().length() < 5) {
@@ -287,33 +317,15 @@ public class NovoUsuarioActivity extends Activity {
         EditText senha = (EditText) viewSenha;
         EditText senhaConfirma = (EditText) viewSenhaConfirma;
         if (TextUtils.isEmpty(senhaConfirma.getText())) {
-            senha.setError("Senha inválida");
-            senha.setFocusable(true);
+            senhaConfirma.setError("Insira uma senha");
+            senhaConfirma.setFocusable(true);
             return false;
         } else if (!senha.getText().equals(senhaConfirma)) {
-            senha.setError("Senha não são iguais");
+            senhaConfirma.setError("Senha não são iguais");
             senha.setFocusable(true);
             return false;
         } else
             return true;
-    }
-
-    public static boolean validaEmail(View view) {
-        EditText email = (EditText) view;
-        if (TextUtils.isEmpty(email.getText())) {
-            email.setError("Email inválido");
-            email.setFocusable(true);
-            return false;
-        } else if (email.getText().length() < 5) {
-            email.setError("Email inválido. Tamanho mínimo de 5 caracteres.");
-            email.setFocusable(true);
-            return false;
-        } else if (email.getText().length() > 60) {
-            email.setError("Email inválido. Tamanho máximo de 60 caracteres");
-            email.setFocusable(true);
-            return false;
-        } else
-            return android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches();
     }
 
 }
