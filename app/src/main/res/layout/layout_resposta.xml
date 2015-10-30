@@ -16,7 +16,8 @@
             android:id="@+id/backgroundReposta"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#00ACC1"
+            android:background="@color/colorPrimary"
+            android:layout_margin="5dp"
             android:orientation="vertical">
 
             <TextView
@@ -32,12 +33,6 @@
                 android:textColor="@color/textColorPrimary"
                 android:textSize="15dp" />
         </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/backgroundReposta"
-            android:background="@android:color/darker_gray" />
 
         <TextView
             android:id="@+id/respostaConteudo"
