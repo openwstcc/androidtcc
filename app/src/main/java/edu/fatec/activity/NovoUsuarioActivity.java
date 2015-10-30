@@ -47,6 +47,7 @@ public class NovoUsuarioActivity extends Activity {
     private EditText dataNasc;
     private EditText email;
     private EditText senha;
+    private EditText senhaConfirma;
     private ProgressBar progressBar;
     private LinearLayout infoNovoUsuario;
     private TextView textInfoNovoUsuario;
@@ -119,6 +120,7 @@ public class NovoUsuarioActivity extends Activity {
         nome = (EditText) findViewById(R.id.nome);
         sobreNome = (EditText) findViewById(R.id.sobreNome);
         email = (EditText) findViewById(R.id.email);
+        senhaConfirma = (EditText) findViewById(R.id.senhaConfirma);
         senha = (EditText) findViewById(R.id.senha);
         telefone = (EditText) findViewById(R.id.telefone);
         dataNasc = (EditText) findViewById(R.id.dataNasc);
@@ -201,7 +203,7 @@ public class NovoUsuarioActivity extends Activity {
             return false;
         else if (!validaSenha(senha))
             return false;
-        else if (!validaConfirmaSenha(senha))
+        else if (!validaConfirmaSenha(senha,senhaConfirma))
             return false;
         else if (!validaEmail(email))
             return false;
@@ -281,18 +283,15 @@ public class NovoUsuarioActivity extends Activity {
             return true;
     }
 
-    public static boolean validaConfirmaSenha(View view) {
-        EditText senha = (EditText) view;
-        if (TextUtils.isEmpty(senha.getText())) {
+    public static boolean validaConfirmaSenha(View viewSenha, View viewSenhaConfirma) {
+        EditText senha = (EditText) viewSenha;
+        EditText senhaConfirma = (EditText) viewSenhaConfirma;
+        if (TextUtils.isEmpty(senhaConfirma.getText())) {
             senha.setError("Senha inválida");
             senha.setFocusable(true);
             return false;
-        } else if (senha.getText().length() < 5) {
-            senha.setError("Senha inválida. Tamanho mínimo de 5 caracteres.");
-            senha.setFocusable(true);
-            return false;
-        } else if (senha.getText().length() > 60) {
-            senha.setError("Senha inválida. Tamanho mínimo de 6 caracteres");
+        } else if (!senha.getText().equals(senhaConfirma)) {
+            senha.setError("Senha não são iguais");
             senha.setFocusable(true);
             return false;
         } else
@@ -316,6 +315,5 @@ public class NovoUsuarioActivity extends Activity {
         } else
             return android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches();
     }
-
 
 }
