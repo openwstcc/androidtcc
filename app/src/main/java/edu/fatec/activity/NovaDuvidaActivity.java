@@ -69,7 +69,6 @@ public class NovaDuvidaActivity extends Activity {
         inserirNovaDuvida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 volleyNovaDuvida();
             }
         });
@@ -82,7 +81,7 @@ public class NovaDuvidaActivity extends Activity {
         tagsNovaDuvida = (EditText) findViewById(R.id.tagsNovaDuvida);
         inserirNovaDuvida = (FloatingActionButton) findViewById(R.id.inserirNovaDuvida);
         infoNovaDuvida = (LinearLayout) findViewById(R.id.backgroundNovaDuvida);
-        textInfoNovaDuvida = (TextView) findViewById(R.id.textInfoDuvida);
+        textInfoNovaDuvida = (TextView) findViewById(R.id.textInfoNovaDuvida);
         progressBarNovaDuvida = (ProgressBar) findViewById(R.id.progressBarDuvida);
     }
 

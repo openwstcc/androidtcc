@@ -60,7 +60,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:background="@android:color/transparent"
-                android:hint="Titúlo da Dúvida" />
+                android:hint="Titúlo da Dúvida"/>
 
         </android.support.v7.widget.CardView>
 
@@ -80,7 +80,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:background="@android:color/transparent"
-                android:hint="Conteúdo da Dúvida" />
+                android:hint="Conteúdo da Dúvida"/>
 
         </android.support.v7.widget.CardView>
 

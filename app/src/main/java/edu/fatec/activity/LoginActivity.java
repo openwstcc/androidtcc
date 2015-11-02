@@ -150,6 +150,8 @@ public class LoginActivity extends Activity {
 
     public void volleyLogin(){
         infoLogin.setVisibility(View.VISIBLE);
+        infoLogin.setBackgroundColor(Color.parseColor("#FFA726"));
+        textInfoLogin.setText("Realizando login");
         progressBarLogin.setVisibility(View.VISIBLE);
 
         RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);

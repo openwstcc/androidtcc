@@ -117,6 +117,7 @@ public class MainActivity extends Activity {
             }
         });
 
+        /**
         recycleView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             int mLastFirstVisibleItem = 0;
 
@@ -138,6 +139,7 @@ public class MainActivity extends Activity {
                 this.mLastFirstVisibleItem = currentFirstVisibleItem;
             }
         });
+        */
 
         swipeRefreshDuvida.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -261,8 +263,6 @@ public class MainActivity extends Activity {
                         sharedPrefEdit.putString("jsonDuvidas", response);
                         duvidaAdapter.swap(jsonDuvidas);
                         sharedPrefEdit.commit();
-                        infoDuvida.setBackgroundColor(Color.parseColor("#00E676"));
-                        textInfoDuvida.setText("Lista de dúvidas atualizadas");
                         infoDuvida.setVisibility(View.GONE);
                         textInfoDuvida.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
