@@ -1,7 +1,9 @@
 package edu.fatec.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -67,8 +69,8 @@ public class NovaDuvidaActivity extends Activity {
         inserirNovaDuvida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                infoNovaDuvida.setVisibility(View.VISIBLE);
-                Log.i("Duvida",new Gson().toJson(novaDuvida()));
+
+                volleyNovaDuvida();
             }
         });
     }
@@ -132,6 +134,11 @@ public class NovaDuvidaActivity extends Activity {
     }
 
     public void volleyNovaDuvida() {
+        infoNovaDuvida.setVisibility(View.VISIBLE);
+        infoNovaDuvida.setBackgroundColor(Color.parseColor("#FFA726"));
+        textInfoNovaDuvida.setText("Criando sua duvida");
+        progressBarNovaDuvida.setVisibility(View.VISIBLE);
+
         String server = getString(R.string.wstcc);
         String url = server + "duvidas/adicionarDuvida";
 
@@ -143,12 +150,16 @@ public class NovaDuvidaActivity extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(getApplicationContext(), "Duvida enviada com sucesso!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Duvida enviada com sucesso", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(NovaDuvidaActivity.this, MainActivity.class);
+                        startActivity(i);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //On error
+                infoNovaDuvida.setBackgroundColor(Color.parseColor("#ff4444"));
+                textInfoNovaDuvida.setText("Erro ao inserir nova Duvida");
+                progressBarNovaDuvida.setVisibility(View.GONE);
             }
         }) {
             @Override
