@@ -25,6 +25,8 @@ import com.example.gqueiroz.androidtcc.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,6 @@ import edu.fatec.model.Usuario;
 public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.RespostaViewHolder> {
 
     private List<JsonResposta> RespostaList;
-
 
     private SharedPreferences sharedPref;
 
@@ -54,6 +55,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         final JsonResposta r = RespostaList.get(position);
         respostaViewHolder.RespostaConteudo.setText(r.getResposta());
         respostaViewHolder.infoResposta.setText(r.getCriador() + " em " + r.getDataCriacao());
+        respostaViewHolder.textRank.setText(String.valueOf(r.getRank()));
 
         respostaViewHolder.compartilharResposta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +92,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         protected TextView infoResposta;
         protected TextView curtirResposta;
         protected TextView compartilharResposta;
+        protected TextView textRank;
 
         public RespostaViewHolder(View v) {
             super(v);
@@ -97,6 +100,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
             infoResposta = (TextView) v.findViewById(R.id.infoResposta);
             curtirResposta = (TextView) v.findViewById(R.id.curtirResposta);
             compartilharResposta = (TextView) v.findViewById(R.id.compartilharResposta);
+            textRank = (TextView) v.findViewById(R.id.textRank);
         }
     }
 
@@ -129,7 +133,6 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                     @Override
                     public void onResponse(String response) {
                         //Falta IMPLEMENTAR OS EVENTOS APOS O LIKE
-
                     }
                 }, new Response.ErrorListener() {
             @Override
