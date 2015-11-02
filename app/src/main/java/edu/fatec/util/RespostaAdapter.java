@@ -50,7 +50,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
     }
 
     @Override
-    public void onBindViewHolder(final RespostaViewHolder respostaViewHolder, int position) {
+    public void onBindViewHolder( RespostaViewHolder respostaViewHolder, int position) {
         final JsonResposta r = RespostaList.get(position);
         respostaViewHolder.RespostaConteudo.setText(r.getResposta());
         respostaViewHolder.infoResposta.setText(r.getCriador() + " em " + r.getDataCriacao());
