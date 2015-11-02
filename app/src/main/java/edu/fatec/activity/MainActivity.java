@@ -253,17 +253,6 @@ public class MainActivity extends Activity {
                     public void onResponse(String response) {
                         if (response == null)
                             return;
-                        progressBar.setVisibility(View.GONE);
-
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                infoDuvida.setVisibility(View.GONE);
-                                textInfoDuvida.setVisibility(View.GONE);
-                                duvidaAdapter.notifyDataSetChanged();
-                            }
-                        }, 20);
 
                         Type listType = new TypeToken<ArrayList<Duvida>>() {
                         }.getType();
@@ -272,9 +261,11 @@ public class MainActivity extends Activity {
                         sharedPrefEdit.putString("jsonDuvidas", response);
                         duvidaAdapter.swap(jsonDuvidas);
                         sharedPrefEdit.commit();
-
                         infoDuvida.setBackgroundColor(Color.parseColor("#00E676"));
                         textInfoDuvida.setText("Lista de dúvidas atualizadas");
+                        infoDuvida.setVisibility(View.GONE);
+                        textInfoDuvida.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
                         swipeRefreshDuvida.setRefreshing(false);
 
                     }
