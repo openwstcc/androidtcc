@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -29,6 +28,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -116,6 +116,7 @@ public class NovaDuvidaActivity extends Activity {
         for (Map.Entry<String, Integer> entry : spinnerValues.entrySet())
             materias.add(entry.getKey());
 
+        Collections.sort(materias);
         spinnerMaterias.setItems(materias);
     }
 
