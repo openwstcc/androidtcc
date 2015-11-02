@@ -10,6 +10,8 @@ public class JsonResposta {
     private int rank;
     private int idUsuario;
     private int idDuvida;
+    private int idUsuarioRank;
+
 
     public String getCriador() {
         return criador;
@@ -81,6 +83,14 @@ public class JsonResposta {
 
     public void setIdDuvida(int idDuvida) {
         this.idDuvida = idDuvida;
+    }
+
+    public int getIdUsuarioRank() {
+        return idUsuarioRank;
+    }
+
+    public void setIdUsuarioRank(int idUsuarioRank) {
+        this.idUsuarioRank = idUsuarioRank;
     }
 
 }
