@@ -7,12 +7,41 @@
     tools:context="edu.fatec.activity.NovaDuvidaActivity">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/backgroundNovaDuvida"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorWarning"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal|center_vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textInfoNovaDuvida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Criando sua duvida"
+            android:layout_margin="10dp"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="15sp" />
+
+        <ProgressBar
+            android:id="@+id/progressBarDuvida"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="10dp"
+            android:indeterminateTint="@color/textColorPrimary"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
+        android:orientation="vertical"
         android:padding="@dimen/activity_vertical_margin"
-        android:layout_alignParentTop="true">
+        android:layout_below="@id/backgroundNovaDuvida">
 
         <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -27,11 +56,11 @@
                 android:id="@+id/tituloNovaDuvida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_below="@+id/labelTituloDuvida"
                 android:layout_gravity="center"
+                android:layout_margin="10dp"
                 android:background="@android:color/transparent"
-                android:hint="Titúlo da Dúvida"
-                android:layout_below="@+id/labelTituloDuvida"/>
+                android:hint="Titúlo da Dúvida" />
 
         </android.support.v7.widget.CardView>
 
@@ -48,8 +77,8 @@
                 android:id="@+id/conteudoNovaDuvida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:layout_gravity="center"
+                android:layout_margin="10dp"
                 android:background="@android:color/transparent"
                 android:hint="Conteúdo da Dúvida" />
 
@@ -60,15 +89,24 @@
             android:id="@+id/backgroundMateriasDuvida"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"  android:minHeight="55dp"
+            android:layout_marginBottom="15dp"
             card_view:cardCornerRadius="2dp">
 
-            <Spinner
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinnerMaterias"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <edu.fatec.util.MultiSelectionSpinner
+                    android:id="@+id/spinnerMaterias"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"/>
+
+            </LinearLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -85,8 +123,8 @@
                 android:id="@+id/tagsNovaDuvida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:layout_gravity="center"
+                android:layout_margin="10dp"
                 android:background="@android:color/transparent"
                 android:hint="Tags da Dúvida" />
 

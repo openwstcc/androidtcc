@@ -1,5 +1,6 @@
 package edu.fatec.json;
 
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -75,4 +76,16 @@ public class JsonDuvida {
         this.idUsuario = idUsuario;
     }
 
+    @Override
+    public String toString() {
+        return "JsonDuvida{" +
+                "idDuvida=" + idDuvida +
+                ", titulo='" + titulo + '\'' +
+                ", conteudo='" + conteudo + '\'' +
+                ", dataCriacao=" + dataCriacao +
+                ", idUsuario=" + idUsuario +
+                ", materias=" + Arrays.toString(materias) +
+                ", tags=" + Arrays.toString(tags) +
+                '}';
+    }
 }
