@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -169,5 +170,19 @@ public class NovaDuvidaActivity extends Activity {
             }
         };
         queue.add(stringRequest);
+    }
+
+    public static boolean validaTitulo(View v) {
+        EditText titulo = (EditText) v;
+        if (TextUtils.isEmpty(titulo.getText())) {
+            titulo.setError("Insira um titulo para a dúvida");
+            titulo.setFocusable(true);
+            return false;
+        } else if (titulo.getText().length() < 5) {
+            titulo.setError("Dúvida inválida. Tamanho mínimo de 5 caracteres.");
+            titulo.setFocusable(true);
+            return false;
+        } else
+            return true;
     }
 }
