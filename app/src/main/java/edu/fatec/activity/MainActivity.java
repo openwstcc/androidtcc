@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
@@ -36,6 +37,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import edu.fatec.model.Duvida;
 import edu.fatec.model.Usuario;
@@ -68,7 +72,6 @@ public class MainActivity extends Activity {
     private RequestQueue queue;
 
     private List<Duvida> jsonDuvidas;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +117,7 @@ public class MainActivity extends Activity {
             }
         });
 
+        /**
         recycleView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             int mLastFirstVisibleItem = 0;
 
@@ -135,6 +139,7 @@ public class MainActivity extends Activity {
                 this.mLastFirstVisibleItem = currentFirstVisibleItem;
             }
         });
+        */
 
         swipeRefreshDuvida.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -248,18 +253,21 @@ public class MainActivity extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response==null)
+                        if (response == null)
                             return;
-                        Type listType = new TypeToken<ArrayList<Duvida>>() {}.getType();
+
+                        Type listType = new TypeToken<ArrayList<Duvida>>() {
+                        }.getType();
                         jsonDuvidas.clear();
                         jsonDuvidas = new Gson().fromJson(response, listType);
-                        duvidaAdapter.swap(jsonDuvidas);
                         sharedPrefEdit.putString("jsonDuvidas", response);
+                        duvidaAdapter.swap(jsonDuvidas);
                         sharedPrefEdit.commit();
                         infoDuvida.setVisibility(View.GONE);
+                        textInfoDuvida.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
                         swipeRefreshDuvida.setRefreshing(false);
-                        Toast.makeText(getApplicationContext(), "Lista de dúvidas atualizadas.", Toast.LENGTH_SHORT).show();
+
                     }
                 }, new Response.ErrorListener() {
             @Override

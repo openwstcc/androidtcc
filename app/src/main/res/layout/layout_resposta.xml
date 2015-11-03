@@ -30,6 +30,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:text="Criador em Jan 00, 0000"
+                android:gravity="center_vertical"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="15dp" />
         </LinearLayout>
@@ -62,13 +63,22 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/textRank"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1"
+                android:textSize="15dp"
+                android:text="0" />
+
+            <TextView
                 android:id="@+id/curtirResposta"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".50"
+                android:layout_weight=".3"
                 android:textSize="13dp"
-                android:drawableLeft="@drawable/ic_star_border_black_24dp"
+                android:drawableLeft="@drawable/ic_thumb_up_black_24dp"
                 android:text="Curtir" />
 
             <TextView
@@ -76,7 +86,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".50"
+                android:layout_weight=".4"
                 android:textSize="13dp"
                 android:drawableLeft="@drawable/ic_share_black_24dp"
                 android:text="Compartilhar" />
