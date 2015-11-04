@@ -70,6 +70,8 @@ public class NovaDuvidaActivity extends Activity {
         inserirNovaDuvida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!validator())
+                    return;
                 volleyNovaDuvida();
             }
         });
@@ -161,6 +163,8 @@ public class NovaDuvidaActivity extends Activity {
                 infoNovaDuvida.setBackgroundColor(Color.parseColor("#ff4444"));
                 textInfoNovaDuvida.setText("Erro ao inserir nova Duvida");
                 progressBarNovaDuvida.setVisibility(View.GONE);
+                Drawable send = getResources().getDrawable(R.drawable.ic_send_white_24dp);
+                inserirNovaDuvida.setImageDrawable(send);
             }
         }) {
             @Override
@@ -172,7 +176,16 @@ public class NovaDuvidaActivity extends Activity {
         queue.add(stringRequest);
     }
 
-    public static boolean validaTitulo(View v) {
+    public boolean validator() {
+        if (!validaTitulo(tituloNovaDuvida))
+            return false;
+        else if (!validaConteudo(conteudoNovaDuvida))
+            return false;
+        else
+            return true;
+    }
+
+    public boolean validaTitulo(View v) {
         EditText titulo = (EditText) v;
         if (TextUtils.isEmpty(titulo.getText())) {
             titulo.setError("Insira um titulo para a dúvida");
@@ -181,6 +194,20 @@ public class NovaDuvidaActivity extends Activity {
         } else if (titulo.getText().length() < 5) {
             titulo.setError("Dúvida inválida. Tamanho mínimo de 5 caracteres.");
             titulo.setFocusable(true);
+            return false;
+        } else
+            return true;
+    }
+
+    public boolean validaConteudo(View v) {
+        EditText conteudo = (EditText) v;
+        if (TextUtils.isEmpty(conteudo.getText())) {
+            conteudo.setError("Insira um conteúdo para a dúvida");
+            conteudo.setFocusable(true);
+            return false;
+        } else if (conteudo.getText().length() < 5) {
+            conteudo.setError("Dúvida inválida. Tamanho mínimo de 5 caracteres.");
+            conteudo.setFocusable(true);
             return false;
         } else
             return true;

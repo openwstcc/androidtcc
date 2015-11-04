@@ -126,7 +126,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:background="@android:color/transparent"
-                android:hint="Tags da Dúvida" />
+                android:hint="Palavras-chave para Dúvida" />
 
         </android.support.v7.widget.CardView>
     </LinearLayout>
@@ -141,8 +141,8 @@
         android:layout_marginRight="10dp"
         android:src="@drawable/ic_done_white_24dp"
         app:backgroundTint="@color/colorPrimaryDark"
+        app:rippleColor="@color/colorPrimary"
         app:borderWidth="0dp"
-        app:elevation="5dp"
-        app:rippleColor="@color/colorPrimary" />
+        app:elevation="5dp"/>
 
 </RelativeLayout>

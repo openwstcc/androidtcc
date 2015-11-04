@@ -213,7 +213,7 @@ public class NovoUsuarioActivity extends Activity {
             return true;
     }
 
-    public static boolean validaNome(View v) {
+    public boolean validaNome(View v) {
         EditText nome = (EditText) v;
         if (TextUtils.isEmpty(nome.getText())) {
             nome.setError("Insira um nome");
@@ -231,7 +231,7 @@ public class NovoUsuarioActivity extends Activity {
             return true;
     }
 
-    public static boolean validaSobreNome(View v) {
+    public boolean validaSobreNome(View v) {
         EditText sobreNome = (EditText) v;
         if (TextUtils.isEmpty(sobreNome.getText())) {
             sobreNome.setError("Insira um sobrenome");
@@ -249,7 +249,7 @@ public class NovoUsuarioActivity extends Activity {
             return true;
     }
 
-    public static boolean validaTelefone(View view) {
+    public boolean validaTelefone(View view) {
         EditText telefone = (EditText) view;
         if (TextUtils.isEmpty(telefone.getText())) {
             telefone.setError("Insira um telefone");
@@ -277,7 +277,7 @@ public class NovoUsuarioActivity extends Activity {
             return true;
     }
 
-    public static boolean validaEmail(View view) {
+    public boolean validaEmail(View view) {
         EditText email = (EditText) view;
         if (TextUtils.isEmpty(email.getText())) {
             email.setError("Insira um email");
@@ -295,7 +295,7 @@ public class NovoUsuarioActivity extends Activity {
             return android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches();
     }
 
-    public static boolean validaSenha(View view) {
+    public boolean validaSenha(View view) {
         EditText senha = (EditText) view;
         if (TextUtils.isEmpty(senha.getText())) {
             senha.setError("Insira uma senha");
@@ -313,7 +313,7 @@ public class NovoUsuarioActivity extends Activity {
             return true;
     }
 
-    public static boolean validaConfirmaSenha(View viewSenha, View viewSenhaConfirma) {
+    public boolean validaConfirmaSenha(View viewSenha, View viewSenhaConfirma) {
         EditText senha = (EditText) viewSenha;
         EditText senhaConfirma = (EditText) viewSenhaConfirma;
         if (TextUtils.isEmpty(senhaConfirma.getText())) {
