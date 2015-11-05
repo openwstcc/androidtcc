@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -43,6 +44,7 @@ public class MultiSelectionSpinner extends Spinner implements OnMultiChoiceClick
             mSelection[which] = isChecked;
             simple_adapter.clear();
             simple_adapter.add(buildSelectedItemString());
+
         } else {
             throw new IllegalArgumentException(
                     "Argument 'which' is out of bounds.");
@@ -58,6 +60,8 @@ public class MultiSelectionSpinner extends Spinner implements OnMultiChoiceClick
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 System.arraycopy(mSelection, 0, mSelectionAtStart, 0, mSelection.length);
+
+
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -94,9 +98,8 @@ public class MultiSelectionSpinner extends Spinner implements OnMultiChoiceClick
         mSelection = new boolean[_items.length];
         mSelectionAtStart = new boolean[_items.length];
         simple_adapter.clear();
-        simple_adapter.add(_items[0]);
+        simple_adapter.add("Materias Relacionadas");
         Arrays.fill(mSelection, false);
-        mSelection[0] = true;
     }
 
     public void setSelection(String[] selection) {
@@ -195,6 +198,10 @@ public class MultiSelectionSpinner extends Spinner implements OnMultiChoiceClick
                 sb.append(_items[i]);
             }
         }
+
+        if(!foundOne)
+            sb.append("Materias Relacionadas");
+
         return sb.toString();
     }
 
