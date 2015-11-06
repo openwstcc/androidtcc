@@ -19,6 +19,7 @@ public class MultiSelectionSpinner extends Spinner implements OnMultiChoiceClick
     String[] _items = null;
     boolean[] mSelection = null;
     boolean[] mSelectionAtStart = null;
+    boolean validator;
     String _itemsAtStart = null;
 
     ArrayAdapter<String> simple_adapter;
@@ -44,7 +45,6 @@ public class MultiSelectionSpinner extends Spinner implements OnMultiChoiceClick
             mSelection[which] = isChecked;
             simple_adapter.clear();
             simple_adapter.add(buildSelectedItemString());
-
         } else {
             throw new IllegalArgumentException(
                     "Argument 'which' is out of bounds.");
@@ -56,12 +56,17 @@ public class MultiSelectionSpinner extends Spinner implements OnMultiChoiceClick
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMultiChoiceItems(_items, mSelection, this);
         _itemsAtStart = getSelectedItemsAsString();
+        validator = true;
+
         builder.setPositiveButton("Escolher", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                System.arraycopy(mSelection, 0, mSelectionAtStart, 0, mSelection.length);
-
-
+                if(getSelectedItemsAsString().length()>3){
+                    validator = false;
+                    Toast.makeText(getContext(),"Selecione no máximo 3 matérias",Toast.LENGTH_LONG);
+                } else {
+                    System.arraycopy(mSelection, 0, mSelectionAtStart, 0, mSelection.length);
+                }
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -73,7 +78,7 @@ public class MultiSelectionSpinner extends Spinner implements OnMultiChoiceClick
             }
         });
         builder.show();
-        return true;
+        return validator;
     }
 
     @Override
