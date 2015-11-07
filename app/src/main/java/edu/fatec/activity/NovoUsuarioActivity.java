@@ -320,7 +320,7 @@ public class NovoUsuarioActivity extends Activity {
             senhaConfirma.setError("Insira uma senha");
             senhaConfirma.setFocusable(true);
             return false;
-        } else if (!senha.getText().equals(senhaConfirma.getText())) {
+        } else if (!senha.getText().toString().equals(senhaConfirma.getText().toString())) {
             senhaConfirma.setError("Senha não são iguais");
             senha.setFocusable(true);
             return false;
