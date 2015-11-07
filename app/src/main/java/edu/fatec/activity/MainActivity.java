@@ -57,7 +57,6 @@ public class MainActivity extends Activity {
     private TextView infoEmailUsuario;
     private ListView drawerList;
     private RecyclerView recycleView;
-    private LinearLayoutManager linearLayoutManager;
     private SwipeRefreshLayout swipeRefreshDuvida;
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -71,6 +70,7 @@ public class MainActivity extends Activity {
     public static final String TAG = "duvidas";
     private RequestQueue queue;
 
+    private String actualRest;
     private List<Duvida> jsonDuvidas;
 
     @Override
@@ -89,10 +89,11 @@ public class MainActivity extends Activity {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedPrefEdit = sharedPref.edit();
 
-        volleyRequest();
+        actualRest = "duvidas/buscarDuvidas";
+        volleyRequest(actualRest);
 
         recycleView.setHasFixedSize(true);
-        linearLayoutManager = new LinearLayoutManager(MainActivity.this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycleView.setLayoutManager(linearLayoutManager);
 
@@ -118,33 +119,31 @@ public class MainActivity extends Activity {
         });
 
         /**
-        recycleView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            int mLastFirstVisibleItem = 0;
+         recycleView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+         int mLastFirstVisibleItem = 0;
 
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            }
+         @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+         }
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                final int currentFirstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
+         @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+         super.onScrolled(recyclerView, dx, dy);
+         final int currentFirstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
 
-                if (currentFirstVisibleItem > this.mLastFirstVisibleItem) {
-                    MainActivity.this.getActionBar().hide();
-                } else if (currentFirstVisibleItem < this.mLastFirstVisibleItem) {
-                    MainActivity.this.getActionBar().show();
-                }
+         if (currentFirstVisibleItem > this.mLastFirstVisibleItem) {
+         MainActivity.this.getActionBar().hide();
+         } else if (currentFirstVisibleItem < this.mLastFirstVisibleItem) {
+         MainActivity.this.getActionBar().show();
+         }
 
-                this.mLastFirstVisibleItem = currentFirstVisibleItem;
-            }
-        });
-        */
+         this.mLastFirstVisibleItem = currentFirstVisibleItem;
+         }
+         });
+         */
 
         swipeRefreshDuvida.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                volleyRequest();
+                volleyRequest(actualRest);
             }
         });
     }
@@ -156,7 +155,7 @@ public class MainActivity extends Activity {
         infoNomeUsuario.setText(usuario.getNome() + " " + usuario.getSobrenome());
         infoEmailUsuario.setText(usuario.getEmail());
 
-        String[] osArray = {"Meu Perfil", "Minhas Matérias", "Configurações"};
+        String[] osArray = {"Meu Perfil", "Minhas Matérias", "Todas as Dúvidas", "Dúvidas Relacionadas", "Minhas Dúvidas"};
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         drawerList.setAdapter(arrayAdapter);
 
@@ -164,14 +163,34 @@ public class MainActivity extends Activity {
         drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (id == 0) {
-                    Intent i = new Intent(MainActivity.this, NovoUsuarioActivity.class);
 
+                if (id == 0) {
                 }
+
                 if (id == 1) {
                     Intent i = new Intent(MainActivity.this, MateriaActivity.class);
                     startActivity(i);
                 }
+
+                if (id == 2) {
+                    swipeRefreshDuvida.setRefreshing(true);
+                    actualRest = "duvidas/buscarDuvidas";
+                    volleyRequest(actualRest);
+
+                }
+
+                if (id == 3) {
+                    swipeRefreshDuvida.setRefreshing(true);
+                    actualRest = "duvidas/buscarDuvidasMateriaPorUsuario";
+                    volleyRequest(actualRest);
+                }
+
+                if (id == 4) {
+                    swipeRefreshDuvida.setRefreshing(true);
+                    actualRest = "duvidas/buscarDuvidasUsuario";
+                    volleyRequest(actualRest);
+                }
+
             }
         });
     }
@@ -239,13 +258,13 @@ public class MainActivity extends Activity {
         swipeRefreshDuvida = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshDuvida);
     }
 
-    public void volleyRequest() {
+    public void volleyRequest(String restRequest) {
         infoDuvida.setBackgroundColor(Color.parseColor("#FFA726"));
         textInfoDuvida.setText("Atualizando informações de dúvidas");
         infoDuvida.setVisibility(View.VISIBLE);
 
         String server = getString(R.string.wstcc);
-        String url = server + "duvidas/buscarDuvidas";
+        String url = server + restRequest;
 
         queue = Volley.newRequestQueue(this);
 
