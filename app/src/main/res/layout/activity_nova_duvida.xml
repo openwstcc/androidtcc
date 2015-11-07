@@ -140,8 +140,8 @@
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
         android:src="@drawable/ic_done_white_24dp"
-        app:backgroundTint="@color/colorPrimaryDark"
-        app:rippleColor="@color/colorPrimary"
+        app:backgroundTint="@color/colorAccent"
+        app:rippleColor="@color/colorAccentRipple"
         app:borderWidth="0dp"
         app:elevation="5dp"/>
 
