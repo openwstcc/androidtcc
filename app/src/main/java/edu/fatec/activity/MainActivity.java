@@ -24,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -118,28 +119,6 @@ public class MainActivity extends Activity {
             }
         });
 
-        /**
-         recycleView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-         int mLastFirstVisibleItem = 0;
-
-         @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-         }
-
-         @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-         super.onScrolled(recyclerView, dx, dy);
-         final int currentFirstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
-
-         if (currentFirstVisibleItem > this.mLastFirstVisibleItem) {
-         MainActivity.this.getActionBar().hide();
-         } else if (currentFirstVisibleItem < this.mLastFirstVisibleItem) {
-         MainActivity.this.getActionBar().show();
-         }
-
-         this.mLastFirstVisibleItem = currentFirstVisibleItem;
-         }
-         });
-         */
-
         swipeRefreshDuvida.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -173,19 +152,21 @@ public class MainActivity extends Activity {
                 }
 
                 if (id == 2) {
+                    Toast.makeText(MainActivity.this,"Todas as Dúvidas",Toast.LENGTH_SHORT).show();
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidas";
                     volleyRequest(actualRest);
-
                 }
 
                 if (id == 3) {
+                    Toast.makeText(MainActivity.this,"Dúvidas Relacionadas",Toast.LENGTH_SHORT).show();
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidasMateriaPorUsuario";
                     volleyRequest(actualRest);
                 }
 
                 if (id == 4) {
+                    Toast.makeText(MainActivity.this,"Minhas Dúvidas",Toast.LENGTH_SHORT).show();
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidasUsuario";
                     volleyRequest(actualRest);
@@ -268,35 +249,72 @@ public class MainActivity extends Activity {
 
         queue = Volley.newRequestQueue(this);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (response == null)
-                            return;
+        StringRequest stringRequest;
+        if(!restRequest.equals("duvidas/buscarDuvidas")){
+            stringRequest = new StringRequest(Request.Method.GET, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            if (response == null)
+                                return;
 
-                        Type listType = new TypeToken<ArrayList<Duvida>>() {
-                        }.getType();
-                        jsonDuvidas.clear();
-                        jsonDuvidas = new Gson().fromJson(response, listType);
-                        sharedPrefEdit.putString("jsonDuvidas", response);
-                        duvidaAdapter.swap(jsonDuvidas);
-                        sharedPrefEdit.commit();
-                        infoDuvida.setVisibility(View.GONE);
-                        textInfoDuvida.setVisibility(View.GONE);
-                        progressBar.setVisibility(View.GONE);
-                        swipeRefreshDuvida.setRefreshing(false);
+                            Type listType = new TypeToken<ArrayList<Duvida>>() {
+                            }.getType();
+                            jsonDuvidas.clear();
+                            jsonDuvidas = new Gson().fromJson(response, listType);
+                            sharedPrefEdit.putString("jsonDuvidas", response);
+                            duvidaAdapter.swap(jsonDuvidas);
+                            sharedPrefEdit.commit();
+                            infoDuvida.setVisibility(View.GONE);
+                            progressBar.setVisibility(View.GONE);
+                            swipeRefreshDuvida.setRefreshing(false);
 
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                infoDuvida.setBackgroundColor(Color.parseColor("#ff4444"));
-                textInfoDuvida.setText("Não foi possível se conectar com o servidor");
-                progressBar.setVisibility(View.GONE);
-                swipeRefreshDuvida.setRefreshing(false);
-            }
-        });
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    infoDuvida.setBackgroundColor(Color.parseColor("#ff4444"));
+                    textInfoDuvida.setText("Não foi possível se conectar com o servidor");
+                    progressBar.setVisibility(View.GONE);
+                    swipeRefreshDuvida.setRefreshing(false);
+                }
+            });
+        } else {
+            stringRequest = new StringRequest(Request.Method.GET, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            if (response == null)
+                                return;
+
+                            Type listType = new TypeToken<ArrayList<Duvida>>() {
+                            }.getType();
+                            jsonDuvidas.clear();
+                            jsonDuvidas = new Gson().fromJson(response, listType);
+                            sharedPrefEdit.putString("jsonDuvidas", response);
+                            duvidaAdapter.swap(jsonDuvidas);
+                            sharedPrefEdit.commit();
+                            infoDuvida.setVisibility(View.GONE);
+                            progressBar.setVisibility(View.GONE);
+                            swipeRefreshDuvida.setRefreshing(false);
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    infoDuvida.setBackgroundColor(Color.parseColor("#ff4444"));
+                    textInfoDuvida.setText("Não foi possível se conectar com o servidor");
+                    progressBar.setVisibility(View.GONE);
+                    swipeRefreshDuvida.setRefreshing(false);
+                }
+            }){
+                @Override
+                public byte[] getBody() throws AuthFailureError {
+                    String sharedUsuario = sharedPref.getString("jsonUsuario", "");
+                    return sharedUsuario.getBytes();
+                }
+            };
+        }
         queue.add(stringRequest);
         stringRequest.setTag(TAG);
     }
