@@ -85,6 +85,7 @@ public class MainActivity extends Activity {
         setupDrawer();
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setTitle("Todas as Dúvidas");
 
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -152,21 +153,21 @@ public class MainActivity extends Activity {
                 }
 
                 if (id == 2) {
-                    Toast.makeText(MainActivity.this,"Todas as Dúvidas",Toast.LENGTH_SHORT).show();
+                    getActionBar().setTitle("Todas as Dúvidas");
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidas";
                     volleyRequest(actualRest);
                 }
 
                 if (id == 3) {
-                    Toast.makeText(MainActivity.this,"Dúvidas Relacionadas",Toast.LENGTH_SHORT).show();
+                    getActionBar().setTitle("Dúvidas Relacionadas");
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidasMateriaPorUsuario";
                     volleyRequest(actualRest);
                 }
 
                 if (id == 4) {
-                    Toast.makeText(MainActivity.this,"Minhas Dúvidas",Toast.LENGTH_SHORT).show();
+                    getActionBar().setTitle("Minhas Dúvidas");
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidasUsuario";
                     volleyRequest(actualRest);
@@ -250,7 +251,7 @@ public class MainActivity extends Activity {
         queue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest;
-        if(!restRequest.equals("duvidas/buscarDuvidas")){
+        if(restRequest.equals("duvidas/buscarDuvidas")){
             stringRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
                         @Override
@@ -280,7 +281,7 @@ public class MainActivity extends Activity {
                 }
             });
         } else {
-            stringRequest = new StringRequest(Request.Method.GET, url,
+            stringRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
