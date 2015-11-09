@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -42,8 +44,8 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
     private List<JsonResposta> RespostaList;
 
     private SharedPreferences sharedPref;
-    String curtiuDescurtiu;
-    private  RespostaViewHolder respostaViewHolderAux;
+    private String curtiuDescurtiu;
+    private RespostaViewHolder respostaViewHolderAux;
 
     public RespostaAdapter(List<JsonResposta> RespostaList) {
         this.RespostaList = RespostaList;
@@ -55,14 +57,14 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
     }
 
     @Override
-    public void onBindViewHolder( final RespostaViewHolder respostaViewHolder, int position) {
+    public void onBindViewHolder(final RespostaViewHolder respostaViewHolder, int position) {
         final JsonResposta r = RespostaList.get(position);
         respostaViewHolder.RespostaConteudo.setText(r.getResposta());
         respostaViewHolder.infoResposta.setText(r.getCriador() + " em " + r.getDataCriacao());
         respostaViewHolder.textRank.setText(String.valueOf(r.getRank()));
-        if (r.isDeuLike()){
-            respostaViewHolderAux.curtirResposta.setTextColor(Color.parseColor("#FB8C00"));
-            respostaViewHolderAux.curtirResposta.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_thumb_down_orange_24dp, 0, 0, 0);
+
+        if (r.isDeuLike()) {
+            respostaViewHolder.curtirResposta.setTextColor(Color.parseColor("#FB8C00"));
         }
 
         respostaViewHolder.compartilharResposta.setOnClickListener(new View.OnClickListener() {
@@ -77,10 +79,11 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
 
             }
         });
+
         respostaViewHolder.curtirResposta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                respostaViewHolderAux =respostaViewHolder;
+                respostaViewHolderAux = respostaViewHolder;
                 volleyLike(r.getIdResposta(), v.getContext());
             }
         });
@@ -118,7 +121,8 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         RespostaList.addAll(Respostas);
         this.notifyDataSetChanged();
     }
-    public JsonResposta like(int idResposta,Context ct){
+
+    public JsonResposta like(int idResposta, Context ct) {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(ct);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ct);
         String sharedUsuario = sharedPref.getString("jsonUsuario", "");
@@ -131,7 +135,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         return r;
     }
 
-      public void volleyLike(final int idResposta, final Context cntx) {
+    public void volleyLike(final int idResposta, final Context cntx) {
 
         String url = "http://openwstcc-devbr.rhcloud.com/rest/respostas/adicionarRank";
 
@@ -141,30 +145,36 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        curtiuDescurtiu=response;
+                        curtiuDescurtiu = response;
                         int rankAtual;
-                        Toast.makeText(cntx,curtiuDescurtiu, Toast.LENGTH_SHORT).show();
-                        if (curtiuDescurtiu.equals("true")){
-                        respostaViewHolderAux.curtirResposta.setTextColor(Color.parseColor("#FB8C00"));
-                            respostaViewHolderAux.curtirResposta.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_thumb_down_orange_24dp, 0, 0, 0);
-                            rankAtual=Integer.valueOf(respostaViewHolderAux.textRank.getText().toString())+1;
+                        Toast.makeText(cntx, curtiuDescurtiu, Toast.LENGTH_SHORT).show();
+                        if (curtiuDescurtiu.equals("true")) {
+                            respostaViewHolderAux.curtirResposta.setTextColor(Color.parseColor("#FB8C00"));
+                            for (Drawable d : respostaViewHolderAux.curtirResposta.getCompoundDrawables()){
+                                if(d!=null)
+                                    d.setTint(Color.parseColor("#FB8C00"));
+                            }
+                            rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) + 1;
                             respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
-                        }else {
+                        } else {
                             respostaViewHolderAux.curtirResposta.setTextColor(Color.parseColor("#000000"));
-                            respostaViewHolderAux.curtirResposta.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_thumb_up_black_24dp, 0, 0, 0);
-                            rankAtual=Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) - 1;
+                            for (Drawable d : respostaViewHolderAux.curtirResposta.getCompoundDrawables()){
+                                if(d!=null)
+                                    d.setTint(Color.parseColor("#000000"));
+                            }
+                            rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) - 1;
                             respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(cntx, "Erro ao acesssar o servidor."+ new Gson().toJson(like(idResposta,cntx)), Toast.LENGTH_SHORT).show();
+                Toast.makeText(cntx, "Erro ao acesssar o servidor." + new Gson().toJson(like(idResposta, cntx)), Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
             public byte[] getBody() throws AuthFailureError {
-                String resp = new Gson().toJson(like(idResposta,cntx));
+                String resp = new Gson().toJson(like(idResposta, cntx));
                 return resp.getBytes();
             }
         };
