@@ -10,7 +10,8 @@ public class JsonResposta {
     private int rank;
     private int idUsuario;
     private int idDuvida;
-    private int idUsuarioRank;
+    private int usuarioLogado;
+    private boolean deuLike;
 
 
     public String getCriador() {
@@ -85,12 +86,19 @@ public class JsonResposta {
         this.idDuvida = idDuvida;
     }
 
-    public int getIdUsuarioRank() {
-        return idUsuarioRank;
+    public int getUsuarioLogado() {
+        return usuarioLogado;
     }
 
-    public void setIdUsuarioRank(int idUsuarioRank) {
-        this.idUsuarioRank = idUsuarioRank;
+    public void setUsuarioLogado(int usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
     }
 
+    public boolean isDeuLike() {
+        return deuLike;
+    }
+
+    public void setDeuLike(boolean deuLike) {
+        this.deuLike = deuLike;
+    }
 }

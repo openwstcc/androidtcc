@@ -177,7 +177,10 @@ public class RespostaActivity extends Activity {
         }) {
             @Override
             public byte[] getBody() throws AuthFailureError {
-                String idDuvida = "{idDuvida:" + duvida.getIdDuvida() + "}";
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                String sharedUsuario = sharedPref.getString("jsonUsuario", "");
+                Usuario usuario = new Gson().fromJson(sharedUsuario, Usuario.class);
+                String idDuvida = "{idDuvida:" + duvida.getIdDuvida() +","+"usuarioLogado:"+usuario.getIdUsuario()+"}";
                 return idDuvida.getBytes();
             }
         };

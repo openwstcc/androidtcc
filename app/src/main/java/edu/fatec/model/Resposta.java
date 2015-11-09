@@ -18,6 +18,7 @@ public class Resposta {
     private int rank;
     private int idUsuario;
     private int idDuvida;
+    private boolean deuLike;
 
     public String getCriador() {
         return criador;
@@ -90,4 +91,13 @@ public class Resposta {
     public void setIdDuvida(int idDuvida) {
         this.idDuvida = idDuvida;
     }
+
+    public boolean isDeuLike() {
+        return deuLike;
+    }
+
+    public void setDeuLike(boolean deuLike) {
+        this.deuLike = deuLike;
+    }
+
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +30,7 @@ import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import edu.fatec.json.JsonResposta;
@@ -40,6 +42,8 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
     private List<JsonResposta> RespostaList;
 
     private SharedPreferences sharedPref;
+    String curtiuDescurtiu;
+    private  RespostaViewHolder respostaViewHolderAux;
 
     public RespostaAdapter(List<JsonResposta> RespostaList) {
         this.RespostaList = RespostaList;
@@ -51,11 +55,15 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
     }
 
     @Override
-    public void onBindViewHolder( RespostaViewHolder respostaViewHolder, int position) {
+    public void onBindViewHolder( final RespostaViewHolder respostaViewHolder, int position) {
         final JsonResposta r = RespostaList.get(position);
         respostaViewHolder.RespostaConteudo.setText(r.getResposta());
         respostaViewHolder.infoResposta.setText(r.getCriador() + " em " + r.getDataCriacao());
         respostaViewHolder.textRank.setText(String.valueOf(r.getRank()));
+        if (r.isDeuLike()){
+            respostaViewHolderAux.curtirResposta.setTextColor(Color.parseColor("#FB8C00"));
+            respostaViewHolderAux.curtirResposta.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_thumb_down_orange_24dp, 0, 0, 0);
+        }
 
         respostaViewHolder.compartilharResposta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +80,8 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         respostaViewHolder.curtirResposta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                volleyLike(r.getIdResposta(),v.getContext());
+                respostaViewHolderAux =respostaViewHolder;
+                volleyLike(r.getIdResposta(), v.getContext());
             }
         });
     }
@@ -117,7 +126,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
 
         JsonResposta r = new JsonResposta();
 
-        r.setIdUsuarioRank(usuario.getIdUsuario());
+        r.setUsuarioLogado(usuario.getIdUsuario());
         r.setIdResposta(idResposta);
         return r;
     }
@@ -132,7 +141,20 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //Falta IMPLEMENTAR OS EVENTOS APOS O LIKE
+                        curtiuDescurtiu=response;
+                        int rankAtual;
+                        Toast.makeText(cntx,curtiuDescurtiu, Toast.LENGTH_SHORT).show();
+                        if (curtiuDescurtiu.equals("true")){
+                        respostaViewHolderAux.curtirResposta.setTextColor(Color.parseColor("#FB8C00"));
+                            respostaViewHolderAux.curtirResposta.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_thumb_down_orange_24dp, 0, 0, 0);
+                            rankAtual=Integer.valueOf(respostaViewHolderAux.textRank.getText().toString())+1;
+                            respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
+                        }else {
+                            respostaViewHolderAux.curtirResposta.setTextColor(Color.parseColor("#000000"));
+                            respostaViewHolderAux.curtirResposta.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_thumb_up_black_24dp, 0, 0, 0);
+                            rankAtual=Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) - 1;
+                            respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
