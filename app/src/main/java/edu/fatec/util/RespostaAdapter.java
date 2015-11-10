@@ -65,6 +65,16 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
 
         if (r.isDeuLike()) {
             respostaViewHolder.curtirResposta.setTextColor(Color.parseColor("#FB8C00"));
+            for (Drawable d : respostaViewHolder.curtirResposta.getCompoundDrawables()) {
+                if (d != null)
+                    d.setTint(Color.parseColor("#FB8C00"));
+            }
+        }else{
+            respostaViewHolder.curtirResposta.setTextColor(Color.parseColor("#000000"));
+                for (Drawable d : respostaViewHolder.curtirResposta.getCompoundDrawables()) {
+                    if (d != null)
+                        d.setTint(Color.parseColor("#000000"));
+                }
         }
 
         respostaViewHolder.compartilharResposta.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +157,6 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                     public void onResponse(String response) {
                         curtiuDescurtiu = response;
                         int rankAtual;
-                        Toast.makeText(cntx, curtiuDescurtiu, Toast.LENGTH_SHORT).show();
                         if (curtiuDescurtiu.equals("true")) {
                             respostaViewHolderAux.curtirResposta.setTextColor(Color.parseColor("#FB8C00"));
                             for (Drawable d : respostaViewHolderAux.curtirResposta.getCompoundDrawables()){
