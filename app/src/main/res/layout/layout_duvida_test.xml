@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    card_view:cardCornerRadius="2dp"
+    android:elevation="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/backgroundDuvida"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/duvidaTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center_vertical"
+                android:text="Titulo da Dúvida"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/duvidaConteudo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/backgroundDuvida"
+            android:layout_margin="8dp"
+            android:gravity="center_vertical"
+            android:text="Conteudo da Dúvida"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/materiasDuvida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/duvidaConteudo"
+            android:layout_margin="8dp"
+            android:text="Materias Relacionadas"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/dataDuvida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/materiasDuvida"
+            android:layout_margin="8dp"
+            android:text="Criada em Jan 01, 2015"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_margin="8dp"
+            android:layout_below="@id/dataDuvida"
+            android:background="@android:color/darker_gray" />
+
+        <Button
+            android:id="@+id/replyDuvida"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/dataDuvida"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/ic_reply_black_24dp"
+            android:backgroundTint="@color/colorPrimaryDark"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
