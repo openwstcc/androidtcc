@@ -275,6 +275,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     infoDuvida.setBackgroundColor(Color.parseColor("#ff4444"));
+                    infoDuvida.setVisibility(View.VISIBLE);
                     textInfoDuvida.setText("Não foi possível se conectar com o servidor");
                     progressBar.setVisibility(View.GONE);
                     swipeRefreshDuvida.setRefreshing(false);
@@ -303,6 +304,7 @@ public class MainActivity extends Activity {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    infoDuvida.setVisibility(View.VISIBLE);
                     infoDuvida.setBackgroundColor(Color.parseColor("#ff4444"));
                     textInfoDuvida.setText("Não foi possível se conectar com o servidor");
                     progressBar.setVisibility(View.GONE);
