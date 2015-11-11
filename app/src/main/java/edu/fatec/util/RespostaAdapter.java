@@ -67,13 +67,13 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
             respostaViewHolder.curtirResposta.setTextColor(Color.parseColor("#FB8C00"));
             for (Drawable d : respostaViewHolder.curtirResposta.getCompoundDrawables()) {
                 if (d != null)
-                    d.setTint(Color.parseColor("#FB8C00"));
+                    d.setTint(respostaViewHolder.accent);
             }
         }else{
             respostaViewHolder.curtirResposta.setTextColor(Color.parseColor("#000000"));
                 for (Drawable d : respostaViewHolder.curtirResposta.getCompoundDrawables()) {
                     if (d != null)
-                        d.setTint(Color.parseColor("#000000"));
+                        d.setTint(respostaViewHolder.textColor);
                 }
         }
 
@@ -115,6 +115,9 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         protected TextView curtirResposta;
         protected TextView compartilharResposta;
         protected TextView textRank;
+        protected int accent;
+        protected int textColor;
+
 
         public RespostaViewHolder(View v) {
             super(v);
@@ -123,6 +126,8 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
             curtirResposta = (TextView) v.findViewById(R.id.curtirResposta);
             compartilharResposta = (TextView) v.findViewById(R.id.compartilharResposta);
             textRank = (TextView) v.findViewById(R.id.textRank);
+            accent = v.getResources().getColor(R.color.colorAccent);
+            textColor = v.getResources().getColor(R.color.textColor);
         }
     }
 
@@ -146,8 +151,8 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
     }
 
     public void volleyLike(final int idResposta, final Context cntx) {
-
-        String url = "http://openwstcc-devbr.rhcloud.com/rest/respostas/adicionarRank";
+        String server = cntx.getString(R.string.wstcc);
+        String url = server + "respostas/adicionarRank";
 
         RequestQueue queue = Volley.newRequestQueue(cntx);
 
@@ -161,7 +166,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                             respostaViewHolderAux.curtirResposta.setTextColor(Color.parseColor("#FB8C00"));
                             for (Drawable d : respostaViewHolderAux.curtirResposta.getCompoundDrawables()){
                                 if(d!=null)
-                                    d.setTint(Color.parseColor("#FB8C00"));
+                                    d.setTint(respostaViewHolderAux.accent);
                             }
                             rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) + 1;
                             respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
@@ -169,7 +174,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                             respostaViewHolderAux.curtirResposta.setTextColor(Color.parseColor("#000000"));
                             for (Drawable d : respostaViewHolderAux.curtirResposta.getCompoundDrawables()){
                                 if(d!=null)
-                                    d.setTint(Color.parseColor("#000000"));
+                                    d.setTint(respostaViewHolderAux.textColor);
                             }
                             rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) - 1;
                             respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
