@@ -153,7 +153,7 @@ public class RespostaActivity extends Activity {
                         backgroundDuvida.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                         swiperRefreshResposta.setRefreshing(false);
                         resposta.setEnabled(true);
-                        inserirResposta.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                        inserirResposta.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
                         setConexao(true);
                     }
                 }, new Response.ErrorListener() {
@@ -162,7 +162,7 @@ public class RespostaActivity extends Activity {
                 Toast.makeText(getApplicationContext(), "Erro ao buscar Respostas.", Toast.LENGTH_SHORT).show();
                 swiperRefreshResposta.setRefreshing(false);
                 resposta.setEnabled(false);
-                inserirResposta.setBackgroundColor(getResources().getColor(R.color.inactive));
+                inserirResposta.setBackgroundTintList(getResources().getColorStateList(R.color.inactive));
                 setConexao(false);
             }
         }) {
@@ -208,7 +208,7 @@ public class RespostaActivity extends Activity {
                     public void onResponse(String response) {
                         Toast.makeText(getApplicationContext(), "Resposta enviada com sucesso!", Toast.LENGTH_SHORT).show();
                         Drawable send = getResources().getDrawable(R.drawable.ic_send_white_24dp);
-                        inserirResposta.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                        inserirResposta.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
                         inserirResposta.setImageDrawable(send);
                         resposta.setText("");
                         showViewRefresh();
@@ -217,7 +217,7 @@ public class RespostaActivity extends Activity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), "Erro ao enviar resposta. Tente novamente", Toast.LENGTH_SHORT).show();
-                inserirResposta.setBackgroundColor(getResources().getColor(R.color.colorFail));
+                inserirResposta.setBackgroundTintList(getResources().getColorStateList(R.color.colorFail));
             }
         }) {
             @Override
@@ -232,11 +232,11 @@ public class RespostaActivity extends Activity {
     public boolean validaResposta(View v) {
         EditText resposta = (EditText) v;
         if (TextUtils.isEmpty(resposta.getText())) {
-            resposta.setError("Insira um conteúdo para a dúvida");
+            resposta.setError("Insira um conteúdo para a resposta");
             resposta.setFocusable(true);
             return false;
         } else if (resposta.getText().length() < 5) {
-            resposta.setError("Dúvida inválida. Tamanho mínimo de 5 caracteres.");
+            resposta.setError("Resposta inválida. Tamanho mínimo de 5 caracteres.");
             resposta.setFocusable(true);
             return false;
         } else

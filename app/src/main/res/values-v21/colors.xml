@@ -5,8 +5,8 @@
     <color name="colorWarning">#FFA726</color>
     <color name="colorFail">#ff4444</color>
     <color name="colorSuccess">#00E676</color>
-    <color name="colorAccent">#FB8C00</color>
-    <color name="colorAccentRipple">#E65100</color>
+    <color name="colorAccent">#FBC02D</color>
+    <color name="colorAccentRipple">#F9A825</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="textColor">#000000</color>
     <color name="inactive">#BDBDBD</color>

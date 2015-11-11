@@ -64,17 +64,16 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         respostaViewHolder.textRank.setText(String.valueOf(r.getRank()));
 
         if (r.isDeuLike()) {
-            respostaViewHolder.curtirResposta.setTextColor(Color.parseColor("#FB8C00"));
+            respostaViewHolder.curtirResposta.setTextColor(respostaViewHolder.accent);
             for (Drawable d : respostaViewHolder.curtirResposta.getCompoundDrawables()) {
                 if (d != null)
                     d.setTint(respostaViewHolder.accent);
             }
-        }else{
-            respostaViewHolder.curtirResposta.setTextColor(Color.parseColor("#000000"));
-                for (Drawable d : respostaViewHolder.curtirResposta.getCompoundDrawables()) {
-                    if (d != null)
-                        d.setTint(respostaViewHolder.textColor);
-                }
+        } else {
+            for (Drawable d : respostaViewHolder.curtirResposta.getCompoundDrawables()) {
+                if (d != null)
+                    d.setTint(respostaViewHolder.textColor);
+            }
         }
 
         respostaViewHolder.compartilharResposta.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +125,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
             curtirResposta = (TextView) v.findViewById(R.id.curtirResposta);
             compartilharResposta = (TextView) v.findViewById(R.id.compartilharResposta);
             textRank = (TextView) v.findViewById(R.id.textRank);
-            accent = v.getResources().getColor(R.color.colorAccent);
+            accent = v.getResources().getColor(R.color.colorAccentRipple);
             textColor = v.getResources().getColor(R.color.textColor);
         }
     }
@@ -163,17 +162,17 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                         curtiuDescurtiu = response;
                         int rankAtual;
                         if (curtiuDescurtiu.equals("true")) {
-                            respostaViewHolderAux.curtirResposta.setTextColor(Color.parseColor("#FB8C00"));
-                            for (Drawable d : respostaViewHolderAux.curtirResposta.getCompoundDrawables()){
-                                if(d!=null)
+                            respostaViewHolderAux.curtirResposta.setTextColor(respostaViewHolderAux.accent);
+                            for (Drawable d : respostaViewHolderAux.curtirResposta.getCompoundDrawables()) {
+                                if (d != null)
                                     d.setTint(respostaViewHolderAux.accent);
                             }
                             rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) + 1;
                             respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
                         } else {
-                            respostaViewHolderAux.curtirResposta.setTextColor(Color.parseColor("#000000"));
-                            for (Drawable d : respostaViewHolderAux.curtirResposta.getCompoundDrawables()){
-                                if(d!=null)
+                            respostaViewHolderAux.curtirResposta.setTextColor(respostaViewHolderAux.textColor);
+                            for (Drawable d : respostaViewHolderAux.curtirResposta.getCompoundDrawables()) {
+                                if (d != null)
                                     d.setTint(respostaViewHolderAux.textColor);
                             }
                             rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) - 1;

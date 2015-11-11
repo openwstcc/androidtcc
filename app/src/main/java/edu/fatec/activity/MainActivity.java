@@ -135,7 +135,7 @@ public class MainActivity extends Activity {
         infoNomeUsuario.setText(usuario.getNome() + " " + usuario.getSobrenome());
         infoEmailUsuario.setText(usuario.getEmail());
 
-        String[] osArray = {"Meu Perfil", "Minhas Matérias", "Todas as Dúvidas", "Dúvidas Relacionadas", "Minhas Dúvidas"};
+        String[] osArray = {"Meu Perfil", "Minhas Matérias", "Todas as Dúvidas", "Dúvidas Relacionadas", "Minhas Dúvidas", "Desconectar"};
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         drawerList.setAdapter(arrayAdapter);
 
@@ -171,6 +171,15 @@ public class MainActivity extends Activity {
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidasUsuario";
                     volleyRequest(actualRest);
+                }
+
+                if (id == 5) {
+                    sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor SharedPrefEdit = sharedPref.edit();
+                    SharedPrefEdit.putString("jsonUsuario", "");
+                    SharedPrefEdit.commit();
+                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(i);
                 }
 
             }
@@ -324,7 +333,9 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        finish();
+        int pid = android.os.Process.myPid();
+        android.os.Process.killProcess(pid);
+        System.exit(0);
     }
 
 }
