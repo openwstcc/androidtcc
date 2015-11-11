@@ -11,6 +11,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -41,6 +42,7 @@ import edu.fatec.util.RespostaAdapter;
 
 public class RespostaActivity extends Activity {
     private Duvida duvida;
+    private Boolean conexao = false;
 
     private TextView conteudoDuvida;
     private EditText resposta;
@@ -89,32 +91,17 @@ public class RespostaActivity extends Activity {
         respostaAdapter = new RespostaAdapter(respostas);
         recyclerView.setAdapter(respostaAdapter);
 
-        /**
-        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            int mLastFirstVisibleItem = 0;
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                final int currentFirstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
-
-                if (currentFirstVisibleItem > this.mLastFirstVisibleItem) {
-                    RespostaActivity.this.getActionBar().hide();
-                } else if (currentFirstVisibleItem < this.mLastFirstVisibleItem) {
-                    RespostaActivity.this.getActionBar().show();
-                }
-
-                this.mLastFirstVisibleItem = currentFirstVisibleItem;
-            }
-        });*/
-
         inserirResposta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!validaResposta(resposta))
+                    return;
+
+                if(!getConexao()){
+                    Toast.makeText(getApplicationContext(), "Verifique a conexão com a internet para realizar uma nova resposta.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 volleyNovaResposta();
             }
         });
@@ -148,6 +135,7 @@ public class RespostaActivity extends Activity {
             }
         });
     }
+
     public void volleyBuscarDuvidas() {
         String server = getString(R.string.wstcc);
         String url = server + "respostas/buscarRespostas";
@@ -162,17 +150,20 @@ public class RespostaActivity extends Activity {
                         }.getType();
                         List<JsonResposta> respostasJson = new Gson().fromJson(response, listType);
                         respostaAdapter.swap(respostasJson);
-                        backgroundDuvida.setBackgroundColor(Color.parseColor("#00838F"));
+                        backgroundDuvida.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                         swiperRefreshResposta.setRefreshing(false);
                         resposta.setEnabled(true);
+                        inserirResposta.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                        setConexao(true);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), "Erro ao buscar Respostas.", Toast.LENGTH_SHORT).show();
-                backgroundDuvida.setBackgroundColor(Color.parseColor("#FFA726"));
                 swiperRefreshResposta.setRefreshing(false);
                 resposta.setEnabled(false);
+                inserirResposta.setBackgroundColor(getResources().getColor(R.color.inactive));
+                setConexao(false);
             }
         }) {
             @Override
@@ -216,15 +207,17 @@ public class RespostaActivity extends Activity {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(getApplicationContext(), "Resposta enviada com sucesso!", Toast.LENGTH_SHORT).show();
-                        resposta.setText("");
                         Drawable send = getResources().getDrawable(R.drawable.ic_send_white_24dp);
+                        inserirResposta.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                         inserirResposta.setImageDrawable(send);
+                        resposta.setText("");
                         showViewRefresh();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //On error
+                Toast.makeText(getApplicationContext(), "Erro ao enviar resposta. Tente novamente", Toast.LENGTH_SHORT).show();
+                inserirResposta.setBackgroundColor(getResources().getColor(R.color.colorFail));
             }
         }) {
             @Override
@@ -236,4 +229,25 @@ public class RespostaActivity extends Activity {
         queue.add(stringRequest);
     }
 
+    public boolean validaResposta(View v) {
+        EditText resposta = (EditText) v;
+        if (TextUtils.isEmpty(resposta.getText())) {
+            resposta.setError("Insira um conteúdo para a dúvida");
+            resposta.setFocusable(true);
+            return false;
+        } else if (resposta.getText().length() < 5) {
+            resposta.setError("Dúvida inválida. Tamanho mínimo de 5 caracteres.");
+            resposta.setFocusable(true);
+            return false;
+        } else
+            return true;
+    }
+
+    public Boolean getConexao() {
+        return conexao;
+    }
+
+    public void setConexao(Boolean conexao) {
+        this.conexao = conexao;
+    }
 }

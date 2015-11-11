@@ -41,7 +41,6 @@ import edu.fatec.util.ExpandableListAdapter;
 public class LoginActivity extends Activity {
 
     private Usuario u = new Usuario();
-    private Usuario jsonUsuario;
 
     private Button login;
     private Button registre;
@@ -134,7 +133,6 @@ public class LoginActivity extends Activity {
                     public void onResponse(String response) {
                         Type listType = new TypeToken<ArrayList<Materia>>(){}.getType();
                         List<Materia> materiasJson = new Gson().fromJson(response, listType);
-                        Toast.makeText(getApplicationContext(), "Materias atualizadas.", Toast.LENGTH_SHORT).show();
                         SharedPrefEdit.putString("jsonMaterias", response);
                         SharedPrefEdit.commit();
                     }
@@ -150,7 +148,7 @@ public class LoginActivity extends Activity {
 
     public void volleyLogin(){
         infoLogin.setVisibility(View.VISIBLE);
-        infoLogin.setBackgroundColor(Color.parseColor("#FFA726"));
+        infoLogin.setBackgroundColor(getResources().getColor(R.color.colorWarning));
         textInfoLogin.setText("Realizando login");
         progressBarLogin.setVisibility(View.VISIBLE);
 
@@ -169,7 +167,7 @@ public class LoginActivity extends Activity {
                             Intent i = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(i);
                         } else {
-                            infoLogin.setBackgroundColor(Color.parseColor("#ff4444"));
+                            infoLogin.setBackgroundColor(getResources().getColor(R.color.colorFail));
                             textInfoLogin.setText("Usuário e senha incorretos");
                             progressBarLogin.setVisibility(View.GONE);
                         }
@@ -177,7 +175,7 @@ public class LoginActivity extends Activity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                infoLogin.setBackgroundColor(Color.parseColor("#ff4444"));
+                infoLogin.setBackgroundColor(getResources().getColor(R.color.colorFail));
                 textInfoLogin.setText("Não foi possível realizar o login, tente novamente");
                 progressBarLogin.setVisibility(View.GONE);
             }
