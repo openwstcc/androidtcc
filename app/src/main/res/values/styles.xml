@@ -1,12 +1,22 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">#00838F</item>
-        <item name="colorPrimaryDark">#006064</item>
-        <item name="android:textColorPrimary">@color/textColorPrimary</item>
-        <item name="android:textColor">@android:color/black</item>
-        <item name="android:editTextColor">@android:color/black</item>
+    <style name="AppTheme" parent="AppTheme.Base">
+
+    </style>
+
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="actionMenuTextColor">@color/textColorPrimary</item>
+        <item name="actionModeBackground">@color/colorAccent</item>
+        <item name="editTextColor">@android:color/black</item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
+
         <item name="drawerArrowStyle">@style/MyDrawerArrowToggle</item>
     </style>
 

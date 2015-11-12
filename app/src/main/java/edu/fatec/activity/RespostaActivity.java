@@ -1,16 +1,16 @@
 package edu.fatec.activity;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,9 +40,11 @@ import edu.fatec.model.Resposta;
 import edu.fatec.model.Usuario;
 import edu.fatec.util.RespostaAdapter;
 
-public class RespostaActivity extends Activity {
+public class RespostaActivity extends AppCompatActivity {
     private Duvida duvida;
     private Boolean conexao = false;
+
+    private Toolbar toolbar;
 
     private TextView conteudoDuvida;
     private EditText resposta;
@@ -70,8 +72,8 @@ public class RespostaActivity extends Activity {
 
         conteudoDuvida.setText(duvida.getConteudo());
 
-        getActionBar().setTitle(duvida.getTitulo());
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         showViewRefresh();
 
@@ -118,6 +120,7 @@ public class RespostaActivity extends Activity {
     }
 
     public void findViewsByID() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         resposta = (EditText) findViewById(R.id.resposta);
         inserirResposta = (FloatingActionButton) findViewById(R.id.inserirResposta);
         backgroundDuvida = (LinearLayout) findViewById(R.id.backgroundDuvidaResposta);

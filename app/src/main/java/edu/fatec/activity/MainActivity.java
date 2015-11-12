@@ -1,19 +1,19 @@
 package edu.fatec.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -38,28 +37,27 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import edu.fatec.model.Duvida;
 import edu.fatec.model.Usuario;
 import edu.fatec.util.DuvidaAdapter;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     //View Objects
-    private DuvidaAdapter duvidaAdapter;
     private LinearLayout infoDuvida;
     private FloatingActionButton novaDuvida;
-    private TextView textInfoDuvida;
     private ProgressBar progressBar;
-
+    private TextView textInfoDuvida;
     private TextView infoNomeUsuario;
     private TextView infoEmailUsuario;
     private ListView drawerList;
+    private DuvidaAdapter duvidaAdapter;
     private RecyclerView recycleView;
+    private LinearLayoutManager linearLayoutManager;
     private SwipeRefreshLayout swipeRefreshDuvida;
 
+    //Action Bar Objects
+    private Toolbar toolbar;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout drawerLayout;
 
@@ -81,12 +79,12 @@ public class MainActivity extends Activity {
 
         findViewsByID();
 
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Todas as Dúvidas");
+
         addDrawerItems();
         setupDrawer();
-        getActionBar().setHomeButtonEnabled(true);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setTitle("Todas as Dúvidas");
-
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedPrefEdit = sharedPref.edit();
@@ -95,7 +93,7 @@ public class MainActivity extends Activity {
         volleyRequest(actualRest);
 
         recycleView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
+        linearLayoutManager = new LinearLayoutManager(MainActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycleView.setLayoutManager(linearLayoutManager);
 
@@ -122,11 +120,13 @@ public class MainActivity extends Activity {
 
         swipeRefreshDuvida.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                volleyRequest(actualRest);
+                public void onRefresh () {
+                    volleyRequest(actualRest);
+                }
             }
-        });
-    }
+
+            );
+        }
 
     private void addDrawerItems() {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -153,21 +153,21 @@ public class MainActivity extends Activity {
                 }
 
                 if (id == 2) {
-                    getActionBar().setTitle("Todas as Dúvidas");
+                    getSupportActionBar().setTitle("Todas as Dúvidas");
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidas";
                     volleyRequest(actualRest);
                 }
 
                 if (id == 3) {
-                    getActionBar().setTitle("Dúvidas Relacionadas");
+                    getSupportActionBar().setTitle("Dúvidas Relacionadas");
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidasMateriaPorUsuario";
                     volleyRequest(actualRest);
                 }
 
                 if (id == 4) {
-                    getActionBar().setTitle("Minhas Dúvidas");
+                    getSupportActionBar().setTitle("Minhas Dúvidas");
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidasUsuario";
                     volleyRequest(actualRest);
@@ -226,6 +226,7 @@ public class MainActivity extends Activity {
 
         if (actionBarDrawerToggle.onOptionsItemSelected(item))
             return true;
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -237,6 +238,7 @@ public class MainActivity extends Activity {
     }
 
     public void findViewsByID() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         novaDuvida = (FloatingActionButton) findViewById(R.id.novaDuvida);
         recycleView = (RecyclerView) findViewById(R.id.recycleViewDuvidas);
         infoNomeUsuario = (TextView) findViewById(R.id.infoNomeUsuario);

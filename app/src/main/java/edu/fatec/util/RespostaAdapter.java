@@ -9,6 +9,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.preference.PreferenceManager;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,14 +66,19 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
 
         if (r.isDeuLike()) {
             respostaViewHolder.curtirResposta.setTextColor(respostaViewHolder.accent);
+            respostaViewHolder.textRank.setTextColor(respostaViewHolder.accent);
             for (Drawable d : respostaViewHolder.curtirResposta.getCompoundDrawables()) {
-                if (d != null)
-                    d.setTint(respostaViewHolder.accent);
+                if (d != null){
+                    Drawable wrapDrawable = DrawableCompat.wrap(d);
+                    DrawableCompat.setTint(wrapDrawable, respostaViewHolder.accent);
+                }
             }
         } else {
             for (Drawable d : respostaViewHolder.curtirResposta.getCompoundDrawables()) {
-                if (d != null)
-                    d.setTint(respostaViewHolder.textColor);
+                if (d != null){
+                    Drawable wrapDrawable = DrawableCompat.wrap(d);
+                    DrawableCompat.setTint(wrapDrawable, respostaViewHolder.textColor);
+                }
             }
         }
 
@@ -163,17 +169,23 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                         int rankAtual;
                         if (curtiuDescurtiu.equals("true")) {
                             respostaViewHolderAux.curtirResposta.setTextColor(respostaViewHolderAux.accent);
+                            respostaViewHolderAux.textRank.setTextColor(respostaViewHolderAux.accent);
                             for (Drawable d : respostaViewHolderAux.curtirResposta.getCompoundDrawables()) {
-                                if (d != null)
-                                    d.setTint(respostaViewHolderAux.accent);
+                                if (d != null){
+                                    Drawable wrapDrawable = DrawableCompat.wrap(d);
+                                    DrawableCompat.setTint(wrapDrawable, respostaViewHolderAux.accent);
+                                }
                             }
                             rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) + 1;
                             respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
                         } else {
                             respostaViewHolderAux.curtirResposta.setTextColor(respostaViewHolderAux.textColor);
+                            respostaViewHolderAux.textRank.setTextColor(respostaViewHolderAux.textColor);
                             for (Drawable d : respostaViewHolderAux.curtirResposta.getCompoundDrawables()) {
-                                if (d != null)
-                                    d.setTint(respostaViewHolderAux.textColor);
+                                if (d != null){
+                                    Drawable wrapDrawable = DrawableCompat.wrap(d);
+                                    DrawableCompat.setTint(wrapDrawable, respostaViewHolderAux.textColor);
+                                }
                             }
                             rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) - 1;
                             respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));

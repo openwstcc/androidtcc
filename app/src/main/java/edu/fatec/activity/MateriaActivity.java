@@ -1,11 +1,12 @@
 package edu.fatec.activity;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
@@ -30,11 +31,13 @@ import java.lang.reflect.Type;
 import edu.fatec.model.Materia;
 import edu.fatec.util.ExpandableListAdapter;
 
-public class MateriaActivity extends Activity {
+public class MateriaActivity extends AppCompatActivity {
     private ExpandableListAdapter listAdapter;
     private LinearLayout infoMateria;
     private TextView textInfoMateria;
     private ProgressBar progressBarMateria;
+
+    private Toolbar toolbar;
 
     private SharedPreferences sharedPref;
 
@@ -47,6 +50,9 @@ public class MateriaActivity extends Activity {
 
         findViewsById();
 
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         ExpandableListView expListView = (ExpandableListView) findViewById(R.id.listaMaterias);
         listAdapter = new ExpandableListAdapter(MateriaActivity.this, materiasJson);
         expListView.setAdapter(listAdapter);
@@ -55,6 +61,7 @@ public class MateriaActivity extends Activity {
     }
 
     public void findViewsById(){
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         infoMateria = (LinearLayout) findViewById(R.id.infoMateria);
         textInfoMateria = (TextView) findViewById(R.id.textInfoMateria);
         progressBarMateria = (ProgressBar) findViewById(R.id.progressBarMateria);

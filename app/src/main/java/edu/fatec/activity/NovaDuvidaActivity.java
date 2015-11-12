@@ -1,6 +1,5 @@
 package edu.fatec.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -8,6 +7,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -39,10 +40,12 @@ import edu.fatec.model.Materia;
 import edu.fatec.model.Usuario;
 import edu.fatec.util.MultiSelectionSpinner;
 
-public class NovaDuvidaActivity extends Activity {
+public class NovaDuvidaActivity extends AppCompatActivity {
     private EditText tituloNovaDuvida;
     private EditText conteudoNovaDuvida;
     private EditText tagsNovaDuvida;
+
+    private Toolbar toolbar;
 
     private LinearLayout infoNovaDuvida;
     private TextView textInfoNovaDuvida;
@@ -60,9 +63,10 @@ public class NovaDuvidaActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nova_duvida);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
         findViewsById();
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setSpinnerValues();
         setSpinnerAdapter();
@@ -78,6 +82,7 @@ public class NovaDuvidaActivity extends Activity {
     }
 
     public void findViewsById() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         spinnerMaterias = (MultiSelectionSpinner) findViewById(R.id.spinnerMaterias);
         tituloNovaDuvida = (EditText) findViewById(R.id.tituloNovaDuvida);
         conteudoNovaDuvida = (EditText) findViewById(R.id.conteudoNovaDuvida);

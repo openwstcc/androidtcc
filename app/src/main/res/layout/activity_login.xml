@@ -5,6 +5,16 @@
     tools:context="edu.fatec.activity.LoginActivity">
 
     <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_actionbar" />
+
+    <LinearLayout
         android:id="@+id/infoLogin"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -96,9 +106,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
-                android:backgroundTint="@color/colorPrimary"
+                android:backgroundTint="@color/colorAccent"
                 android:text="Login"
-                android:textColor="#FFFFFF" />
+                android:textColor="@color/textColorPrimary" />
 
             <Button
                 android:id="@+id/registreUsuario"
@@ -108,9 +118,11 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@android:color/transparent"
                 android:text="Registrar novo usuário"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="@color/colorAccent" />
         </LinearLayout>
 
     </ScrollView>
+
+    </LinearLayout>
 
 </RelativeLayout>

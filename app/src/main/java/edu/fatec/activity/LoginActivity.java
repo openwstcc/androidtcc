@@ -1,11 +1,11 @@
 package edu.fatec.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -36,11 +36,11 @@ import java.util.List;
 
 import edu.fatec.model.Materia;
 import edu.fatec.model.Usuario;
-import edu.fatec.util.ExpandableListAdapter;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
 
     private Usuario u = new Usuario();
+    private String server;
 
     private Button login;
     private Button registre;
@@ -49,7 +49,7 @@ public class LoginActivity extends Activity {
     private LinearLayout infoLogin;
     private TextView textInfoLogin;
     private ProgressBar progressBarLogin;
-    private String server;
+    private Toolbar toolbar;
 
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor SharedPrefEdit;
@@ -61,11 +61,13 @@ public class LoginActivity extends Activity {
 
         findViewsByID();
 
+        setSupportActionBar(toolbar);
+
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPrefEdit = sharedPref.edit();
 
-        String todasMaterias = sharedPref.getString("jsonMaterias","");
-        if(todasMaterias.length()<1){
+        String todasMaterias = sharedPref.getString("jsonMaterias", "");
+        if (todasMaterias.length() < 1) {
             volleyBuscarMaterias();
         }
 
@@ -88,9 +90,9 @@ public class LoginActivity extends Activity {
         login.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!validaEmail(email))
+                if (!validaEmail(email))
                     return;
-                else if(!validaSenha(senha))
+                else if (!validaSenha(senha))
                     return;
                 volleyLogin();
             }
@@ -98,6 +100,7 @@ public class LoginActivity extends Activity {
     }
 
     private void findViewsByID() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         email = (EditText) findViewById(R.id.email);
         senha = (EditText) findViewById(R.id.senha);
         login = (Button) findViewById(R.id.loginUsuario);
@@ -121,7 +124,7 @@ public class LoginActivity extends Activity {
         SharedPrefEdit.commit();
     }
 
-    public void volleyBuscarMaterias(){
+    public void volleyBuscarMaterias() {
         server = getString(R.string.wstcc);
 
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -131,7 +134,8 @@ public class LoginActivity extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Type listType = new TypeToken<ArrayList<Materia>>(){}.getType();
+                        Type listType = new TypeToken<ArrayList<Materia>>() {
+                        }.getType();
                         List<Materia> materiasJson = new Gson().fromJson(response, listType);
                         SharedPrefEdit.putString("jsonMaterias", response);
                         SharedPrefEdit.commit();
@@ -146,7 +150,7 @@ public class LoginActivity extends Activity {
     }
 
 
-    public void volleyLogin(){
+    public void volleyLogin() {
         infoLogin.setVisibility(View.VISIBLE);
         infoLogin.setBackgroundColor(getResources().getColor(R.color.colorWarning));
         textInfoLogin.setText("Realizando login");
@@ -162,7 +166,7 @@ public class LoginActivity extends Activity {
                     public void onResponse(String response) {
                         Log.i("RESPONSE", response);
                         Usuario usuario = new Gson().fromJson(response, Usuario.class);
-                        if (usuario.getNome()!=null) {
+                        if (usuario.getNome() != null) {
                             persisteSharedPref(response);
                             Intent i = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(i);

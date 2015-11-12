@@ -5,39 +5,51 @@
     tools:context="edu.fatec.activity.MateriaActivity">
 
     <LinearLayout
-        android:id="@+id/infoMateria"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:gravity="center_horizontal|center_vertical"
-        android:background="@color/colorWarning"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textInfoMateria"
-            android:layout_width="wrap_content"
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/layout_actionbar" />
+
+        <LinearLayout
+            android:id="@+id/infoMateria"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="12dp"
-            android:text="Atualizando informações de Materias"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="15sp" />
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorWarning"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
 
-        <ProgressBar
-            android:id="@+id/progressBarMateria"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_margin="10dp"
-            android:indeterminateTint="@color/textColorPrimary" />
+            <TextView
+                android:id="@+id/textInfoMateria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="12dp"
+                android:text="Atualizando informações de Materias"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="15sp" />
+
+            <ProgressBar
+                android:id="@+id/progressBarMateria"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_margin="10dp"
+                android:indeterminateTint="@color/textColorPrimary" />
+        </LinearLayout>
+
+        <ExpandableListView
+            android:id="@+id/listaMaterias"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/infoMateria" />
+
     </LinearLayout>
-
-    <ExpandableListView
-        android:id="@+id/listaMaterias"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/infoMateria"/>
 
 </RelativeLayout>

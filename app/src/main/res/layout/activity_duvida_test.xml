@@ -4,47 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.fatec.activity.DuvidaTestActivity">
+    tools:context="edu.fatec.test.DuvidaTestActivity">
 
     <LinearLayout
-        android:id="@+id/infoDuvida"
+        android:id="@+id/actionBar_background"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorWarning"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal|center_vertical">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textInfoDuvida"
-            android:layout_width="wrap_content"
+        <include
+            android:id="@+id/actionBar"
+            layout="@layout/layout_actionbar" />
+
+        <LinearLayout
+            android:id="@+id/infoDuvida"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Atualizando informações de dúvidas"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="15sp" />
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorWarning"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_margin="10dp"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:indeterminateTint="@color/textColorPrimary"/>
+            <TextView
+                android:id="@+id/textInfoDuvida"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Atualizando informações de dúvidas"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="15sp" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_margin="10dp"
+                android:indeterminateTint="@color/textColorPrimary" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/cardList"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/infoDuvida"
+            android:clipToPadding="false"
+            android:paddingBottom="70dp"
+            android:paddingLeft="@dimen/activity_margin_recycle"
+            android:paddingRight="@dimen/activity_margin_recycle"
+            android:paddingTop="@dimen/activity_margin_recycle"
+            android:scrollbars="vertical" />
 
     </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/cardList"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="70dp"
-        android:paddingLeft="@dimen/activity_margin_recycle"
-        android:paddingRight="@dimen/activity_margin_recycle"
-        android:paddingTop="@dimen/activity_margin_recycle"
-        android:scrollbars="vertical"
-        android:layout_below="@+id/infoDuvida"/>
 
     <android.support.design.widget.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/novaDuvida"

@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -38,7 +40,7 @@ import java.util.Calendar;
 
 import edu.fatec.model.Usuario;
 
-public class NovoUsuarioActivity extends Activity {
+public class NovoUsuarioActivity extends AppCompatActivity {
     //View Objects
     private Button inserirUsuario;
     private EditText nome;
@@ -52,6 +54,8 @@ public class NovoUsuarioActivity extends Activity {
     private LinearLayout infoNovoUsuario;
     private TextView textInfoNovoUsuario;
 
+    private Toolbar toolbar;
+
     //Date Objects
     private DatePickerDialog dataPicker;
     private SimpleDateFormat dateFormatter;
@@ -61,9 +65,10 @@ public class NovoUsuarioActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_usuario);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
         findViewsById();
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
         setDateTimeField();
@@ -117,6 +122,7 @@ public class NovoUsuarioActivity extends Activity {
     }
 
     private void findViewsById() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         nome = (EditText) findViewById(R.id.nome);
         sobreNome = (EditText) findViewById(R.id.sobreNome);
         email = (EditText) findViewById(R.id.email);
