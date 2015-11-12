@@ -1,4 +1,4 @@
-package edu.fatec.activity;
+package edu.fatec.test;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,9 @@ import android.widget.Button;
 
 
 import com.example.gqueiroz.androidtcc.R;
+
+import edu.fatec.activity.LoginActivity;
+import edu.fatec.activity.NovoUsuarioActivity;
 
 
 public class ApresentacaoActivity extends Activity {

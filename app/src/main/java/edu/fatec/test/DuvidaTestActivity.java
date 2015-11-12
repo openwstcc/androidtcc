@@ -1,4 +1,4 @@
-package edu.fatec.activity;
+package edu.fatec.test;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +29,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.fatec.activity.NovaDuvidaActivity;
 import edu.fatec.model.Duvida;
 import edu.fatec.util.DuvidaAdapter;
 
