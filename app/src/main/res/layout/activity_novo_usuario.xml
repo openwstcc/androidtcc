@@ -214,7 +214,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_gravity="center_horizontal"
-                    android:backgroundTint="@color/colorAccent"
+                    android:backgroundTint="@color/colorPrimary"
                     android:text="Concluir"
                     android:textColor="@color/textColorPrimary" />
 

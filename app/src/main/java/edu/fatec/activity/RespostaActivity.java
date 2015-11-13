@@ -74,6 +74,7 @@ public class RespostaActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(duvida.getTitulo());
 
         showViewRefresh();
 

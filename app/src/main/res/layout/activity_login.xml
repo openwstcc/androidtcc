@@ -1,36 +1,47 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:orientation="vertical"
     tools:context="edu.fatec.activity.LoginActivity">
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/layout_actionbar" />
 
     <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/logoFatec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/ic_fatec_logo_white" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/infoLogin"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:background="@color/colorWarning"
-        android:orientation="horizontal"
         android:gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal"
         android:visibility="gone">
 
         <TextView
             android:id="@+id/textInfoLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Realizando login"
             android:layout_margin="10dp"
+            android:text="Realizando login"
             android:textColor="@color/textColorPrimary"
             android:textSize="15sp" />
 
@@ -39,8 +50,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_margin="10dp"
-            android:indeterminateTint="@color/textColorPrimary"/>
-
+            android:indeterminateTint="@color/textColorPrimary" />
     </LinearLayout>
 
     <ScrollView
@@ -106,7 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
-                android:backgroundTint="@color/colorAccent"
+                android:backgroundTint="@color/colorPrimary"
                 android:text="Login"
                 android:textColor="@color/textColorPrimary" />
 
@@ -118,11 +128,9 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@android:color/transparent"
                 android:text="Registrar novo usuário"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
     </ScrollView>
 
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

@@ -62,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewsByID();
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPrefEdit = sharedPref.edit();
