@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         infoNomeUsuario.setText(usuario.getNome() + " " + usuario.getSobrenome());
         infoEmailUsuario.setText(usuario.getEmail());
 
-        String[] osArray = {"Meu Perfil", "Minhas Matérias", "Todas as Dúvidas", "Dúvidas Relacionadas", "Minhas Dúvidas", "Desconectar"};
+        String[] osArray = {"Minhas Matérias", "Todas as Dúvidas", " Relacionadas", "Minhas Dúvidas", "Meu Perfil", "Desconectar"};
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         drawerList.setAdapter(arrayAdapter);
 
@@ -148,32 +148,33 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if (id == 0) {
-                }
-
-                if (id == 1) {
                     Intent i = new Intent(MainActivity.this, MateriaActivity.class);
                     startActivity(i);
                 }
 
-                if (id == 2) {
+                if (id == 1) {
                     getSupportActionBar().setTitle("Todas as Dúvidas");
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidas";
                     volleyRequest(actualRest);
                 }
 
-                if (id == 3) {
+                if (id == 2) {
                     getSupportActionBar().setTitle("Dúvidas Relacionadas");
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidasMateriaPorUsuario";
                     volleyRequest(actualRest);
                 }
 
-                if (id == 4) {
+                if (id == 3) {
                     getSupportActionBar().setTitle("Minhas Dúvidas");
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidasUsuario";
                     volleyRequest(actualRest);
+                }
+
+                if (id == 4) {
+                    //Meu Perfil
                 }
 
                 if (id == 5) {
