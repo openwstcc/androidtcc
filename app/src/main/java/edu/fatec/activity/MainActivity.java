@@ -14,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recycleView;
     private LinearLayoutManager linearLayoutManager;
     private SwipeRefreshLayout swipeRefreshDuvida;
+    private PesquisaDialog pesquisaDialog;
 
     //Action Bar Objects
     private Toolbar toolbar;
@@ -177,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                     sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     SharedPreferences.Editor SharedPrefEdit = sharedPref.edit();
                     SharedPrefEdit.putString("jsonUsuario", "");
-                    SharedPrefEdit.commit();
+                    SharedPrefEdit.apply();
                     Intent i = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(i);
                 }
@@ -218,11 +221,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+
+        return true ;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.action_settings)
             return true;
+
+        if (id == R.id.menu_pesquisa){
+            pesquisaDialog = new PesquisaDialog(MainActivity.this);
+            pesquisaDialog.show();
+        }
+
 
         if (actionBarDrawerToggle.onOptionsItemSelected(item))
             return true;

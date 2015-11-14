@@ -5,11 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -37,6 +35,7 @@ import com.google.gson.GsonBuilder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import edu.fatec.model.Usuario;
 
@@ -70,7 +69,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         setDateTimeField();
 
         dataNasc.setOnClickListener(new View.OnClickListener() {
@@ -81,21 +80,22 @@ public class NovoUsuarioActivity extends AppCompatActivity {
             }
         });
 
-        inserirUsuario.setOnClickListener(new View.OnClickListener() {
-                                              @Override
-                                              public void onClick(View v) {
-                                                  if (!validator())
-                                                      return;
+        inserirUsuario.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!validator())
+                            return;
 
-                                                  infoNovoUsuario.setVisibility(View.VISIBLE);
-                                                  progressBar.setVisibility(View.VISIBLE);
-                                                  textInfoNovoUsuario.setText("Seu usuário está sendo criado.");
-                                                  infoNovoUsuario.setBackgroundColor(Color.parseColor("#FFA726"));
-                                                  inserirUsuario.setEnabled(false);
+                        infoNovoUsuario.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.VISIBLE);
+                        textInfoNovoUsuario.setText("Seu usuário está sendo criado.");
+                        infoNovoUsuario.setBackgroundColor(Color.parseColor("#FFA726"));
+                        inserirUsuario.setEnabled(false);
 
-                                                  volleyRequest();
-                                              }
-                                          }
+                        volleyRequest();
+                    }
+                }
         );
     }
 
@@ -110,7 +110,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
 
         try {
             String myFormat = "dd/MM/yyyy";
-            SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
             usuario.setDataNasc(sdf.parse(dataNasc.getText().toString()));
         } catch (ParseException e) {
             e.printStackTrace();
@@ -196,10 +196,6 @@ public class NovoUsuarioActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    /**
-     * Validação de Campos
-     */
-
     public boolean validator() {
         if (!validaNome(nome))
             return false;
@@ -213,7 +209,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
             return false;
         else if (!validaSenha(senha))
             return false;
-        else if (!validaConfirmaSenha(senha,senhaConfirma))
+        else if (!validaConfirmaSenha(senha, senhaConfirma))
             return false;
         else
             return true;
@@ -273,9 +269,9 @@ public class NovoUsuarioActivity extends AppCompatActivity {
             return true;
     }
 
-    public boolean validaDataNasc(View view){
+    public boolean validaDataNasc(View view) {
         EditText dataNasc = (EditText) view;
-        if(TextUtils.isEmpty(dataNasc.getText())){
+        if (TextUtils.isEmpty(dataNasc.getText())) {
             dataNasc.setError("Insira uma data de nascimento");
             dataNasc.setFocusable(true);
             return false;

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:minWidth="330dp"
+    android:orientation="vertical"
+    tools:context=".PesquisaDialog">
+
+    <EditText
+        android:id="@+id/conteudoPesquisa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Pesquisar..." />
+
+    <Button
+        android:id="@+id/refinarPesquisa"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:text="Refinar Pesquisa"
+        android:textColor="@color/colorPrimary" />
+
+    <CheckBox
+        android:id="@+id/checkTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Pesquisar em Título de Dúvidas" />
+
+    <CheckBox
+        android:id="@+id/checkConteudo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Pesquisar em Conteúdo de Dúvidas" />
+
+    <CheckBox
+        android:id="@+id/checkMateria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Pesquisar em Matérias" />
+
+    <CheckBox
+        android:id="@+id/checkTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Pesquisar por Palavras-chave" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancelaPesquisa"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight=".5"
+            android:background="@android:color/transparent"
+            android:text="Cancelar"
+            android:textColor="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/novaPesquisa"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight=".5"
+            android:background="@android:color/transparent"
+            android:text="Pesquisar"
+            android:textColor="@color/colorPrimary" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
