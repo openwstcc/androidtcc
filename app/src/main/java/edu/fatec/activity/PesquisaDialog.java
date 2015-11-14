@@ -1,7 +1,6 @@
 package edu.fatec.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
@@ -12,9 +11,6 @@ import android.widget.EditText;
 
 import com.example.gqueiroz.androidtcc.R;
 
-/**
- * Created by gqueiroz on 14/11/2015.
- */
 public class PesquisaDialog extends Dialog {
     private Activity c;
     private EditText conteudoPesquisa;
@@ -26,7 +22,7 @@ public class PesquisaDialog extends Dialog {
     private Button novaPesquisa;
     private Button cancelaPesquisa;
 
-    private boolean visible = true;
+    private boolean visible = false;
 
     public PesquisaDialog(Activity a) {
         super(a);
@@ -40,6 +36,11 @@ public class PesquisaDialog extends Dialog {
         setContentView(R.layout.layout_pesquisa);
 
         findViewsById();
+
+        checkTitulo.setVisibility(View.GONE);
+        checkConteudo.setVisibility(View.GONE);
+        checkMateria.setVisibility(View.GONE);
+        checkTag.setVisibility(View.GONE);
 
         refinarPesquisa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,17 +71,17 @@ public class PesquisaDialog extends Dialog {
         novaPesquisa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closeDialog();
+
             }
         });
 
     }
 
-    public void closeDialog() {
+    public void closeDialog(){
         this.dismiss();
     }
 
-    public void findViewsById() {
+    public void findViewsById(){
         conteudoPesquisa = (EditText) findViewById(R.id.conteudoPesquisa);
         checkTitulo = (CheckBox) findViewById(R.id.checkTitulo);
         checkConteudo = (CheckBox) findViewById(R.id.checkConteudo);

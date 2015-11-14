@@ -12,50 +12,51 @@
         android:id="@+id/conteudoPesquisa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:hint="Pesquisar..." />
 
     <Button
         android:id="@+id/refinarPesquisa"
-        style="?android:attr/borderlessButtonStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@android:color/transparent"
-        android:text="Refinar Pesquisa"
-        android:textColor="@color/colorPrimary" />
+        android:layout_marginBottom="5dp"
+        android:background="@color/colorPrimary"
+        android:text="Filtrar Pesquisa"
+        android:textColor="@color/textColorPrimary" />
 
     <CheckBox
         android:id="@+id/checkTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:checked="true"
-        android:text="Pesquisar em Título de Dúvidas" />
+        android:text="Pesquisar por Título de Dúvidas" />
 
     <CheckBox
         android:id="@+id/checkConteudo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:checked="true"
-        android:text="Pesquisar em Conteúdo de Dúvidas" />
+        android:text="Pesquisar por Conteúdo de Dúvidas" />
 
     <CheckBox
         android:id="@+id/checkMateria"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:checked="true"
-        android:text="Pesquisar em Matérias" />
+        android:text="Pesquisar por Matérias" />
 
     <CheckBox
         android:id="@+id/checkTag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
         android:checked="true"
         android:text="Pesquisar por Palavras-chave" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <Button
