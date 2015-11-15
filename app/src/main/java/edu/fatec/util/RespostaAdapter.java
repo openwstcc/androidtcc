@@ -142,7 +142,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         this.notifyDataSetChanged();
     }
 
-    public JsonResposta like(int idResposta, Context ct) {
+    private JsonResposta like(int idResposta, Context ct) {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(ct);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ct);
         String sharedUsuario = sharedPref.getString("jsonUsuario", "");
@@ -155,7 +155,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         return r;
     }
 
-    public void volleyLike(final int idResposta, final Context cntx) {
+    private void volleyLike(final int idResposta, final Context cntx) {
         String server = cntx.getString(R.string.wstcc);
         String url = server + "respostas/adicionarRank";
 

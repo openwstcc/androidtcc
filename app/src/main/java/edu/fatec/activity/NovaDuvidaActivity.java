@@ -81,7 +81,7 @@ public class NovaDuvidaActivity extends AppCompatActivity {
         });
     }
 
-    public void findViewsById() {
+    private void findViewsById() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         spinnerMaterias = (MultiSelectionSpinner) findViewById(R.id.spinnerMaterias);
         tituloNovaDuvida = (EditText) findViewById(R.id.tituloNovaDuvida);
@@ -93,7 +93,7 @@ public class NovaDuvidaActivity extends AppCompatActivity {
         progressBarNovaDuvida = (ProgressBar) findViewById(R.id.progressBarDuvida);
     }
 
-    public JsonDuvida novaDuvida() {
+    private JsonDuvida novaDuvida() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String sharedUsuario = sharedPref.getString("jsonUsuario", "");
         Usuario usuario = new Gson().fromJson(sharedUsuario, Usuario.class);
@@ -108,7 +108,7 @@ public class NovaDuvidaActivity extends AppCompatActivity {
         return d;
     }
 
-    public int[] getSelectedMaterias() {
+    private int[] getSelectedMaterias() {
         List<String> materias = spinnerMaterias.getSelectedStrings();
         int[] items = new int[materias.size()];
 
@@ -118,7 +118,7 @@ public class NovaDuvidaActivity extends AppCompatActivity {
         return items;
     }
 
-    public void setSpinnerAdapter() {
+    private void setSpinnerAdapter() {
         List<String> materias = new ArrayList<>();
 
         for (Map.Entry<String, Integer> entry : spinnerValues.entrySet())
@@ -128,7 +128,7 @@ public class NovaDuvidaActivity extends AppCompatActivity {
         spinnerMaterias.setItems(materias);
     }
 
-    public void setSpinnerValues() {
+    private void setSpinnerValues() {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         String todasMaterias = sharedPref.getString("jsonMaterias", "");
@@ -141,7 +141,7 @@ public class NovaDuvidaActivity extends AppCompatActivity {
             spinnerValues.put(m.getMateria(), m.getIdMateria());
     }
 
-    public void volleyNovaDuvida() {
+    private void volleyNovaDuvida() {
         infoNovaDuvida.setVisibility(View.VISIBLE);
         infoNovaDuvida.setBackgroundColor(Color.parseColor("#FFA726"));
         textInfoNovaDuvida.setText("Criando sua duvida");
@@ -181,7 +181,7 @@ public class NovaDuvidaActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    public boolean validator() {
+    private boolean validator() {
         if (!validaTitulo(tituloNovaDuvida))
             return false;
         else if (!validaConteudo(conteudoNovaDuvida))
@@ -190,7 +190,7 @@ public class NovaDuvidaActivity extends AppCompatActivity {
             return true;
     }
 
-    public boolean validaTitulo(View v) {
+    private boolean validaTitulo(View v) {
         EditText titulo = (EditText) v;
         if (TextUtils.isEmpty(titulo.getText())) {
             titulo.setError("Insira um titulo para a dúvida");
@@ -204,7 +204,7 @@ public class NovaDuvidaActivity extends AppCompatActivity {
             return true;
     }
 
-    public boolean validaConteudo(View v) {
+    private boolean validaConteudo(View v) {
         EditText conteudo = (EditText) v;
         if (TextUtils.isEmpty(conteudo.getText())) {
             conteudo.setError("Insira um conteúdo para a dúvida");

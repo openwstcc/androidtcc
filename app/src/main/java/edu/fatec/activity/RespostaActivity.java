@@ -42,7 +42,7 @@ import edu.fatec.util.RespostaAdapter;
 
 public class RespostaActivity extends AppCompatActivity {
     private Duvida duvida;
-    private Boolean conexao = false;
+    private boolean conexao = false;
 
     private Toolbar toolbar;
 
@@ -120,7 +120,7 @@ public class RespostaActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void findViewsByID() {
+    private void findViewsByID() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         resposta = (EditText) findViewById(R.id.resposta);
         inserirResposta = (FloatingActionButton) findViewById(R.id.inserirResposta);
@@ -130,7 +130,7 @@ public class RespostaActivity extends AppCompatActivity {
         swiperRefreshResposta = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshResposta);
     }
 
-    public void showViewRefresh(){
+    private void showViewRefresh(){
         swiperRefreshResposta.post(new Runnable() {
             @Override
             public void run() {
@@ -140,7 +140,7 @@ public class RespostaActivity extends AppCompatActivity {
         });
     }
 
-    public void volleyBuscarDuvidas() {
+    private void volleyBuscarDuvidas() {
         String server = getString(R.string.wstcc);
         String url = server + "respostas/buscarRespostas";
 
@@ -182,7 +182,7 @@ public class RespostaActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    public Resposta novaResposta() {
+    private Resposta novaResposta() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String sharedUsuario = sharedPref.getString("jsonUsuario", "");
         Usuario usuario = new Gson().fromJson(sharedUsuario, Usuario.class);
@@ -198,7 +198,7 @@ public class RespostaActivity extends AppCompatActivity {
         return r;
     }
 
-    public void volleyNovaResposta() {
+    private void volleyNovaResposta() {
         String server = getString(R.string.wstcc);
         String url = server + "respostas/adicionarResposta";
 
@@ -233,7 +233,7 @@ public class RespostaActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    public boolean validaResposta(View v) {
+    private boolean validaResposta(View v) {
         EditText resposta = (EditText) v;
         if (TextUtils.isEmpty(resposta.getText())) {
             resposta.setError("Insira um conteúdo para a resposta");
@@ -247,11 +247,11 @@ public class RespostaActivity extends AppCompatActivity {
             return true;
     }
 
-    public Boolean getConexao() {
+    private boolean getConexao() {
         return conexao;
     }
 
-    public void setConexao(Boolean conexao) {
+    private void setConexao(boolean conexao) {
         this.conexao = conexao;
     }
 }

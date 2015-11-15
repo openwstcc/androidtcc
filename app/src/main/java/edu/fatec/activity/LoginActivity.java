@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     private SharedPreferences sharedPref;
-    private SharedPreferences.Editor SharedPrefEdit;
+    private SharedPreferences.Editor sharedPrefEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPrefEdit = sharedPref.edit();
+        sharedPrefEdit = sharedPref.edit();
 
         String todasMaterias = sharedPref.getString("jsonMaterias", "");
         if (todasMaterias.length() < 1) {
@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPrefEdit.commit();
     }
 
-    public void volleyBuscarMaterias() {
+    private void volleyBuscarMaterias() {
         server = getString(R.string.wstcc);
 
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -138,8 +138,8 @@ public class LoginActivity extends AppCompatActivity {
                         Type listType = new TypeToken<ArrayList<Materia>>() {
                         }.getType();
                         List<Materia> materiasJson = new Gson().fromJson(response, listType);
-                        SharedPrefEdit.putString("jsonMaterias", response);
-                        SharedPrefEdit.commit();
+                        sharedPrefEdit.putString("jsonMaterias", response);
+                        sharedPrefEdit.commit();
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -151,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void volleyLogin() {
+    private void volleyLogin() {
         infoLogin.setVisibility(View.VISIBLE);
         infoLogin.setBackgroundColor(getResources().getColor(R.color.colorWarning));
         textInfoLogin.setText("Realizando login");
@@ -193,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    public static boolean validaEmail(View view) {
+    private static boolean validaEmail(View view) {
         EditText email = (EditText) view;
         if (TextUtils.isEmpty(email.getText())) {
             email.setError("Email inválido");
@@ -211,7 +211,7 @@ public class LoginActivity extends AppCompatActivity {
             return android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches();
     }
 
-    public static boolean validaSenha(View view) {
+    private static boolean validaSenha(View view) {
         EditText senha = (EditText) view;
         if (TextUtils.isEmpty(senha.getText())) {
             senha.setError("Senha inválida");

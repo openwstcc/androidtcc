@@ -49,14 +49,14 @@ public class NovoUsuarioActivity extends AppCompatActivity {
     private EditText email;
     private EditText senha;
     private EditText senhaConfirma;
-    private ProgressBar progressBar;
+    private ProgressBar progressBarNovoUsuario;
     private LinearLayout infoNovoUsuario;
     private TextView textInfoNovoUsuario;
 
     private Toolbar toolbar;
 
     //Date Objects
-    private DatePickerDialog dataPicker;
+    private DatePickerDialog datePicker;
     private SimpleDateFormat dateFormatter;
 
     @Override
@@ -76,7 +76,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 hideSoftKeyboard();
-                dataPicker.show();
+                datePicker.show();
             }
         });
 
@@ -88,7 +88,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
                             return;
 
                         infoNovoUsuario.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.VISIBLE);
+                        progressBarNovoUsuario.setVisibility(View.VISIBLE);
                         textInfoNovoUsuario.setText("Seu usuário está sendo criado.");
                         infoNovoUsuario.setBackgroundColor(Color.parseColor("#FFA726"));
                         inserirUsuario.setEnabled(false);
@@ -99,7 +99,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
         );
     }
 
-    public Usuario novoUsuario() {
+    private Usuario novoUsuario() {
         Usuario usuario = new Usuario();
 
         usuario.setNome(nome.getText().toString());
@@ -132,14 +132,14 @@ public class NovoUsuarioActivity extends AppCompatActivity {
         dataNasc = (EditText) findViewById(R.id.dataNasc);
         dataNasc.setInputType(InputType.TYPE_NULL);
         inserirUsuario = (Button) findViewById(R.id.inserirUsuario);
-        progressBar = (ProgressBar) findViewById(R.id.progressBarNovoUsuario);
+        progressBarNovoUsuario = (ProgressBar) findViewById(R.id.progressBar);
         infoNovoUsuario = (LinearLayout) findViewById(R.id.infoNovoUsuario);
         textInfoNovoUsuario = (TextView) findViewById(R.id.textInfoNovoUsuario);
     }
 
-    public void setDateTimeField() {
+    private void setDateTimeField() {
         Calendar calendar = Calendar.getInstance();
-        dataPicker = new DatePickerDialog(NovoUsuarioActivity.this, new DatePickerDialog.OnDateSetListener() {
+        datePicker = new DatePickerDialog(NovoUsuarioActivity.this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
@@ -163,7 +163,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void volleyRequest() {
+    private void volleyRequest() {
         String server = getString(R.string.wstcc);
 
         RequestQueue queue = Volley.newRequestQueue(NovoUsuarioActivity.this);
@@ -183,7 +183,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
                 inserirUsuario.setEnabled(true);
                 textInfoNovoUsuario.setText("Por favor, tente novamente.");
                 infoNovoUsuario.setBackgroundColor(Color.parseColor("#ff4444"));
-                progressBar.setVisibility(View.GONE);
+                progressBarNovoUsuario.setVisibility(View.GONE);
             }
         }) {
             @Override
@@ -196,7 +196,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    public boolean validator() {
+    private boolean validator() {
         if (!validaNome(nome))
             return false;
         else if (!validaSobreNome(sobreNome))
@@ -215,7 +215,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
             return true;
     }
 
-    public boolean validaNome(View v) {
+    private boolean validaNome(View v) {
         EditText nome = (EditText) v;
         if (TextUtils.isEmpty(nome.getText())) {
             nome.setError("Insira um nome");
@@ -233,7 +233,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
             return true;
     }
 
-    public boolean validaSobreNome(View v) {
+    private boolean validaSobreNome(View v) {
         EditText sobreNome = (EditText) v;
         if (TextUtils.isEmpty(sobreNome.getText())) {
             sobreNome.setError("Insira um sobrenome");
@@ -251,7 +251,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
             return true;
     }
 
-    public boolean validaTelefone(View view) {
+    private boolean validaTelefone(View view) {
         EditText telefone = (EditText) view;
         if (TextUtils.isEmpty(telefone.getText())) {
             telefone.setError("Insira um telefone");
@@ -269,7 +269,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
             return true;
     }
 
-    public boolean validaDataNasc(View view) {
+    private boolean validaDataNasc(View view) {
         EditText dataNasc = (EditText) view;
         if (TextUtils.isEmpty(dataNasc.getText())) {
             dataNasc.setError("Insira uma data de nascimento");
@@ -279,7 +279,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
             return true;
     }
 
-    public boolean validaEmail(View view) {
+    private boolean validaEmail(View view) {
         EditText email = (EditText) view;
         if (TextUtils.isEmpty(email.getText())) {
             email.setError("Insira um email");
@@ -297,7 +297,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
             return android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches();
     }
 
-    public boolean validaSenha(View view) {
+    private boolean validaSenha(View view) {
         EditText senha = (EditText) view;
         if (TextUtils.isEmpty(senha.getText())) {
             senha.setError("Insira uma senha");
@@ -315,7 +315,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
             return true;
     }
 
-    public boolean validaConfirmaSenha(View viewSenha, View viewSenhaConfirma) {
+    private boolean validaConfirmaSenha(View viewSenha, View viewSenhaConfirma) {
         EditText senha = (EditText) viewSenha;
         EditText senhaConfirma = (EditText) viewSenhaConfirma;
         if (TextUtils.isEmpty(senhaConfirma.getText())) {

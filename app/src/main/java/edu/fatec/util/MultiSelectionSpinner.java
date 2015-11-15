@@ -189,7 +189,7 @@ public class MultiSelectionSpinner extends Spinner implements OnMultiChoiceClick
         return selection;
     }
 
-    private String buildSelectedItemString() {
+    public String buildSelectedItemString() {
         StringBuilder sb = new StringBuilder();
         boolean foundOne = false;
 

@@ -19,25 +19,25 @@ import edu.fatec.activity.RespostaActivity;
 import edu.fatec.model.Duvida;
 
 public class DuvidaAdapter extends RecyclerView.Adapter<DuvidaAdapter.DuvidaViewHolder> {
-    private List<Duvida> DuvidaList;
+    private List<Duvida> duvidaList;
 
-    public DuvidaAdapter(List<Duvida> DuvidaList) {
-        this.DuvidaList = DuvidaList;
+    public DuvidaAdapter(List<Duvida> duvidaList) {
+        this.duvidaList = duvidaList;
     }
 
 
     @Override
     public int getItemCount() {
-        return DuvidaList.size();
+        return duvidaList.size();
     }
 
     @Override
     public void onBindViewHolder(DuvidaViewHolder duvidaViewHolder, int position) {
-        final Duvida d = DuvidaList.get(position);
+        final Duvida d = duvidaList.get(position);
         duvidaViewHolder.duvidaTitulo.setText(d.getTitulo());
         duvidaViewHolder.duvidaConteudo.setText(d.getConteudo());
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        duvidaViewHolder.infoDuvida.setText("Criada em "+ d.getDataCriacao());
+        duvidaViewHolder.infoDuvida.setText("Criada em " + d.getDataCriacao());
 
         duvidaViewHolder.replyDuvida.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,8 +79,8 @@ public class DuvidaAdapter extends RecyclerView.Adapter<DuvidaAdapter.DuvidaView
     }
 
     public void swap(List<Duvida> duvidas) {
-        DuvidaList.clear();
-        DuvidaList.addAll(duvidas);
+        duvidaList.clear();
+        duvidaList.addAll(duvidas);
         this.notifyDataSetChanged();
     }
 }

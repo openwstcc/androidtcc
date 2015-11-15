@@ -145,7 +145,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
-    public void carregaListView() {
+    private void carregaListView() {
         List<String> mat1Semestre = new ArrayList<>();
         List<String> mat2Semestre = new ArrayList<>();
         List<String> mat3Semestre = new ArrayList<>();

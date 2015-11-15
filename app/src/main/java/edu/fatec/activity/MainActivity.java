@@ -43,6 +43,7 @@ import java.util.List;
 import edu.fatec.model.Duvida;
 import edu.fatec.model.Usuario;
 import edu.fatec.util.DuvidaAdapter;
+import edu.fatec.util.PesquisaDialog;
 
 public class MainActivity extends AppCompatActivity {
     //View Objects
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView infoEmailUsuario;
     private ListView drawerList;
     private DuvidaAdapter duvidaAdapter;
-    private RecyclerView recycleView;
+    private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private SwipeRefreshLayout swipeRefreshDuvida;
     private PesquisaDialog pesquisaDialog;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences.Editor sharedPrefEdit;
 
     //Volley Objects
-    public static final String TAG = "duvidas";
+    private static final String TAG = "duvidas";
     private RequestQueue queue;
 
     private String actualRest;
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewsByID();
+        findViewsById();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -95,10 +96,10 @@ public class MainActivity extends AppCompatActivity {
         actualRest = "duvidas/buscarDuvidas";
         volleyRequest(actualRest);
 
-        recycleView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(MainActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recycleView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         String sharedDuvidas = sharedPref.getString("jsonDuvidas", "");
         if (sharedDuvidas.length() > 1) {
@@ -106,11 +107,11 @@ public class MainActivity extends AppCompatActivity {
             }.getType();
             jsonDuvidas = new Gson().fromJson(sharedDuvidas, listType);
             duvidaAdapter = new DuvidaAdapter(jsonDuvidas);
-            recycleView.setAdapter(duvidaAdapter);
+            recyclerView.setAdapter(duvidaAdapter);
         } else {
             jsonDuvidas = new ArrayList<>();
             duvidaAdapter = new DuvidaAdapter(jsonDuvidas);
-            recycleView.setAdapter(duvidaAdapter);
+            recyclerView.setAdapter(duvidaAdapter);
         }
 
         novaDuvida.setOnClickListener(new View.OnClickListener() {
@@ -255,10 +256,10 @@ public class MainActivity extends AppCompatActivity {
             queue.cancelAll(TAG);
     }
 
-    public void findViewsByID() {
+    private void findViewsById() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         novaDuvida = (FloatingActionButton) findViewById(R.id.novaDuvida);
-        recycleView = (RecyclerView) findViewById(R.id.recycleViewDuvidas);
+        recyclerView = (RecyclerView) findViewById(R.id.recycleViewDuvidas);
         infoNomeUsuario = (TextView) findViewById(R.id.infoNomeUsuario);
         infoEmailUsuario = (TextView) findViewById(R.id.infoEmailUsuario);
         drawerList = (ListView) findViewById(R.id.drawerList);
@@ -269,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshDuvida = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshDuvida);
     }
 
-    public void volleyRequest(String restRequest) {
+    private void volleyRequest(String restRequest) {
         infoDuvida.setBackgroundColor(Color.parseColor("#FFA726"));
         textInfoDuvida.setText("Atualizando informações de dúvidas");
         infoDuvida.setVisibility(View.VISIBLE);

@@ -1,4 +1,4 @@
-package edu.fatec.activity;
+package edu.fatec.util;
 
 import android.app.Activity;
 import android.app.Dialog;

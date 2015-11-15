@@ -60,14 +60,14 @@ public class MateriaActivity extends AppCompatActivity {
         volleyBuscarMateriasUsuario();
     }
 
-    public void findViewsById(){
+    private void findViewsById(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         infoMateria = (LinearLayout) findViewById(R.id.infoMateria);
         textInfoMateria = (TextView) findViewById(R.id.textInfoMateria);
         progressBarMateria = (ProgressBar) findViewById(R.id.progressBarMateria);
     }
 
-    public void volleyBuscarMateriasUsuario() {
+    private void volleyBuscarMateriasUsuario() {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         final String sharedUsuario = sharedPref.getString("jsonUsuario", "");
