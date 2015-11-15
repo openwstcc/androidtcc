@@ -47,14 +47,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<String, Boolean> controleMaterias = new HashMap<>();
 
     private SharedPreferences sharedPref;
-    private SharedPreferences.Editor SharedPrefEdit;
+    private SharedPreferences.Editor sharedPrefEdit;
 
     public ExpandableListAdapter(Context context, List<Materia> materias) {
         this.context = context;
         this.materias = materias;
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPrefEdit = sharedPref.edit();
+        sharedPrefEdit = sharedPref.edit();
 
         server = context.getString(R.string.wstcc);
 
