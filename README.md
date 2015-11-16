@@ -19,9 +19,11 @@ Protótipo de aplicativo **Android**, para trabalho de conclusão de curso, cons
 
 O projeto continua em andamento, mas ja está em um modelo estável. Os seguintes screenshots serão atualizados conforme novas modificações surgirem.
 
-![Login](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/login.png)
+![View Login](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/login.png)
+![View Novo usuário](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/novousuario.png)
 ![View Principal](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/main.png)
-![NavigationDrawer](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/navdrawer.png)
+![View de Pesquisa](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/pesquisa.png)
+![View NavigationDrawer](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/navdrawer.png)
 ![View de Resposta](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/resposta.png)
 ![View de Duvida](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/novaduvida.png)
 ![View de Materias](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/materias.png)
