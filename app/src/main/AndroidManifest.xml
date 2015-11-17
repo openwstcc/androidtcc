@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.gqueiroz.androidtcc">
+    package="com.example.gqueiroz.androidtcc" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -8,41 +8,37 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-
-        <activity android:name="edu.fatec.activity.LoginActivity">
+        android:theme="@style/AppTheme" >
+        <activity android:name="edu.fatec.activity.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="edu.fatec.activity.MainActivity"
-            android:label="@string/app_name"></activity>
-
+            android:label="@string/app_name" />
         <activity
             android:name="edu.fatec.activity.MateriaActivity"
             android:label="@string/title_activity_materia_test"
-            android:parentActivityName="edu.fatec.activity.MainActivity">
+            android:parentActivityName="edu.fatec.activity.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.fatec.activity.MainActivity" />
         </activity>
-
         <activity
             android:name="edu.fatec.activity.NovoUsuarioActivity"
             android:label="@string/title_activity_usuario_test"
-            android:parentActivityName="edu.fatec.activity.LoginActivity">
+            android:parentActivityName="edu.fatec.activity.LoginActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.fatec.activity.LoginActivity" />
         </activity>
-
         <activity
             android:name="edu.fatec.test.DuvidaTestActivity"
             android:label="@string/title_activity_duvida_test"
-            android:parentActivityName="edu.fatec.activity.MainActivity">
+            android:parentActivityName="edu.fatec.activity.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.fatec.activity.MainActivity" />
@@ -50,7 +46,7 @@
         <activity
             android:name="edu.fatec.activity.RespostaActivity"
             android:label="@string/title_activity_resposta_test"
-            android:parentActivityName="edu.fatec.test.DuvidaTestActivity">
+            android:parentActivityName="edu.fatec.test.DuvidaTestActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.fatec.test.DuvidaTestActivity" />
@@ -58,7 +54,7 @@
         <activity
             android:name="edu.fatec.test.ApresentacaoActivity"
             android:label="@string/title_activity_apresentacao"
-            android:parentActivityName="edu.fatec.activity.MainActivity">
+            android:parentActivityName="edu.fatec.activity.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.fatec.activity.MainActivity" />
@@ -66,10 +62,14 @@
         <activity
             android:name="edu.fatec.activity.NovaDuvidaActivity"
             android:label="@string/title_activity_nova_duvida_test"
-            android:parentActivityName="edu.fatec.test.DuvidaTestActivity">
+            android:parentActivityName="edu.fatec.test.DuvidaTestActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.fatec.test.DuvidaTestActivity" />
+        </activity>
+        <activity
+            android:name="edu.fatec.activity.PerfilUsuarioActivity"
+            android:label="@string/title_activity_perfil_usuario" >
         </activity>
     </application>
 

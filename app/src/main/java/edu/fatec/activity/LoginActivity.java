@@ -83,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         registre.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Erro ao se conectar com o WebService. Tente Novamente.", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(LoginActivity.this, NovoUsuarioActivity.class);
                 startActivity(i);
             }

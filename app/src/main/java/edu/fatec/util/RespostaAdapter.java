@@ -194,7 +194,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(cntx, "Erro ao acesssar o servidor." + new Gson().toJson(like(idResposta, cntx)), Toast.LENGTH_SHORT).show();
+                Toast.makeText(cntx, "Verifique sua conexão com a internet para curitr uma resposta.", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
