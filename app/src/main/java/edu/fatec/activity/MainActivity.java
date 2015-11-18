@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -139,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         infoNomeUsuario.setText(usuario.getNome() + " " + usuario.getSobrenome());
         infoEmailUsuario.setText(usuario.getEmail());
 
-        String[] osArray = {"Minhas Matérias", "Todas as Dúvidas", " Relacionadas", "Minhas Dúvidas", "Meu Perfil", "Desconectar"};
+        String[] osArray = {"Minhas Matérias", "Todas as Dúvidas", "Relacionadas", "Minhas Dúvidas", "Meu Perfil", "Desconectar"};
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         drawerList.setAdapter(arrayAdapter);
 
@@ -149,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if (id == 0) {
+                    drawerLayout.closeDrawer(Gravity.LEFT);
                     Intent i = new Intent(MainActivity.this, MateriaActivity.class);
                     startActivity(i);
                 }
@@ -158,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidas";
                     volleyRequest(actualRest);
+                    drawerLayout.closeDrawer(Gravity.LEFT);
                 }
 
                 if (id == 2) {
@@ -165,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidasMateriaPorUsuario";
                     volleyRequest(actualRest);
+                    drawerLayout.closeDrawer(Gravity.LEFT);
                 }
 
                 if (id == 3) {
@@ -172,13 +176,17 @@ public class MainActivity extends AppCompatActivity {
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidasUsuario";
                     volleyRequest(actualRest);
+                    drawerLayout.closeDrawer(Gravity.LEFT);
                 }
 
                 if (id == 4) {
-                    //Meu Perfil
+                    drawerLayout.closeDrawer(Gravity.LEFT);
+                    Intent i = new Intent(MainActivity.this, PerfilUsuarioActivity.class);
+                    startActivity(i);
                 }
 
                 if (id == 5) {
+                    drawerLayout.closeDrawer(Gravity.LEFT);
                     sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     SharedPreferences.Editor SharedPrefEdit = sharedPref.edit();
                     SharedPrefEdit.putString("jsonUsuario", "");
@@ -241,7 +249,6 @@ public class MainActivity extends AppCompatActivity {
             pesquisaDialog = new PesquisaDialog(MainActivity.this);
             pesquisaDialog.show();
         }
-
 
         if (actionBarDrawerToggle.onOptionsItemSelected(item))
             return true;

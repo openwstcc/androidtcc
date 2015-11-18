@@ -6,11 +6,11 @@
     tools:context="edu.fatec.activity.NovoUsuarioActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:orientation="vertical"
-        android:id="@+id/linearLayout">
+        android:orientation="vertical">
 
         <include
             android:id="@+id/toolbar"
@@ -23,66 +23,95 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/activity_vertical_margin">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal|center_vertical"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:id="@+id/iconeContato"
-                android:background="@drawable/ic_account_circle_black_24dp"
-                android:backgroundTint="@color/colorAccentRipple"/>
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/viewEmail"
-                android:textSize="20sp"
-                android:layout_marginBottom="20dp"
-                android:text="email@email.com.br"/>
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical">
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editNome"
-                android:layout_marginBottom="10dp"
-                android:hint="Nome"/>
+                <ImageView
+                    android:layout_height="80dp"
+                    android:layout_width="80dp"
+                    android:src="@drawable/ic_account_circle_black_24dp"
+                    android:tint="@color/colorAccent"/>
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editSobreNome"
-                android:layout_marginBottom="10dp"
-                android:hint="Sobrenome"/>
+                <TextView
+                    android:id="@+id/viewEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:text="email@email.com.br"
+                    android:textSize="20sp" />
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editTelefone"
-                android:hint="+55 11 9999-9999"
-                android:layout_marginBottom="10dp"
-                android:inputType="phone"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editDataNasc"
-                android:hint="00/00/00"
-                android:ems="10"
-                android:focusable="false"
-                android:inputType="none"/>
+                    <TextView
+                        android:id="@+id/drawContact"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/ic_account_circle_black_24dp" />
 
-        </LinearLayout>
+                    <EditText
+                        android:id="@+id/editNome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nome" />
+                </LinearLayout>
 
-    </ScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/ic_account_circle_black_24dp"
+                        android:visibility="invisible" />
+
+                    <EditText
+                        android:id="@+id/editSobreNome"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+
+                        android:hint="Sobrenome" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/drawPhone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/ic_phone_black_24dp" />
+
+                    <EditText
+                        android:id="@+id/editTelefone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:ems="10"
+                        android:hint="Telefone"
+                        android:inputType="phone" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
-
-
-
 
 </RelativeLayout>

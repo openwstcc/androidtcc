@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -13,22 +14,29 @@ import com.example.gqueiroz.androidtcc.R;
 import com.google.gson.Gson;
 
 import edu.fatec.model.Usuario;
+import edu.fatec.util.SenhaDialog;
 
 public class PerfilUsuarioActivity extends AppCompatActivity {
     private TextView viewEmail;
     private EditText editNome;
     private EditText editSobreNome;
     private EditText editTelefone;
-    private EditText editDataNasc;
+
+    private Toolbar toolbar;
 
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor sharedPrefEdit;
+
+    private SenhaDialog senhaDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_usuario);
+
         findViewsById();
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String sharedUsuario = sharedPref.getString("jsonUsuario", "");
@@ -38,7 +46,6 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         editNome.setText(usuario.getNome());
         editSobreNome.setText(usuario.getSobrenome());
         editTelefone.setText(usuario.getTelefone());
-        editDataNasc.setText(usuario.getDataNasc().toString());
     }
 
     @Override
@@ -52,17 +59,18 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.alterarSenha) {
-            return true;
+            senhaDialog = new SenhaDialog(PerfilUsuarioActivity.this);
+            senhaDialog.show();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     public void findViewsById(){
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         viewEmail = (TextView) findViewById(R.id.viewEmail);
         editNome = (EditText) findViewById(R.id.editNome);
         editSobreNome = (EditText) findViewById(R.id.editSobreNome);
         editTelefone = (EditText) findViewById(R.id.editTelefone);
-        editDataNasc = (EditText) findViewById(R.id.editDataNasc);
     }
 }
