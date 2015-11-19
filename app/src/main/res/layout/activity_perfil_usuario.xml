@@ -16,32 +16,42 @@
             android:id="@+id/toolbar"
             layout="@layout/layout_actionbar" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="vertical">
+
+                <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_account_circle_black_512dp"
+                android:tint="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/viewEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:text="email@email.com.br"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/activity_vertical_margin">
+            android:layout_gravity="center_horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal|center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
                 android:orientation="vertical">
-
-                <ImageView
-                    android:layout_height="80dp"
-                    android:layout_width="80dp"
-                    android:src="@drawable/ic_account_circle_black_24dp"
-                    android:tint="@color/colorAccent"/>
-
-                <TextView
-                    android:id="@+id/viewEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="20dp"
-                    android:text="email@email.com.br"
-                    android:textSize="20sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -87,7 +97,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -109,6 +118,7 @@
                 </LinearLayout>
 
             </LinearLayout>
+
 
         </ScrollView>
 
