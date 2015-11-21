@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,19 +73,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         if (r.isDeuLike()) {
             respostaViewHolder.curtirResposta.setTextColor(respostaViewHolder.accent);
             respostaViewHolder.textRank.setTextColor(respostaViewHolder.accent);
-            for (Drawable d : respostaViewHolder.curtirResposta.getCompoundDrawables()) {
-                if (d != null) {
-                    Drawable wrapDrawable = DrawableCompat.wrap(d);
-                    DrawableCompat.setTint(wrapDrawable, respostaViewHolder.accent);
-                }
-            }
-        } else {
-            for (Drawable d : respostaViewHolder.curtirResposta.getCompoundDrawables()) {
-                if (d != null) {
-                    Drawable wrapDrawable = DrawableCompat.wrap(d);
-                    DrawableCompat.setTint(wrapDrawable, respostaViewHolder.textColor);
-                }
-            }
+            respostaViewHolder.curtirIcon.setColorFilter(respostaViewHolder.accent);
         }
 
         if (r.isFlagProfessor()){
@@ -144,6 +133,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         protected TextView profIcon;
         protected TextView profCriador;
         protected TextView textRank;
+        protected ImageView curtirIcon;
         protected int accent;
         protected int textColor;
         protected int success;
@@ -157,11 +147,12 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
             compartilharResposta = (TextView) v.findViewById(R.id.compartilharResposta);
             textRank = (TextView) v.findViewById(R.id.textRank);
             accent = v.getResources().getColor(R.color.colorAccentRipple);
-            success = v.getResources().getColor(R.color.colorSuccess);
+            success = v.getResources().getColor(R.color.colorAccentRipple);
             textColor = v.getResources().getColor(R.color.textColor);
             profIcon = (TextView) v.findViewById(R.id.flagProf);
             profCriador = (TextView) v.findViewById(R.id.flagCriador);
             backgroundReposta = (LinearLayout) v.findViewById(R.id.backgroundReposta);
+            curtirIcon = (ImageView) v.findViewById(R.id.curtirIcon);
         }
     }
 
@@ -205,24 +196,13 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                         if (curtiuDescurtiu.equals("true")) {
                             respostaViewHolderAux.curtirResposta.setTextColor(respostaViewHolderAux.accent);
                             respostaViewHolderAux.textRank.setTextColor(respostaViewHolderAux.accent);
-                            for (Drawable d : respostaViewHolderAux.curtirResposta.getCompoundDrawables()) {
-                                if (d != null) {
-                                    Drawable wrapDrawable = DrawableCompat.wrap(d);
-                                    DrawableCompat.setTint(wrapDrawable, respostaViewHolderAux.accent);
-                                }
-
-                            }
+                            respostaViewHolderAux.curtirIcon.setColorFilter(respostaViewHolderAux.accent);
                             rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) + 1;
                             respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
                         } else {
                             respostaViewHolderAux.curtirResposta.setTextColor(respostaViewHolderAux.textColor);
                             respostaViewHolderAux.textRank.setTextColor(respostaViewHolderAux.textColor);
-                            for (Drawable d : respostaViewHolderAux.curtirResposta.getCompoundDrawables()) {
-                                if (d != null) {
-                                    Drawable wrapDrawable = DrawableCompat.wrap(d);
-                                    DrawableCompat.setTint(wrapDrawable, respostaViewHolderAux.textColor);
-                                }
-                            }
+                            respostaViewHolderAux.curtirIcon.setColorFilter(respostaViewHolderAux.textColor);
                             rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) - 1;
                             respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
                         }

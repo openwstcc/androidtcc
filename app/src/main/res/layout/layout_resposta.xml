@@ -91,6 +91,15 @@
                 android:textSize="15dp"
                 android:text="0" />
 
+            <ImageView
+                android:id="@+id/curtirIcon"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_thumb_up_black_24dp"/>
+
             <TextView
                 android:id="@+id/curtirResposta"
                 style="?android:attr/borderlessButtonStyle"
@@ -98,7 +107,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".3"
                 android:textSize="13dp"
-                android:drawableLeft="@drawable/ic_thumb_up_black_24dp"
                 android:text="Curtir" />
 
             <TextView
