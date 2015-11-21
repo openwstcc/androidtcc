@@ -39,7 +39,6 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
     private SenhaDialog senhaDialog;
 
     private SharedPreferences sharedPref;
-    private SharedPreferences.Editor sharedPrefEdit;
 
     private Usuario usuario;
 

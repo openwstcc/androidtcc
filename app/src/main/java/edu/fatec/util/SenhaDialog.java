@@ -2,28 +2,46 @@ package edu.fatec.util;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.gqueiroz.androidtcc.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import edu.fatec.activity.LoginActivity;
+import edu.fatec.model.Usuario;
 
 public class SenhaDialog extends Dialog {
     private Activity c;
-    private EditText senhaAntiga;
     private EditText senhaNova;
     private EditText senhaConfirma;
+    private ProgressBar progressBar;
 
     private Button cancelaSenha;
     private Button atualizaSenha;
 
-    private Toolbar toolbar;
+    private Usuario usuario;
 
-    private boolean visible = false;
+    private SharedPreferences sharedPref;
 
     public SenhaDialog(Activity a) {
         super(a);
@@ -38,6 +56,11 @@ public class SenhaDialog extends Dialog {
 
         findViewsById();
 
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(c.getApplicationContext());
+        String sharedUsuario = sharedPref.getString("jsonUsuario", "");
+        usuario = new Gson().fromJson(sharedUsuario, Usuario.class);
+
+
         cancelaSenha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,27 +73,25 @@ public class SenhaDialog extends Dialog {
             public void onClick(View v) {
                 if (!validator())
                     return;
-                closeDialog();
+                volleyRequest();
             }
         });
     }
 
-    public void closeDialog(){
+    public void closeDialog() {
         this.dismiss();
     }
 
-    public void findViewsById(){
-        senhaAntiga = (EditText) findViewById(R.id.senhaAntiga);
+    public void findViewsById() {
         senhaNova = (EditText) findViewById(R.id.senhaNova);
         senhaConfirma = (EditText) findViewById(R.id.senhaConfirma);
         cancelaSenha = (Button) findViewById(R.id.cancelaSenha);
         atualizaSenha = (Button) findViewById(R.id.atualizaSenha);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarSenha);
     }
 
-    private boolean validator(){
-        if (!validaSenha(senhaAntiga))
-            return false;
-        else if (!validaSenha(senhaNova))
+    private boolean validator() {
+        if (!validaSenha(senhaNova))
             return false;
         else if (!validaConfirmaSenha(senhaNova, senhaConfirma))
             return false;
@@ -110,4 +131,37 @@ public class SenhaDialog extends Dialog {
         } else
             return true;
     }
+
+    private void volleyRequest() {
+        usuario.setSenha(senhaNova.getText().toString());
+        progressBar.setVisibility(View.VISIBLE);
+        String server = c.getString(R.string.wstcc);
+
+        RequestQueue queue = Volley.newRequestQueue(c);
+        String url = server + "usuarios/alterarSenha";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(c.getApplicationContext(), "Senha atualizada", Toast.LENGTH_SHORT).show();
+                        closeDialog();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(c.getApplicationContext(), "Não foi possível atualizar a senha. Por favor, tente novamente.", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+            }
+        }) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                Gson gson = new GsonBuilder().create();
+                String body = gson.toJson(usuario);
+                return body.getBytes();
+            }
+        };
+        queue.add(stringRequest);
+    }
+
 }

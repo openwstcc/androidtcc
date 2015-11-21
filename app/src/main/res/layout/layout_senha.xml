@@ -8,14 +8,7 @@
     android:orientation="vertical"
     tools:context=".PesquisaDialog">
 
-    <EditText
-        android:id="@+id/senhaAntiga"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:hint="Senha antiga" />
-
-    <EditText
+   <EditText
         android:id="@+id/senhaNova"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,12 +20,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:hint="Confirma nova senha" />
+        android:hint="Confirma nova senha"
+        android:layout_marginBottom="5dp"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarSenha"
+        android:layout_gravity="center_horizontal"
+        android:indeterminate="true"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <Button
