@@ -23,7 +23,7 @@
         android:layout_marginBottom="5dp"
         android:background="@color/colorPrimary"
         android:text="Filtrar Pesquisa"
-        android:textColor="@color/textColorPrimary" />
+        android:textColor="@color/textColorPrimary"/>
 
     <CheckBox
         android:id="@+id/checkTitulo"
@@ -53,6 +53,15 @@
         android:layout_marginBottom="5dp"
         android:checked="true"
         android:text="Pesquisar por Palavras-chave" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarSenha"
+        android:layout_gravity="center_horizontal"
+        android:indeterminate="true"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="fill_parent"

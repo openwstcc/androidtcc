@@ -10,6 +10,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -39,6 +42,8 @@ import edu.fatec.json.JsonDuvida;
 import edu.fatec.model.Materia;
 import edu.fatec.model.Usuario;
 import edu.fatec.util.MultiSelectionSpinner;
+import edu.fatec.util.NovaDuvidaHelp;
+import edu.fatec.util.PesquisaDialog;
 
 public class NovaDuvidaActivity extends AppCompatActivity {
     private EditText tituloNovaDuvida;
@@ -57,6 +62,8 @@ public class NovaDuvidaActivity extends AppCompatActivity {
     private FloatingActionButton inserirNovaDuvida;
 
     private SharedPreferences sharedPref;
+
+    private NovaDuvidaHelp novaduvidahelp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +86,26 @@ public class NovaDuvidaActivity extends AppCompatActivity {
                 volleyNovaDuvida();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_nova_duvida, menu);
+
+        return true ;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.menu_nova_duvida){
+            novaduvidahelp = new NovaDuvidaHelp(NovaDuvidaActivity.this);
+            novaduvidahelp.show();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void findViewsById() {
