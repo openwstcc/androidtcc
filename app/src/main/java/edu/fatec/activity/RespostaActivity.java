@@ -54,6 +54,9 @@ public class RespostaActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private SwipeRefreshLayout swiperRefreshResposta;
     private FloatingActionButton inserirResposta;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor sharedPrefEdit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,11 @@ public class RespostaActivity extends AppCompatActivity {
             jsonDuvida = extras.getString("duvida");
 
         duvida = new Gson().fromJson(jsonDuvida, Duvida.class);
+
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor SharedPrefEdit = sharedPref.edit();
+        SharedPrefEdit.putString("jsonDuvidaTemp", jsonDuvida);
+        SharedPrefEdit.commit();
 
         conteudoDuvida.setText(duvida.getConteudo());
 

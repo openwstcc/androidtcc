@@ -1,5 +1,6 @@
 package edu.fatec.model;
 
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -12,8 +13,31 @@ public class Duvida {
     private int idDuvida;
     private String titulo;
     private String conteudo;
-    private String criador;
     private String dataCriacao;
+    private String criador;
+    private int idUsuario;
+    private int usuarioLogado;
+    private int[] materias;
+    private int qtdRespostas;
+    private String[] tags;
+
+    public String getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(String dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+
+    public int getUsuarioLogado() {
+        return usuarioLogado;
+    }
+
+    public void setUsuarioLogado(int usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
+    }
+
 
     public int getIdDuvida() {
         return idDuvida;
@@ -39,13 +63,54 @@ public class Duvida {
         this.conteudo = conteudo;
     }
 
-    public String getDataCriacao() {
-        return dataCriacao;
+    public String getCriador() {
+        return criador;
     }
 
-    public void setDataCriacao(String dataCriacao) {
-        this.dataCriacao = dataCriacao;
+    public void setCriador(String criador) {
+        this.criador = criador;
     }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public int[] getMaterias() {
+        return materias;
+    }
+
+    public void setMaterias(int[] materias) {
+        this.materias = materias;
+    }
+
+    public int getQtdRespostas() {
+        return qtdRespostas;
+    }
+
+    public void setQtdRespostas(int qtdRespostas) {
+        this.qtdRespostas = qtdRespostas;
+    }
+
+    public String[] getTags() {
+        return tags;
+    }
+
+    public void setTags(String[] tags) {
+        this.tags = tags;
+    }
+
+    @Override
+    public String toString() {
+        return "Duvida [idDuvida=" + idDuvida + ", titulo=" + titulo + ", conteudo=" + conteudo + ", dataCriacao="
+                + dataCriacao + ", criador=" + criador + ", idUsuario=" + idUsuario + ", materias="
+                + Arrays.toString(materias) + ", qtdRespostas=" + qtdRespostas + ", tags=" + Arrays.toString(tags)
+                + "]";
+    }
+
 
     @Override
     public int hashCode() {
@@ -87,18 +152,5 @@ public class Duvida {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "Duvida [idDuvida=" + idDuvida + ", titulo=" + titulo + ", conteudo=" + conteudo
-                + ", dataCriacao=" + dataCriacao + "]";
-    }
-
-    public String getCriador() {
-        return criador;
-    }
-
-    public void setCriador(String criador) {
-        this.criador = criador;
-    }
 
 }

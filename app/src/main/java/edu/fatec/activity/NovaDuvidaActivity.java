@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import edu.fatec.json.JsonDuvida;
+import edu.fatec.model.Duvida;
 import edu.fatec.model.Materia;
 import edu.fatec.model.Usuario;
 import edu.fatec.util.MultiSelectionSpinner;
@@ -120,12 +120,12 @@ public class NovaDuvidaActivity extends AppCompatActivity {
         progressBarNovaDuvida = (ProgressBar) findViewById(R.id.progressBarDuvida);
     }
 
-    private JsonDuvida novaDuvida() {
+    private Duvida novaDuvida() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String sharedUsuario = sharedPref.getString("jsonUsuario", "");
         Usuario usuario = new Gson().fromJson(sharedUsuario, Usuario.class);
 
-        JsonDuvida d = new JsonDuvida();
+        Duvida d = new Duvida();
         d.setIdUsuario(usuario.getIdUsuario());
         d.setTitulo(tituloNovaDuvida.getText().toString());
         d.setConteudo(conteudoNovaDuvida.getText().toString());

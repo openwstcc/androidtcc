@@ -37,6 +37,7 @@ import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import edu.fatec.json.JsonResposta;
+import edu.fatec.model.Duvida;
 import edu.fatec.model.Resposta;
 import edu.fatec.model.Usuario;
 
@@ -81,6 +82,11 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                 }
             }
         }
+        if (r.isFlagProfessor()){
+            respostaViewHolder.profIcon.setVisibility(View.INVISIBLE);
+        }else{
+            respostaViewHolder.profIcon.setVisibility(View.VISIBLE);
+        }
 
         respostaViewHolder.compartilharResposta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +105,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
             @Override
             public void onClick(View v) {
                 respostaViewHolderAux = respostaViewHolder;
-                volleyLike(r.getIdResposta(), v.getContext());
+                volleyLike(r.getIdResposta(), v.getContext(),true);
             }
         });
     }
@@ -119,6 +125,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         protected TextView infoResposta;
         protected TextView curtirResposta;
         protected TextView compartilharResposta;
+        protected TextView profIcon;
         protected TextView textRank;
         protected int accent;
         protected int textColor;
@@ -133,6 +140,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
             textRank = (TextView) v.findViewById(R.id.textRank);
             accent = v.getResources().getColor(R.color.colorAccentRipple);
             textColor = v.getResources().getColor(R.color.textColor);
+            profIcon = (TextView) v.findViewById(R.id.flagProf);
         }
     }
 
@@ -142,7 +150,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         this.notifyDataSetChanged();
     }
 
-    private JsonResposta like(int idResposta, Context ct) {
+    private JsonResposta like(int idResposta, Context ct,boolean likeValidacao) {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(ct);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ct);
         String sharedUsuario = sharedPref.getString("jsonUsuario", "");
@@ -155,7 +163,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         return r;
     }
 
-    private void volleyLike(final int idResposta, final Context cntx) {
+    private void volleyLike(final int idResposta, final Context cntx, final boolean likeValidacao) {
         String server = cntx.getString(R.string.wstcc);
         String url = server + "respostas/adicionarRank";
 
@@ -175,6 +183,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                                     Drawable wrapDrawable = DrawableCompat.wrap(d);
                                     DrawableCompat.setTint(wrapDrawable, respostaViewHolderAux.accent);
                                 }
+
                             }
                             rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) + 1;
                             respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
@@ -199,7 +208,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         }) {
             @Override
             public byte[] getBody() throws AuthFailureError {
-                String resp = new Gson().toJson(like(idResposta, cntx));
+                String resp = new Gson().toJson(like(idResposta, cntx,likeValidacao));
                 return resp.getBytes();
             }
         };
