@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:minWidth="330dp"
+    android:orientation="vertical"
+    tools:context=".PesquisaDialog">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="Validar resposta?"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Uma resposta valida será visivel para todos os outros alunos no topo deste dúvida"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/apenasCurtir"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight=".5"
+            android:background="@android:color/transparent"
+            android:text="Apenas Curtir"
+            android:textColor="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/validarResposta"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight=".5"
+            android:background="@android:color/transparent"
+            android:text="Validar Resposta"
+            android:textColor="@color/colorPrimary" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
