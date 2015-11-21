@@ -366,4 +366,9 @@ public class MainActivity extends AppCompatActivity {
         System.exit(0);
     }
 
+    public void posPesquisa(String pesquisa, List<Duvida> retorno){
+        duvidaAdapter.swap(retorno);
+        getSupportActionBar().setTitle(pesquisa);
+    }
+
 }
