@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -41,7 +42,7 @@ import edu.fatec.model.Usuario;
 
 public class NovoUsuarioActivity extends AppCompatActivity {
     //View Objects
-    private Button inserirUsuario;
+    private FloatingActionButton inserirUsuario;
     private EditText nome;
     private EditText sobreNome;
     private EditText telefone;
@@ -87,12 +88,6 @@ public class NovoUsuarioActivity extends AppCompatActivity {
                         if (!validator())
                             return;
 
-                        infoNovoUsuario.setVisibility(View.VISIBLE);
-                        progressBarNovoUsuario.setVisibility(View.VISIBLE);
-                        textInfoNovoUsuario.setText("Seu usuário está sendo criado.");
-                        infoNovoUsuario.setBackgroundColor(Color.parseColor("#FFA726"));
-                        inserirUsuario.setEnabled(false);
-
                         volleyRequest();
                     }
                 }
@@ -131,8 +126,8 @@ public class NovoUsuarioActivity extends AppCompatActivity {
         telefone = (EditText) findViewById(R.id.telefone);
         dataNasc = (EditText) findViewById(R.id.dataNasc);
         dataNasc.setInputType(InputType.TYPE_NULL);
-        inserirUsuario = (Button) findViewById(R.id.inserirUsuario);
-        progressBarNovoUsuario = (ProgressBar) findViewById(R.id.progressBar);
+        inserirUsuario = (FloatingActionButton  ) findViewById(R.id.inserirUsuario);
+        progressBarNovoUsuario = (ProgressBar) findViewById(R.id.progressBarNovoUsuario);
         infoNovoUsuario = (LinearLayout) findViewById(R.id.infoNovoUsuario);
         textInfoNovoUsuario = (TextView) findViewById(R.id.textInfoNovoUsuario);
     }
@@ -164,6 +159,12 @@ public class NovoUsuarioActivity extends AppCompatActivity {
     }
 
     private void volleyRequest() {
+        infoNovoUsuario.setVisibility(View.VISIBLE);
+        progressBarNovoUsuario.setVisibility(View.VISIBLE);
+        textInfoNovoUsuario.setText("Seu usuário está sendo criado");
+        infoNovoUsuario.setBackgroundColor(Color.parseColor("#FFA726"));
+        inserirUsuario.setEnabled(false);
+
         String server = getString(R.string.wstcc);
 
         RequestQueue queue = Volley.newRequestQueue(NovoUsuarioActivity.this);
@@ -173,9 +174,18 @@ public class NovoUsuarioActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(getApplicationContext(), "Usuário criado com sucesso!", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(NovoUsuarioActivity.this, LoginActivity.class);
-                        startActivity(i);
+                        if (response.equals("1062")) {
+                            email.setError("Endereço de emai já existe. Por favor, informe outro endereço de email");
+                            email.setFocusable(true);
+                            inserirUsuario.setEnabled(true);
+                            textInfoNovoUsuario.setText("Endereço de email já existe");
+                            infoNovoUsuario.setBackgroundColor(Color.parseColor("#ff4444"));
+                            progressBarNovoUsuario.setVisibility(View.GONE);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Usuário criado com sucesso!", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(NovoUsuarioActivity.this, LoginActivity.class);
+                            startActivity(i);
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -329,5 +339,4 @@ public class NovoUsuarioActivity extends AppCompatActivity {
         } else
             return true;
     }
-
 }
