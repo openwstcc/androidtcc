@@ -8,6 +8,12 @@
     android:orientation="vertical"
     tools:context=".PesquisaDialog">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,6 +29,7 @@
         android:text="Uma resposta valida será visivel para todos os outros alunos no topo deste dúvida"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"

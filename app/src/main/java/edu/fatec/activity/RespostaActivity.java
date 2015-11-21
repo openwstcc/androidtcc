@@ -54,6 +54,7 @@ public class RespostaActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private SwipeRefreshLayout swiperRefreshResposta;
     private FloatingActionButton inserirResposta;
+
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor sharedPrefEdit;
 
@@ -99,7 +100,7 @@ public class RespostaActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         List<JsonResposta> respostas = new ArrayList<>();
-        respostaAdapter = new RespostaAdapter(respostas);
+        respostaAdapter = new RespostaAdapter(respostas, RespostaActivity.this);
         recyclerView.setAdapter(respostaAdapter);
 
         inserirResposta.setOnClickListener(new View.OnClickListener() {

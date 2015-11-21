@@ -1,9 +1,9 @@
 package edu.fatec.util;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -149,7 +149,8 @@ public class PesquisaDialog extends Dialog {
                         if (response == null)
                             closeDialog();
 
-                        Type listType = new TypeToken<ArrayList<Duvida>>() {}.getType();
+                        Type listType = new TypeToken<ArrayList<Duvida>>() {
+                        }.getType();
                         List<Duvida> jsonDuvidas = new Gson().fromJson(response, listType);
                         c.posPesquisa(conteudoPesquisa.getText().toString(), jsonDuvidas);
                         closeDialog();

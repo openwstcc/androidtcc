@@ -1,5 +1,6 @@
 package edu.fatec.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.preference.PreferenceManager;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,13 +46,22 @@ import edu.fatec.model.Usuario;
 public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.RespostaViewHolder> {
 
     private List<JsonResposta> RespostaList;
+    private Usuario usuarioAtual;
+    private Duvida duvidaAtual;
 
     private SharedPreferences sharedPref;
     private String curtiuDescurtiu;
     private RespostaViewHolder respostaViewHolderAux;
 
-    public RespostaAdapter(List<JsonResposta> RespostaList) {
+    private Activity c;
+    private ValidaResposta validaResposta;
+
+    public RespostaAdapter(List<JsonResposta> RespostaList, Activity a) {
         this.RespostaList = RespostaList;
+        this.c = a;
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(a.getApplicationContext());
+        usuarioAtual = new Gson().fromJson(sharedPref.getString("jsonUsuario", ""), Usuario.class);
+        duvidaAtual = new Gson().fromJson(sharedPref.getString("jsonDuvidaTemp", ""), Duvida.class);
     }
 
     @Override
@@ -69,22 +80,22 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
             respostaViewHolder.curtirResposta.setTextColor(respostaViewHolder.accent);
             respostaViewHolder.textRank.setTextColor(respostaViewHolder.accent);
             for (Drawable d : respostaViewHolder.curtirResposta.getCompoundDrawables()) {
-                if (d != null){
+                if (d != null) {
                     Drawable wrapDrawable = DrawableCompat.wrap(d);
                     DrawableCompat.setTint(wrapDrawable, respostaViewHolder.accent);
                 }
             }
         } else {
             for (Drawable d : respostaViewHolder.curtirResposta.getCompoundDrawables()) {
-                if (d != null){
+                if (d != null) {
                     Drawable wrapDrawable = DrawableCompat.wrap(d);
                     DrawableCompat.setTint(wrapDrawable, respostaViewHolder.textColor);
                 }
             }
         }
-        if (r.isFlagProfessor()){
+        if (r.isFlagProfessor()) {
             respostaViewHolder.profIcon.setVisibility(View.INVISIBLE);
-        }else{
+        } else {
             respostaViewHolder.profIcon.setVisibility(View.VISIBLE);
         }
 
@@ -105,7 +116,11 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
             @Override
             public void onClick(View v) {
                 respostaViewHolderAux = respostaViewHolder;
-                volleyLike(r.getIdResposta(), v.getContext(),true);
+                if (usuarioAtual.getIdUsuario() == duvidaAtual.getIdUsuario()) {
+                    validaResposta = new ValidaResposta(c);
+                    validaResposta.show();
+                } else
+                    volleyLike(r.getIdResposta(), v.getContext(), true);
             }
         });
     }
@@ -150,7 +165,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         this.notifyDataSetChanged();
     }
 
-    private JsonResposta like(int idResposta, Context ct,boolean likeValidacao) {
+    private JsonResposta like(int idResposta, Context ct, boolean likeValidacao) {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(ct);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ct);
         String sharedUsuario = sharedPref.getString("jsonUsuario", "");
@@ -179,7 +194,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                             respostaViewHolderAux.curtirResposta.setTextColor(respostaViewHolderAux.accent);
                             respostaViewHolderAux.textRank.setTextColor(respostaViewHolderAux.accent);
                             for (Drawable d : respostaViewHolderAux.curtirResposta.getCompoundDrawables()) {
-                                if (d != null){
+                                if (d != null) {
                                     Drawable wrapDrawable = DrawableCompat.wrap(d);
                                     DrawableCompat.setTint(wrapDrawable, respostaViewHolderAux.accent);
                                 }
@@ -191,7 +206,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                             respostaViewHolderAux.curtirResposta.setTextColor(respostaViewHolderAux.textColor);
                             respostaViewHolderAux.textRank.setTextColor(respostaViewHolderAux.textColor);
                             for (Drawable d : respostaViewHolderAux.curtirResposta.getCompoundDrawables()) {
-                                if (d != null){
+                                if (d != null) {
                                     Drawable wrapDrawable = DrawableCompat.wrap(d);
                                     DrawableCompat.setTint(wrapDrawable, respostaViewHolderAux.textColor);
                                 }
@@ -208,7 +223,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         }) {
             @Override
             public byte[] getBody() throws AuthFailureError {
-                String resp = new Gson().toJson(like(idResposta, cntx,likeValidacao));
+                String resp = new Gson().toJson(like(idResposta, cntx, likeValidacao));
                 return resp.getBytes();
             }
         };
