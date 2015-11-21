@@ -10,12 +10,16 @@ import com.example.gqueiroz.androidtcc.R;
 
 public class ValidaResposta extends Dialog{
     private Activity c;
+    private RespostaAdapter respostaAdapter;
+    private int idResposta;
     private Button validaResposta;
     private Button apenasCurtir;
 
-    public ValidaResposta(Activity a){
+    public ValidaResposta(Activity a, RespostaAdapter respostaAdapter, int idResposta){
         super(a);
         this.c = a;
+        this.respostaAdapter = respostaAdapter;
+        this.idResposta = idResposta;
     }
 
     @Override
@@ -26,17 +30,20 @@ public class ValidaResposta extends Dialog{
 
         findViewsById();
 
-        validaResposta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeDialog();
-            }
-        });
-
         apenasCurtir = (Button) findViewById(R.id.apenasCurtir);
         apenasCurtir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                respostaAdapter.volleyLike(idResposta, c, true);
+                closeDialog();
+            }
+        });
+
+        validaResposta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                respostaAdapter.valida = true;
+                respostaAdapter.volleyLike(idResposta, c, true);
                 closeDialog();
             }
         });

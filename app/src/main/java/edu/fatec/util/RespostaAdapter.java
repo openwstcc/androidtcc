@@ -2,21 +2,17 @@ package edu.fatec.util;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.preference.PreferenceManager;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,18 +25,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gqueiroz.androidtcc.R;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.w3c.dom.Text;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import edu.fatec.json.JsonResposta;
 import edu.fatec.model.Duvida;
-import edu.fatec.model.Resposta;
 import edu.fatec.model.Usuario;
 
 public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.RespostaViewHolder> {
@@ -55,6 +46,8 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
 
     private Activity c;
     private ValidaResposta validaResposta;
+
+    public boolean valida = false;
 
     public RespostaAdapter(List<JsonResposta> RespostaList, Activity a) {
         this.RespostaList = RespostaList;
@@ -93,20 +86,26 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                 }
             }
         }
-        if (r.isFlagProfessor()) {
-            respostaViewHolder.profIcon.setVisibility(View.INVISIBLE);
-        } else {
+
+        if (r.isFlagProfessor()){
+            respostaViewHolder.backgroundReposta.setBackgroundColor(respostaViewHolder.success);
             respostaViewHolder.profIcon.setVisibility(View.VISIBLE);
         }
 
-        respostaViewHolder.compartilharResposta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String msg = r.getResposta() + "\nRespondida por " + r.getCriador();
-                Intent i = new Intent();
-                i.setAction(Intent.ACTION_SEND);
-                i.putExtra(Intent.EXTRA_TEXT, msg);
-                i.setType("text/plain");
+        if (r.isFlagCriador()){
+            respostaViewHolder.backgroundReposta.setBackgroundColor(respostaViewHolder.success);
+            respostaViewHolder.profIcon.setVisibility(View.VISIBLE);
+        }
+
+
+            respostaViewHolder.compartilharResposta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String msg = r.getResposta() + "\nRespondida por " + r.getCriador();
+                    Intent i = new Intent();
+                    i.setAction(Intent.ACTION_SEND);
+                    i.putExtra(Intent.EXTRA_TEXT, msg);
+                    i.setType("text/plain");
                 v.getContext().startActivity(i);
 
             }
@@ -117,7 +116,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
             public void onClick(View v) {
                 respostaViewHolderAux = respostaViewHolder;
                 if (usuarioAtual.getIdUsuario() == duvidaAtual.getIdUsuario()) {
-                    validaResposta = new ValidaResposta(c);
+                    validaResposta = new ValidaResposta(c, RespostaAdapter.this, r.getIdResposta());
                     validaResposta.show();
                 } else
                     volleyLike(r.getIdResposta(), v.getContext(), true);
@@ -136,26 +135,33 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
 
     public static class RespostaViewHolder extends RecyclerView.ViewHolder {
 
+        protected CardView cardView;
+        protected LinearLayout backgroundReposta;
         protected TextView RespostaConteudo;
         protected TextView infoResposta;
         protected TextView curtirResposta;
         protected TextView compartilharResposta;
         protected TextView profIcon;
+        protected TextView profCriador;
         protected TextView textRank;
         protected int accent;
         protected int textColor;
-
+        protected int success;
 
         public RespostaViewHolder(View v) {
             super(v);
+            cardView = (CardView) v.findViewById(R.id.card_view);
             RespostaConteudo = (TextView) v.findViewById(R.id.respostaConteudo);
             infoResposta = (TextView) v.findViewById(R.id.infoResposta);
             curtirResposta = (TextView) v.findViewById(R.id.curtirResposta);
             compartilharResposta = (TextView) v.findViewById(R.id.compartilharResposta);
             textRank = (TextView) v.findViewById(R.id.textRank);
             accent = v.getResources().getColor(R.color.colorAccentRipple);
+            success = v.getResources().getColor(R.color.colorSuccess);
             textColor = v.getResources().getColor(R.color.textColor);
             profIcon = (TextView) v.findViewById(R.id.flagProf);
+            profCriador = (TextView) v.findViewById(R.id.flagCriador);
+            backgroundReposta = (LinearLayout) v.findViewById(R.id.backgroundReposta);
         }
     }
 
@@ -165,7 +171,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         this.notifyDataSetChanged();
     }
 
-    private JsonResposta like(int idResposta, Context ct, boolean likeValidacao) {
+    public JsonResposta like(int idResposta, Context ct) {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(ct);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ct);
         String sharedUsuario = sharedPref.getString("jsonUsuario", "");
@@ -175,10 +181,16 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
 
         r.setUsuarioLogado(usuario.getIdUsuario());
         r.setIdResposta(idResposta);
+
+        if (usuarioAtual.getPerfil().equals("A"))
+            r.setFlagCriador(valida);
+        else
+            r.setFlagProfessor(valida);
+
         return r;
     }
 
-    private void volleyLike(final int idResposta, final Context cntx, final boolean likeValidacao) {
+    public void volleyLike(final int idResposta, final Context cntx, final boolean likeValidacao) {
         String server = cntx.getString(R.string.wstcc);
         String url = server + "respostas/adicionarRank";
 
@@ -223,7 +235,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         }) {
             @Override
             public byte[] getBody() throws AuthFailureError {
-                String resp = new Gson().toJson(like(idResposta, cntx, likeValidacao));
+                String resp = new Gson().toJson(like(idResposta, cntx));
                 return resp.getBytes();
             }
         };

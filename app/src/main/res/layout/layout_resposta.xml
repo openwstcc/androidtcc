@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:layout_margin="5dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
@@ -30,18 +31,28 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:text="Criador em Jan 00, 0000"
-                android:gravity="center_vertical"
-                android:layout_weight=".4"
+                android:layout_weight=".9"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/flagCriador"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_done_white_24dp"
+                android:textSize="15dp"
+                android:layout_weight="0.1"
+                android:visibility="gone"/>
+
             <TextView
                 android:id="@+id/flagProf"
-                android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_school_white_24dp"
                 android:textSize="15dp"
-                android:layout_weight="0.07" />
+                android:layout_weight="0.1"
+                android:visibility="gone"/>
+
         </LinearLayout>
 
         <TextView
