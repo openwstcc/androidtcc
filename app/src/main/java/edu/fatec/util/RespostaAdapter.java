@@ -77,7 +77,6 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         respostaViewHolder.textRank.setText(String.valueOf(r.getRank()));
 
         if (r.isFlagCriador()) {
-            valida = r.isFlagCriador();
             respostaViewHolder.iconAluno.setVisibility(View.VISIBLE);
             colorirCard(respostaViewHolder.cardView, respostaViewHolder.backgroundReposta, respostaViewHolder.RespostaConteudo, respostaViewHolder.curtirIcon,
                     respostaViewHolder.compartilharIcon, respostaViewHolder.textRank, respostaViewHolder.curtirResposta, respostaViewHolder.compartilharResposta, respostaViewHolder.divisorResposta);
@@ -176,10 +175,8 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         r.setUsuarioLogado(usuario.getIdUsuario());
         r.setIdResposta(idResposta);
 
-        if (usuarioAtual.getPerfil().equals("A"))
-            r.setFlagCriador(valida);
-        else
-            r.setFlagProfessor(valida);
+
+        r.setFlagCriador(valida);
 
         return r;
     }
@@ -201,17 +198,18 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                                 respostaViewHolderAux.curtirResposta.setTextColor(accent);
                                 respostaViewHolderAux.textRank.setTextColor(accent);
                                 respostaViewHolderAux.curtirIcon.setColorFilter(accent);
+                                rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) + 1;
+                                respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
                             }
-                            rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) + 1;
-                            respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
+
                         } else {
                             if (!valida) {
                                 respostaViewHolderAux.curtirResposta.setTextColor(textColor);
                                 respostaViewHolderAux.textRank.setTextColor(textColor);
                                 respostaViewHolderAux.curtirIcon.setColorFilter(textColor);
+                                rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) - 1;
+                                respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
                             }
-                            rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) - 1;
-                            respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
                         }
                     }
                 }, new Response.ErrorListener() {
