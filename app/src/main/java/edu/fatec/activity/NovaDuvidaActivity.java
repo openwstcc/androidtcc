@@ -81,7 +81,7 @@ public class NovaDuvidaActivity extends AppCompatActivity {
         inserirNovaDuvida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!validator())
+                if (!validator())
                     return;
                 volleyNovaDuvida();
             }
@@ -213,7 +213,11 @@ public class NovaDuvidaActivity extends AppCompatActivity {
             return false;
         else if (!validaConteudo(conteudoNovaDuvida))
             return false;
-        else
+        else if (getSelectedMaterias().length > 3){
+            Toast.makeText(NovaDuvidaActivity.this, "Selecione no máximo 3 matérias", Toast.LENGTH_SHORT).show();
+            return false;
+
+        } else
             return true;
     }
 
@@ -244,4 +248,5 @@ public class NovaDuvidaActivity extends AppCompatActivity {
         } else
             return true;
     }
+
 }

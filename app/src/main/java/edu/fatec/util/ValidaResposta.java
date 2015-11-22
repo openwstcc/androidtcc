@@ -43,7 +43,7 @@ public class ValidaResposta extends Dialog{
         apenasCurtir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                respostaAdapter.volleyLike(idResposta, c, true);
+                respostaAdapter.volleyLike(idResposta, c);
                 closeDialog();
             }
         });
@@ -52,7 +52,7 @@ public class ValidaResposta extends Dialog{
             @Override
             public void onClick(View v) {
                 respostaAdapter.valida = true;
-                respostaAdapter.volleyLike(idResposta, c, true);
+                respostaAdapter.volleyLike(idResposta, c);
                 closeDialog();
 
                 sharedPref = PreferenceManager.getDefaultSharedPreferences(c.getApplicationContext());

@@ -43,8 +43,13 @@ public class MultiSelectionSpinner extends Spinner implements OnMultiChoiceClick
     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
         if (mSelection != null && which < mSelection.length) {
             mSelection[which] = isChecked;
-            simple_adapter.clear();
-            simple_adapter.add(buildSelectedItemString());
+
+            if (getSelectedIndices().size() > 3) {
+                Toast.makeText(getContext(), "Selecione no máximo 3 matérias", Toast.LENGTH_LONG).show();
+            } else {
+                simple_adapter.clear();
+                simple_adapter.add(buildSelectedItemString());
+            }
         } else {
             throw new IllegalArgumentException(
                     "Argument 'which' is out of bounds.");
@@ -61,12 +66,7 @@ public class MultiSelectionSpinner extends Spinner implements OnMultiChoiceClick
         builder.setPositiveButton("Escolher", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(getSelectedItemsAsString().length()>3){
-                    validator = false;
-                    Toast.makeText(getContext(),"Selecione no máximo 3 matérias",Toast.LENGTH_LONG);
-                } else {
-                    System.arraycopy(mSelection, 0, mSelectionAtStart, 0, mSelection.length);
-                }
+                System.arraycopy(mSelection, 0, mSelectionAtStart, 0, mSelection.length);
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -199,12 +199,11 @@ public class MultiSelectionSpinner extends Spinner implements OnMultiChoiceClick
                     sb.append(", ");
                 }
                 foundOne = true;
-
                 sb.append(_items[i]);
             }
         }
 
-        if(!foundOne)
+        if (!foundOne)
             sb.append("Materias Relacionadas");
 
         return sb.toString();

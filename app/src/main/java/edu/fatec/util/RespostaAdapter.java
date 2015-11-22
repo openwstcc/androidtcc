@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -46,12 +47,21 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
 
     public boolean valida = false;
 
+    public int accent;
+    public int accentRipple;
+    public int textColorPrimary;
+    public int textColor;
+
     public RespostaAdapter(List<JsonResposta> RespostaList, Activity a) {
         this.RespostaList = RespostaList;
         this.c = a;
         sharedPref = PreferenceManager.getDefaultSharedPreferences(a.getApplicationContext());
         usuarioAtual = new Gson().fromJson(sharedPref.getString("jsonUsuario", ""), Usuario.class);
         duvidaAtual = new Gson().fromJson(sharedPref.getString("jsonDuvidaTemp", ""), Duvida.class);
+        accent = c.getResources().getColor(R.color.colorAccent);
+        accentRipple = c.getResources().getColor(R.color.colorAccentRipple);
+        textColor = c.getResources().getColor(R.color.textColor);
+        textColorPrimary = c.getResources().getColor(R.color.textColorPrimary);
     }
 
     @Override
@@ -66,22 +76,21 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         respostaViewHolder.infoResposta.setText(r.getCriador() + " em " + r.getDataCriacao());
         respostaViewHolder.textRank.setText(String.valueOf(r.getRank()));
 
-        if (r.isDeuLike()) {
-            respostaViewHolder.curtirResposta.setTextColor(respostaViewHolder.accent);
-            respostaViewHolder.textRank.setTextColor(respostaViewHolder.accent);
-            respostaViewHolder.curtirIcon.setColorFilter(respostaViewHolder.accent);
-        }
-
-        if (r.isFlagProfessor()) {
-            respostaViewHolder.backgroundReposta.setBackgroundColor(respostaViewHolder.success);
-            respostaViewHolder.iconProf.setVisibility(View.VISIBLE);
-        }
-
         if (r.isFlagCriador()) {
-            respostaViewHolder.backgroundReposta.setBackgroundColor(respostaViewHolder.success);
+            valida = r.isFlagCriador();
             respostaViewHolder.iconAluno.setVisibility(View.VISIBLE);
+            colorirCard(respostaViewHolder.cardView, respostaViewHolder.backgroundReposta, respostaViewHolder.RespostaConteudo, respostaViewHolder.curtirIcon,
+                    respostaViewHolder.compartilharIcon, respostaViewHolder.textRank, respostaViewHolder.curtirResposta, respostaViewHolder.compartilharResposta, respostaViewHolder.divisorResposta);
         }
 
+        if (r.isDeuLike() && !r.isFlagCriador()) {
+            respostaViewHolder.curtirResposta.setTextColor(accentRipple);
+            respostaViewHolder.textRank.setTextColor(accentRipple);
+            respostaViewHolder.curtirIcon.setColorFilter(accentRipple);
+        }
+
+        if (r.isFlagProfessor())
+            respostaViewHolder.iconProf.setVisibility(View.VISIBLE);
 
         respostaViewHolder.compartilharResposta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +113,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                     validaResposta = new ValidaResposta(c, RespostaAdapter.this, r.getIdResposta());
                     validaResposta.show();
                 } else
-                    volleyLike(r.getIdResposta(), v.getContext(), true);
+                    volleyLike(r.getIdResposta(), v.getContext());
             }
         });
     }
@@ -121,6 +130,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
     public static class RespostaViewHolder extends RecyclerView.ViewHolder {
 
         protected CardView cardView;
+        protected View divisorResposta;
         protected LinearLayout backgroundReposta;
         protected TextView RespostaConteudo;
         protected TextView infoResposta;
@@ -130,9 +140,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         protected TextView iconAluno;
         protected TextView textRank;
         protected ImageView curtirIcon;
-        protected int accent;
-        protected int textColor;
-        protected int success;
+        protected ImageView compartilharIcon;
 
         public RespostaViewHolder(View v) {
             super(v);
@@ -142,13 +150,12 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
             curtirResposta = (TextView) v.findViewById(R.id.curtirResposta);
             compartilharResposta = (TextView) v.findViewById(R.id.compartilharResposta);
             textRank = (TextView) v.findViewById(R.id.textRank);
-            accent = v.getResources().getColor(R.color.colorAccentRipple);
-            success = v.getResources().getColor(R.color.colorAccentRipple);
-            textColor = v.getResources().getColor(R.color.textColor);
             iconProf = (TextView) v.findViewById(R.id.flagProf);
             iconAluno = (TextView) v.findViewById(R.id.flagCriador);
             backgroundReposta = (LinearLayout) v.findViewById(R.id.backgroundReposta);
             curtirIcon = (ImageView) v.findViewById(R.id.curtirIcon);
+            compartilharIcon = (ImageView) v.findViewById(R.id.compartilharIcon);
+            divisorResposta = (View) v.findViewById(R.id.divisorResposta);
         }
     }
 
@@ -177,7 +184,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         return r;
     }
 
-    public void volleyLike(final int idResposta, final Context cntx, final boolean likeValidacao) {
+    public void volleyLike(final int idResposta, final Context cntx) {
         String server = cntx.getString(R.string.wstcc);
         String url = server + "respostas/adicionarRank";
 
@@ -189,16 +196,20 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                     public void onResponse(String response) {
                         curtiuDescurtiu = response;
                         int rankAtual;
-                        if (curtiuDescurtiu.equals("true") && valida==false) {
-                            respostaViewHolderAux.curtirResposta.setTextColor(respostaViewHolderAux.accent);
-                            respostaViewHolderAux.textRank.setTextColor(respostaViewHolderAux.accent);
-                            respostaViewHolderAux.curtirIcon.setColorFilter(respostaViewHolderAux.accent);
+                        if (curtiuDescurtiu.equals("true")) {
+                            if (!valida) {
+                                respostaViewHolderAux.curtirResposta.setTextColor(accent);
+                                respostaViewHolderAux.textRank.setTextColor(accent);
+                                respostaViewHolderAux.curtirIcon.setColorFilter(accent);
+                            }
                             rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) + 1;
                             respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
                         } else {
-                            respostaViewHolderAux.curtirResposta.setTextColor(respostaViewHolderAux.textColor);
-                            respostaViewHolderAux.textRank.setTextColor(respostaViewHolderAux.textColor);
-                            respostaViewHolderAux.curtirIcon.setColorFilter(respostaViewHolderAux.textColor);
+                            if (!valida) {
+                                respostaViewHolderAux.curtirResposta.setTextColor(textColor);
+                                respostaViewHolderAux.textRank.setTextColor(textColor);
+                                respostaViewHolderAux.curtirIcon.setColorFilter(textColor);
+                            }
                             rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) - 1;
                             respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
                         }
@@ -216,6 +227,18 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
             }
         };
         queue.add(stringRequest);
+    }
+
+    public void colorirCard(CardView card, LinearLayout titulo, TextView conteudo, ImageView curtirIcon, ImageView compartilharIcon, TextView qtdCurtir, TextView curtir, TextView compartilhar, View divisorResposta) {
+        card.setCardBackgroundColor(accent);
+        titulo.setBackgroundColor(accent);
+        conteudo.setTextColor(textColorPrimary);
+        qtdCurtir.setTextColor(textColorPrimary);
+        curtirIcon.setColorFilter(textColorPrimary);
+        curtir.setTextColor(textColorPrimary);
+        compartilharIcon.setColorFilter(textColorPrimary);
+        compartilhar.setTextColor(textColorPrimary);
+        divisorResposta.setBackgroundColor(textColorPrimary);
     }
 
 }

@@ -1,12 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:elevation="5dp"
-    card_view:cardCornerRadius="5dp">
+    card_view:cardCornerRadius="5dp"
+    card_view:cardBackgroundColor="@color/colorAccent"
+    android:contextClickable="false"
+    android:measureAllChildren="false">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +18,6 @@
             android:id="@+id/backgroundReposta"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
             android:layout_margin="5dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -42,7 +43,7 @@
                 android:drawableLeft="@drawable/ic_done_white_24dp"
                 android:textSize="15dp"
                 android:layout_weight="0.1"
-                android:visibility="gone"/>
+                />
 
             <TextView
                 android:id="@+id/flagProf"
@@ -51,7 +52,7 @@
                 android:drawableLeft="@drawable/ic_school_white_24dp"
                 android:textSize="15dp"
                 android:layout_weight="0.1"
-                android:visibility="gone"/>
+                />
 
         </LinearLayout>
 
@@ -60,10 +61,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/backgroundReposta"
-            android:layout_margin="5dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:gravity="center_vertical"
             android:text="Conteudo da Resposta"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:textColor="@color/textColorPrimary"/>
 
         <View
             android:layout_width="fill_parent"
@@ -71,8 +76,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_below="@id/respostaConteudo"
-            android:id="@+id/divisorResposta"
-            android:background="@android:color/darker_gray" />
+            android:background="@color/textColorPrimary" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -87,7 +91,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".1"
                 android:textSize="15dp"
-                android:text="0" />
+                android:text="0"
+                android:textColor="@color/textColorPrimary"/>
 
             <ImageView
                 android:id="@+id/curtirIcon"
@@ -96,7 +101,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".1"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/ic_thumb_up_black_24dp"/>
+                android:src="@drawable/ic_thumb_up_black_24dp"
+                android:tint="@color/textColorPrimary"/>
 
             <TextView
                 android:id="@+id/curtirResposta"
@@ -105,7 +111,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".3"
                 android:textSize="13dp"
-                android:text="Curtir" />
+                android:text="Curtir"
+                android:textColor="@color/textColorPrimary"/>
 
             <ImageView
                 android:id="@+id/compartilharIcon"
@@ -114,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".1"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/ic_share_black_24dp"/>
+                android:src="@drawable/ic_share_white_24dp"/>
 
             <TextView
                 android:id="@+id/compartilharResposta"
@@ -123,7 +130,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".4"
                 android:textSize="13dp"
-                android:text="Compartilhar" />
+                android:text="Compartilhar"
+                android:textColor="@color/textColorPrimary" />
         </LinearLayout>
 
     </RelativeLayout>
