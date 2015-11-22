@@ -2,11 +2,18 @@ package edu.fatec.util;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import com.example.gqueiroz.androidtcc.R;
+import com.google.gson.Gson;
+
+import edu.fatec.activity.RespostaActivity;
+import edu.fatec.model.Duvida;
 
 public class ValidaResposta extends Dialog{
     private Activity c;
@@ -14,6 +21,8 @@ public class ValidaResposta extends Dialog{
     private int idResposta;
     private Button validaResposta;
     private Button apenasCurtir;
+
+    private SharedPreferences sharedPref;
 
     public ValidaResposta(Activity a, RespostaAdapter respostaAdapter, int idResposta){
         super(a);
@@ -45,7 +54,14 @@ public class ValidaResposta extends Dialog{
                 respostaAdapter.valida = true;
                 respostaAdapter.volleyLike(idResposta, c, true);
                 closeDialog();
-            }
+
+                sharedPref = PreferenceManager.getDefaultSharedPreferences(c.getApplicationContext());
+                String jsonDuvida = sharedPref.getString("jsonDuvidaTemp", "");
+
+                Intent i = new Intent(v.getContext(), RespostaActivity.class);
+                i.putExtra("duvida", jsonDuvida);
+                v.getContext().startActivity(i);
+           }
         });
     }
 

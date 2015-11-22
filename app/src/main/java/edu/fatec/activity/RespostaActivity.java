@@ -139,7 +139,7 @@ public class RespostaActivity extends AppCompatActivity {
         swiperRefreshResposta = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshResposta);
     }
 
-    private void showViewRefresh(){
+    public void showViewRefresh(){
         swiperRefreshResposta.post(new Runnable() {
             @Override
             public void run() {

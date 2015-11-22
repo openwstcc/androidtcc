@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,8 +24,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gqueiroz.androidtcc.R;
 import com.google.gson.Gson;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -76,25 +72,25 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
             respostaViewHolder.curtirIcon.setColorFilter(respostaViewHolder.accent);
         }
 
-        if (r.isFlagProfessor()){
+        if (r.isFlagProfessor()) {
             respostaViewHolder.backgroundReposta.setBackgroundColor(respostaViewHolder.success);
-            respostaViewHolder.profIcon.setVisibility(View.VISIBLE);
+            respostaViewHolder.iconProf.setVisibility(View.VISIBLE);
         }
 
-        if (r.isFlagCriador()){
+        if (r.isFlagCriador()) {
             respostaViewHolder.backgroundReposta.setBackgroundColor(respostaViewHolder.success);
-            respostaViewHolder.profIcon.setVisibility(View.VISIBLE);
+            respostaViewHolder.iconAluno.setVisibility(View.VISIBLE);
         }
 
 
-            respostaViewHolder.compartilharResposta.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String msg = r.getResposta() + "\nRespondida por " + r.getCriador();
-                    Intent i = new Intent();
-                    i.setAction(Intent.ACTION_SEND);
-                    i.putExtra(Intent.EXTRA_TEXT, msg);
-                    i.setType("text/plain");
+        respostaViewHolder.compartilharResposta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String msg = r.getResposta() + "\nRespondida por " + r.getCriador();
+                Intent i = new Intent();
+                i.setAction(Intent.ACTION_SEND);
+                i.putExtra(Intent.EXTRA_TEXT, msg);
+                i.setType("text/plain");
                 v.getContext().startActivity(i);
 
             }
@@ -130,8 +126,8 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         protected TextView infoResposta;
         protected TextView curtirResposta;
         protected TextView compartilharResposta;
-        protected TextView profIcon;
-        protected TextView profCriador;
+        protected TextView iconProf;
+        protected TextView iconAluno;
         protected TextView textRank;
         protected ImageView curtirIcon;
         protected int accent;
@@ -149,8 +145,8 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
             accent = v.getResources().getColor(R.color.colorAccentRipple);
             success = v.getResources().getColor(R.color.colorAccentRipple);
             textColor = v.getResources().getColor(R.color.textColor);
-            profIcon = (TextView) v.findViewById(R.id.flagProf);
-            profCriador = (TextView) v.findViewById(R.id.flagCriador);
+            iconProf = (TextView) v.findViewById(R.id.flagProf);
+            iconAluno = (TextView) v.findViewById(R.id.flagCriador);
             backgroundReposta = (LinearLayout) v.findViewById(R.id.backgroundReposta);
             curtirIcon = (ImageView) v.findViewById(R.id.curtirIcon);
         }
@@ -193,7 +189,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                     public void onResponse(String response) {
                         curtiuDescurtiu = response;
                         int rankAtual;
-                        if (curtiuDescurtiu.equals("true")) {
+                        if (curtiuDescurtiu.equals("true") && valida==false) {
                             respostaViewHolderAux.curtirResposta.setTextColor(respostaViewHolderAux.accent);
                             respostaViewHolderAux.textRank.setTextColor(respostaViewHolderAux.accent);
                             respostaViewHolderAux.curtirIcon.setColorFilter(respostaViewHolderAux.accent);
