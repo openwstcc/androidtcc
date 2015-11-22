@@ -20,7 +20,7 @@ public class MultiSelectionSpinner extends Spinner implements OnMultiChoiceClick
     boolean[] mSelection = null;
     boolean[] mSelectionAtStart = null;
     boolean validator;
-    String   _itemsAtStart = null;
+    String _itemsAtStart = null;
 
     ArrayAdapter<String> simple_adapter;
 

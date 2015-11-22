@@ -30,7 +30,8 @@
         <activity
             android:name="edu.fatec.activity.NovoUsuarioActivity"
             android:label="@string/title_activity_usuario_test"
-            android:parentActivityName="edu.fatec.activity.LoginActivity" >
+            android:parentActivityName="edu.fatec.activity.LoginActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.fatec.activity.LoginActivity" />
@@ -62,7 +63,8 @@
         <activity
             android:name="edu.fatec.activity.NovaDuvidaActivity"
             android:label="@string/title_activity_nova_duvida_test"
-            android:parentActivityName="edu.fatec.activity.MainActivity" >
+            android:parentActivityName="edu.fatec.activity.MainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.fatec.test.DuvidaTestActivity" />
