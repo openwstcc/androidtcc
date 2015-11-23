@@ -47,6 +47,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
 
     public boolean valida = false;
 
+    public int primary;
     public int accent;
     public int accentRipple;
     public int textColorPrimary;
@@ -58,6 +59,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         sharedPref = PreferenceManager.getDefaultSharedPreferences(a.getApplicationContext());
         usuarioAtual = new Gson().fromJson(sharedPref.getString("jsonUsuario", ""), Usuario.class);
         duvidaAtual = new Gson().fromJson(sharedPref.getString("jsonDuvidaTemp", ""), Duvida.class);
+        primary = c.getResources().getColor(R.color.colorPrimary);
         accent = c.getResources().getColor(R.color.colorAccent);
         accentRipple = c.getResources().getColor(R.color.colorAccentRipple);
         textColor = c.getResources().getColor(R.color.textColor);
@@ -83,9 +85,9 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         }
 
         if (r.isDeuLike() && !r.isFlagCriador()) {
-            respostaViewHolder.curtirResposta.setTextColor(accentRipple);
-            respostaViewHolder.textRank.setTextColor(accentRipple);
-            respostaViewHolder.curtirIcon.setColorFilter(accentRipple);
+            respostaViewHolder.curtirResposta.setTextColor(primary);
+            respostaViewHolder.textRank.setTextColor(primary);
+            respostaViewHolder.curtirIcon.setColorFilter(primary);
         }
 
         if (r.isFlagProfessor())
@@ -109,10 +111,10 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
             public void onClick(View v) {
                 respostaViewHolderAux = respostaViewHolder;
                 if (usuarioAtual.getIdUsuario() == duvidaAtual.getIdUsuario()) {
-                    validaResposta = new ValidaResposta(c, RespostaAdapter.this, r.getIdResposta());
+                    validaResposta = new ValidaResposta(c, RespostaAdapter.this, r.getIdResposta(), r.isFlagCriador());
                     validaResposta.show();
                 } else
-                    volleyLike(r.getIdResposta(), v.getContext());
+                    volleyLike(r.getIdResposta(), v.getContext(), r.isFlagCriador());
             }
         });
     }
@@ -181,7 +183,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         return r;
     }
 
-    public void volleyLike(final int idResposta, final Context cntx) {
+    public void volleyLike(final int idResposta, final Context cntx, final boolean isFlagCriador) {
         String server = cntx.getString(R.string.wstcc);
         String url = server + "respostas/adicionarRank";
 
@@ -195,18 +197,22 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
                         int rankAtual;
                         if (curtiuDescurtiu.equals("true")) {
                             if (!valida) {
-                                respostaViewHolderAux.curtirResposta.setTextColor(accent);
-                                respostaViewHolderAux.textRank.setTextColor(accent);
-                                respostaViewHolderAux.curtirIcon.setColorFilter(accent);
+                                if(!isFlagCriador){
+                                    respostaViewHolderAux.curtirResposta.setTextColor(primary);
+                                    respostaViewHolderAux.textRank.setTextColor(primary);
+                                    respostaViewHolderAux.curtirIcon.setColorFilter(primary);
+                                }
                                 rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) + 1;
                                 respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
                             }
 
                         } else {
                             if (!valida) {
-                                respostaViewHolderAux.curtirResposta.setTextColor(textColor);
-                                respostaViewHolderAux.textRank.setTextColor(textColor);
-                                respostaViewHolderAux.curtirIcon.setColorFilter(textColor);
+                                if(!isFlagCriador){
+                                    respostaViewHolderAux.curtirResposta.setTextColor(textColor);
+                                    respostaViewHolderAux.textRank.setTextColor(textColor);
+                                    respostaViewHolderAux.curtirIcon.setColorFilter(textColor);
+                                }
                                 rankAtual = Integer.valueOf(respostaViewHolderAux.textRank.getText().toString()) - 1;
                                 respostaViewHolderAux.textRank.setText(Integer.toString(rankAtual));
                             }

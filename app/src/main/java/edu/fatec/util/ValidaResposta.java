@@ -21,14 +21,16 @@ public class ValidaResposta extends Dialog{
     private int idResposta;
     private Button validaResposta;
     private Button apenasCurtir;
+    private boolean isFlagCriador;
 
     private SharedPreferences sharedPref;
 
-    public ValidaResposta(Activity a, RespostaAdapter respostaAdapter, int idResposta){
+    public ValidaResposta(Activity a, RespostaAdapter respostaAdapter, int idResposta, boolean isFlagCriador){
         super(a);
         this.c = a;
         this.respostaAdapter = respostaAdapter;
         this.idResposta = idResposta;
+        this.isFlagCriador = isFlagCriador;
     }
 
     @Override
@@ -43,7 +45,7 @@ public class ValidaResposta extends Dialog{
         apenasCurtir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                respostaAdapter.volleyLike(idResposta, c);
+                respostaAdapter.volleyLike(idResposta, c, isFlagCriador);
                 closeDialog();
             }
         });
@@ -52,7 +54,7 @@ public class ValidaResposta extends Dialog{
             @Override
             public void onClick(View v) {
                 respostaAdapter.valida = true;
-                respostaAdapter.volleyLike(idResposta, c);
+                respostaAdapter.volleyLike(idResposta, c, isFlagCriador);
                 closeDialog();
 
                 sharedPref = PreferenceManager.getDefaultSharedPreferences(c.getApplicationContext());

@@ -122,9 +122,10 @@ public class PesquisaDialog extends Dialog {
 
     private JsonPesquisa jsonPesquisa() {
         JsonPesquisa jsonPesquisa = new JsonPesquisa();
-        if (conteudoPesquisa.getText().toString().startsWith("\"") && conteudoPesquisa.getText().toString().endsWith("\""))
-            jsonPesquisa.setPesquisa(new String[]{conteudoPesquisa.getText().toString()});
-        else
+        if (conteudoPesquisa.getText().toString().startsWith("\"") && conteudoPesquisa.getText().toString().endsWith("\"")){
+            String[] temp = new String[]{conteudoPesquisa.getText().toString().substring(1,conteudoPesquisa.getText().toString().length()-1)};
+            jsonPesquisa.setPesquisa(temp);
+        } else
             jsonPesquisa.setPesquisa(conteudoPesquisa.getText().toString().split("\\s+"));
 
         jsonPesquisa.setTitulo(checkTitulo.isChecked());
@@ -153,6 +154,7 @@ public class PesquisaDialog extends Dialog {
                         }.getType();
                         List<Duvida> jsonDuvidas = new Gson().fromJson(response, listType);
                         c.posPesquisa(conteudoPesquisa.getText().toString(), jsonDuvidas);
+                        c.pesquisa = true;
                         closeDialog();
                     }
                 }, new Response.ErrorListener() {
@@ -166,6 +168,7 @@ public class PesquisaDialog extends Dialog {
             public byte[] getBody() throws AuthFailureError {
                 Gson gson = new GsonBuilder().create();
                 String body = gson.toJson(jsonPesquisa());
+                Log.i("Pesquisa",body);
                 return body.getBytes();
             }
         };

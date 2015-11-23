@@ -59,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private SwipeRefreshLayout swipeRefreshDuvida;
+
     private PesquisaDialog pesquisaDialog;
+    public boolean pesquisa = false;
 
     //Action Bar Objects
     private Toolbar toolbar;
@@ -126,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshDuvida.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
                 public void onRefresh () {
+                if(pesquisa)
+                    swipeRefreshDuvida.setRefreshing(false);
+                else
                     volleyRequest(actualRest);
                 }
             }
@@ -150,12 +155,14 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if (id == 0) {
+                    pesquisa = false;
                     drawerLayout.closeDrawer(Gravity.LEFT);
                     Intent i = new Intent(MainActivity.this, MateriaActivity.class);
                     startActivity(i);
                 }
 
                 if (id == 1) {
+                    pesquisa = false;
                     getSupportActionBar().setTitle("Todas as Dúvidas");
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidas";
@@ -164,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (id == 2) {
+                    pesquisa = false;
                     getSupportActionBar().setTitle("Dúvidas Relacionadas");
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidasMateriaPorUsuario";
@@ -172,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (id == 3) {
+                    pesquisa = false;
                     getSupportActionBar().setTitle("Minhas Dúvidas");
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidasUsuario";
@@ -180,12 +189,14 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (id == 4) {
+                    pesquisa = false;
                     drawerLayout.closeDrawer(Gravity.LEFT);
                     Intent i = new Intent(MainActivity.this, PerfilUsuarioActivity.class);
                     startActivity(i);
                 }
 
                 if (id == 5) {
+                    pesquisa = false;
                     drawerLayout.closeDrawer(Gravity.LEFT);
                     sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     SharedPreferences.Editor SharedPrefEdit = sharedPref.edit();
