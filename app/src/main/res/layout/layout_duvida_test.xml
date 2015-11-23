@@ -39,32 +39,60 @@
             android:layout_margin="8dp"
             android:gravity="center_vertical"
             android:text="Conteudo da Dúvida"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:ellipsize="end"
+            android:maxLines="3"/>
 
         <TextView
             android:id="@+id/materiasDuvida"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/duvidaConteudo"
-            android:layout_margin="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:text="Materias Relacionadas"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:visibility="gone"/>
 
         <TextView
-            android:id="@+id/dataDuvida"
+            android:id="@+id/duvidasTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/materiasDuvida"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Tags Relacionadas"
+            android:textSize="15sp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/infoCriador"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/duvidasTag"
             android:layout_margin="8dp"
-            android:text="Criada em Jan 01, 2015"
-            android:textSize="15sp" />
+            android:text="Criada em Jan 01, 2015 por Usuaário"
+            android:textSize="15sp"
+            android:visibility="gone"/>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:layout_margin="8dp"
-            android:layout_below="@id/dataDuvida"
-            android:background="@android:color/darker_gray" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_below="@id/infoCriador"
+            android:background="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/infoDuvida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/replyDuvida"
+            android:layout_alignLeft="@+id/duvidaConteudo"
+            android:layout_alignStart="@+id/duvidaConteudo"
+            android:layout_margin="5dp"
+            android:text="Informações"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/replyDuvida"
@@ -72,10 +100,8 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/dataDuvida"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_below="@+id/infoCriador"
+            android:layout_margin="5dp"
             android:background="@drawable/ic_reply_black_24dp"
             android:backgroundTint="@color/colorPrimaryDark"/>
 

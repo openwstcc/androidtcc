@@ -101,11 +101,11 @@ public class DuvidaTestActivity extends Activity {
         if(sharedDuvidas.length()>1){
             Type listType = new TypeToken<ArrayList<Duvida>>(){}.getType();
             jsonDuvidas = new Gson().fromJson(sharedDuvidas, listType);
-            duvidaAdapter = new DuvidaAdapter(jsonDuvidas);
+            duvidaAdapter = new DuvidaAdapter(jsonDuvidas, DuvidaTestActivity.this);
             recList.setAdapter(duvidaAdapter);
         } else {
             jsonDuvidas = new ArrayList<>();
-            duvidaAdapter = new DuvidaAdapter(jsonDuvidas);
+            duvidaAdapter = new DuvidaAdapter(jsonDuvidas, DuvidaTestActivity.this);
             recList.setAdapter(duvidaAdapter);
         }
 

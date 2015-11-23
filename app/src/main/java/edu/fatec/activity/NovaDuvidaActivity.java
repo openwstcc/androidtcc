@@ -213,8 +213,8 @@ public class NovaDuvidaActivity extends AppCompatActivity {
             return false;
         else if (!validaConteudo(conteudoNovaDuvida))
             return false;
-        else if (getSelectedMaterias().length > 3){
-            Toast.makeText(NovaDuvidaActivity.this, "Selecione no máximo 3 matérias", Toast.LENGTH_SHORT).show();
+        else if (getSelectedMaterias().length > 3 && getSelectedMaterias().length<1){
+            Toast.makeText(NovaDuvidaActivity.this, "Selecione pelo menos uma matéria, e no máximo 3 matérias", Toast.LENGTH_SHORT).show();
             return false;
 
         } else
