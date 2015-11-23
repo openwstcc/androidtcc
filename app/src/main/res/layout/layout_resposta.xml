@@ -33,13 +33,14 @@
                 android:text="Criador em Jan 00, 0000"
                 android:layout_weight=".9"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/flagCriador"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_done_white_24dp"
+                android:drawableLeft="@drawable/ic_check_circle_white_24dp"
                 android:textSize="15dp"
                 android:layout_weight="0.1"
                 android:visibility="gone"/>
@@ -60,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/backgroundReposta"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:gravity="center_vertical"
             android:text="Conteudo da Resposta"
             android:textSize="15dp" />

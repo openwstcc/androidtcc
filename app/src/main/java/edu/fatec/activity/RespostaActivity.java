@@ -12,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -38,7 +40,9 @@ import edu.fatec.json.JsonResposta;
 import edu.fatec.model.Duvida;
 import edu.fatec.model.Resposta;
 import edu.fatec.model.Usuario;
+import edu.fatec.util.NovaDuvidaHelp;
 import edu.fatec.util.RespostaAdapter;
+import edu.fatec.util.RespostaHelp;
 
 public class RespostaActivity extends AppCompatActivity {
     private Duvida duvida;
@@ -58,6 +62,7 @@ public class RespostaActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor sharedPrefEdit;
 
+    private RespostaHelp respostaHelp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,11 +125,23 @@ public class RespostaActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_resposta, menu);
+
+        return true ;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
+            case R.id.menu_resposta:
+                respostaHelp = new RespostaHelp(RespostaActivity.this);
+                respostaHelp.show();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

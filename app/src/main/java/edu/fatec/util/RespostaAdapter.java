@@ -242,7 +242,7 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
         curtir.setTextColor(textColorPrimary);
         compartilharIcon.setColorFilter(textColorPrimary);
         compartilhar.setTextColor(textColorPrimary);
-        divisorResposta.setBackgroundColor(textColorPrimary);
+        divisorResposta.setBackgroundColor(accent);
     }
 
 }

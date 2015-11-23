@@ -6,6 +6,6 @@
         android:id="@+id/menu_nova_duvida"
         app:showAsAction="collapseActionView|ifRoom"
         android:icon="@drawable/ic_help_white_24dp"
-        android:title="Pesquisar"/>
+        android:title="Ajuda"/>
 
 </menu>

@@ -2,7 +2,6 @@ package edu.fatec.util;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -10,11 +9,11 @@ import android.widget.Button;
 
 import com.example.gqueiroz.androidtcc.R;
 
-public class NovaDuvidaHelp extends Dialog {
+public class RespostaHelp extends Dialog {
     private Activity c;
     private Button entendi;
 
-    public NovaDuvidaHelp(Activity a) {
+    public RespostaHelp(Activity a) {
         super(a);
         this.c = a;
     }
@@ -23,7 +22,7 @@ public class NovaDuvidaHelp extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.layout_nova_duvida);
+        setContentView(R.layout.layout_resposta_ajuda);
 
         entendi = (Button) findViewById(R.id.entendi);
         entendi.setOnClickListener(new View.OnClickListener() {
@@ -32,7 +31,6 @@ public class NovaDuvidaHelp extends Dialog {
                 closeDialog();
             }
         });
-
     }
 
     public void closeDialog() {
