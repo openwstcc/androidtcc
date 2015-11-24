@@ -53,6 +53,7 @@ public class RespostaActivity extends AppCompatActivity {
     private TextView conteudoDuvida;
     private EditText resposta;
     private LinearLayout backgroundDuvida;
+    private LinearLayout semRespostas;
     private RecyclerView recyclerView;
     private RespostaAdapter respostaAdapter;
     private LinearLayoutManager linearLayoutManager;
@@ -154,6 +155,7 @@ public class RespostaActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.cardList);
         conteudoDuvida = (TextView) findViewById(R.id.textConteudoDuvida);
         swiperRefreshResposta = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshResposta);
+        semRespostas = (LinearLayout) findViewById(R.id.semRespostas);
     }
 
     public void showViewRefresh(){
@@ -167,6 +169,8 @@ public class RespostaActivity extends AppCompatActivity {
     }
 
     private void volleyBuscarDuvidas() {
+        semRespostas.setVisibility(View.GONE);
+
         String server = getString(R.string.wstcc);
         String url = server + "respostas/buscarRespostas";
 
@@ -185,6 +189,8 @@ public class RespostaActivity extends AppCompatActivity {
                         resposta.setEnabled(true);
                         inserirResposta.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
                         setConexao(true);
+                        if(respostasJson.size()<1)
+                            semRespostas.setVisibility(View.VISIBLE);
                     }
                 }, new Response.ErrorListener() {
             @Override

@@ -37,6 +37,32 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/semRespostas"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/backgroundDuvidaResposta"
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_question_answer_black_48dp"
+                android:tint="@color/inactive" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Não há respostas. \n Seja o primeiro a responder esta dúvida."
+                android:textColor="@color/inactive"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshResposta"
             android:layout_width="match_parent"

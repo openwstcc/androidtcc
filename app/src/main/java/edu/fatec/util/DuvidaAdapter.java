@@ -70,9 +70,9 @@ public class DuvidaAdapter extends RecyclerView.Adapter<DuvidaAdapter.DuvidaView
             for (String tag : d.getTags())
                 tags = tags + tag + ";\n ";
         else
-            tags = tags + "Não possui tags.";
+            tags = tags + "Está dúvida não possui palavras-chave.";
 
-        duvidaViewHolder.infoTag.setText(Html.fromHtml("<b>Tags:</b> " + tags));
+        duvidaViewHolder.infoTag.setText(Html.fromHtml("<b>Palavras-chave:</b> " + tags));
 
         duvidaViewHolder.replyDuvida.setOnClickListener(new View.OnClickListener() {
             @Override

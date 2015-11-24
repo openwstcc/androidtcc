@@ -52,6 +52,33 @@
                     android:indeterminateTint="@color/textColorPrimary" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/semDuvida"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/infoDuvida"
+                android:layout_margin="10dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_question_answer_black_48dp"
+                    android:tint="@color/inactive" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:allowUndo="false"
+                    android:gravity="center_horizontal"
+                    android:text="Não há dúvidas. Crie novas dúvidas para interagir com outros alunos."
+                    android:textColor="@color/inactive"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
+
             <android.support.v4.widget.SwipeRefreshLayout
                 android:id="@+id/swipeRefreshDuvida"
                 android:layout_width="match_parent"
@@ -81,9 +108,9 @@
                 android:layout_marginRight="10dp"
                 android:src="@drawable/ic_add_white_24dp"
                 app:backgroundTint="@color/colorAccent"
+                app:rippleColor="@color/colorAccentRipple"
                 app:borderWidth="0dp"
-                app:elevation="5dp"
-                app:rippleColor="@color/colorAccentRipple" />
+                app:elevation="5dp" />
         </RelativeLayout>
 
     </LinearLayout>

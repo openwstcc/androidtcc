@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -83,6 +84,7 @@ public class NovaDuvidaActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!validator())
                     return;
+
                 volleyNovaDuvida();
             }
         });
@@ -124,7 +126,6 @@ public class NovaDuvidaActivity extends AppCompatActivity {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String sharedUsuario = sharedPref.getString("jsonUsuario", "");
         Usuario usuario = new Gson().fromJson(sharedUsuario, Usuario.class);
-
         Duvida d = new Duvida();
         d.setIdUsuario(usuario.getIdUsuario());
         d.setTitulo(tituloNovaDuvida.getText().toString());
@@ -214,7 +215,7 @@ public class NovaDuvidaActivity extends AppCompatActivity {
         else if (!validaConteudo(conteudoNovaDuvida))
             return false;
         else if (getSelectedMaterias().length > 3 && getSelectedMaterias().length<1){
-            Toast.makeText(NovaDuvidaActivity.this, "Selecione pelo menos uma matéria, e no máximo 3 matérias", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NovaDuvidaActivity.this, "Selecione pelo menos uma matéria, e nno máximo 3 matérias", Toast.LENGTH_SHORT).show();
             return false;
 
         } else

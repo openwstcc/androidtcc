@@ -49,6 +49,7 @@ import edu.fatec.util.PesquisaDialog;
 public class MainActivity extends AppCompatActivity {
     //View Objects
     private LinearLayout infoDuvida;
+    private LinearLayout semDuvida;
     private FloatingActionButton novaDuvida;
     private ProgressBar progressBar;
     private TextView textInfoDuvida;
@@ -286,9 +287,11 @@ public class MainActivity extends AppCompatActivity {
         textInfoDuvida = (TextView) findViewById(R.id.textInfoDuvida);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         swipeRefreshDuvida = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshDuvida);
+        semDuvida = (LinearLayout) findViewById(R.id.semDuvida);
     }
 
     private void volleyRequest(String restRequest) {
+        semDuvida.setVisibility(View.GONE);
         infoDuvida.setBackgroundColor(Color.parseColor("#FFA726"));
         textInfoDuvida.setText("Atualizando informações de dúvidas");
         infoDuvida.setVisibility(View.VISIBLE);
@@ -317,6 +320,9 @@ public class MainActivity extends AppCompatActivity {
                             infoDuvida.setVisibility(View.GONE);
                             progressBar.setVisibility(View.GONE);
                             swipeRefreshDuvida.setRefreshing(false);
+
+                            if(jsonDuvidas.size()<1)
+                                semDuvida.setVisibility(View.VISIBLE);
 
                         }
                     }, new Response.ErrorListener() {
@@ -347,6 +353,9 @@ public class MainActivity extends AppCompatActivity {
                             infoDuvida.setVisibility(View.GONE);
                             progressBar.setVisibility(View.GONE);
                             swipeRefreshDuvida.setRefreshing(false);
+
+                            if(jsonDuvidas.size()<1)
+                                semDuvida.setVisibility(View.VISIBLE);
 
                         }
                     }, new Response.ErrorListener() {
