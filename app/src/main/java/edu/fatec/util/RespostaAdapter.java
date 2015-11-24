@@ -234,15 +234,15 @@ public class RespostaAdapter extends RecyclerView.Adapter<RespostaAdapter.Respos
     }
 
     public void colorirCard(CardView card, LinearLayout titulo, TextView conteudo, ImageView curtirIcon, ImageView compartilharIcon, TextView qtdCurtir, TextView curtir, TextView compartilhar, View divisorResposta) {
-        card.setCardBackgroundColor(accent);
-        titulo.setBackgroundColor(accent);
+        card.setCardBackgroundColor(accentRipple);
+        titulo.setBackgroundColor(accentRipple);
         conteudo.setTextColor(textColorPrimary);
         qtdCurtir.setTextColor(textColorPrimary);
         curtirIcon.setColorFilter(textColorPrimary);
         curtir.setTextColor(textColorPrimary);
         compartilharIcon.setColorFilter(textColorPrimary);
         compartilhar.setTextColor(textColorPrimary);
-        divisorResposta.setBackgroundColor(accent);
+        divisorResposta.setBackgroundColor(accentRipple);
     }
 
 }
