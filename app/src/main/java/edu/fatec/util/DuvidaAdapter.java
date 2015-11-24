@@ -19,14 +19,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.fatec.activity.RespostaActivity;
 import edu.fatec.model.Duvida;
 import edu.fatec.model.Materia;
-import edu.fatec.model.Usuario;
 
 public class DuvidaAdapter extends RecyclerView.Adapter<DuvidaAdapter.DuvidaViewHolder> {
     private List<Duvida> duvidaList;

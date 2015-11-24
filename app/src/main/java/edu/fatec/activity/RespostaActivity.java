@@ -40,7 +40,6 @@ import edu.fatec.json.JsonResposta;
 import edu.fatec.model.Duvida;
 import edu.fatec.model.Resposta;
 import edu.fatec.model.Usuario;
-import edu.fatec.util.NovaDuvidaHelp;
 import edu.fatec.util.RespostaAdapter;
 import edu.fatec.util.RespostaHelp;
 

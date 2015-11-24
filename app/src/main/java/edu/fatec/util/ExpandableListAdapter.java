@@ -1,12 +1,9 @@
 package edu.fatec.util;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +12,11 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import edu.fatec.activity.MainActivity;
 import edu.fatec.model.Materia;
-import edu.fatec.model.Usuario;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -35,7 +28,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.gqueiroz.androidtcc.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;

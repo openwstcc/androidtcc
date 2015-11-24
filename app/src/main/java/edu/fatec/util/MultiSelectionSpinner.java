@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-
 public class MultiSelectionSpinner extends Spinner implements OnMultiChoiceClickListener {
     String[] _items = null;
     boolean[] mSelection = null;

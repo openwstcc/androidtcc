@@ -10,10 +10,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import com.example.gqueiroz.androidtcc.R;
-import com.google.gson.Gson;
 
 import edu.fatec.activity.RespostaActivity;
-import edu.fatec.model.Duvida;
 
 public class ValidaResposta extends Dialog{
     private Activity c;
