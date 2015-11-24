@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         infoNomeUsuario.setText(usuario.getNome() + " " + usuario.getSobrenome());
         infoEmailUsuario.setText(usuario.getEmail());
 
-        String[] osArray = {"Minhas Matérias", "Todas as Dúvidas", "Relacionadas", "Minhas Dúvidas", "Meu Perfil", "Desconectar"};
+        String[] osArray = {"Minhas Matérias", "Todas as Dúvidas", "Dúvidas por Matérias", "Minhas Dúvidas", "Meu Perfil", "Desconectar"};
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         drawerList.setAdapter(arrayAdapter);
 
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (id == 2) {
                     pesquisa = false;
-                    getSupportActionBar().setTitle("Dúvidas Relacionadas");
+                    getSupportActionBar().setTitle("Dúvidas por Matérias");
                     swipeRefreshDuvida.setRefreshing(true);
                     actualRest = "duvidas/buscarDuvidasMateriaPorUsuario";
                     volleyRequest(actualRest);
