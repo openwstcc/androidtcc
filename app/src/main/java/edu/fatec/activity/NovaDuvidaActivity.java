@@ -181,6 +181,7 @@ public class NovaDuvidaActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         Drawable loop = getResources().getDrawable(R.drawable.ic_loop_white_24dp);
         inserirNovaDuvida.setImageDrawable(loop);
+        inserirNovaDuvida.setEnabled(false);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -198,6 +199,7 @@ public class NovaDuvidaActivity extends AppCompatActivity {
                 progressBarNovaDuvida.setVisibility(View.GONE);
                 Drawable send = getResources().getDrawable(R.drawable.ic_send_white_24dp);
                 inserirNovaDuvida.setImageDrawable(send);
+                inserirNovaDuvida.setEnabled(true);
             }
         }) {
             @Override

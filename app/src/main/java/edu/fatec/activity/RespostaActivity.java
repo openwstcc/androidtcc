@@ -236,6 +236,7 @@ public class RespostaActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         Drawable loop = getResources().getDrawable(R.drawable.ic_loop_white_24dp);
         inserirResposta.setImageDrawable(loop);
+        inserirResposta.setEnabled(false);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -247,12 +248,14 @@ public class RespostaActivity extends AppCompatActivity {
                         inserirResposta.setImageDrawable(send);
                         resposta.setText("");
                         showViewRefresh();
+                        inserirResposta.setEnabled(true);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), "Erro ao enviar resposta. Tente novamente", Toast.LENGTH_SHORT).show();
                 inserirResposta.setBackgroundTintList(getResources().getColorStateList(R.color.colorFail));
+                inserirResposta.setEnabled(true);
             }
         }) {
             @Override
