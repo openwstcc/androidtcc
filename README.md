@@ -25,5 +25,7 @@ O projeto continua em andamento, mas ja está em um modelo estável. Os seguinte
 ![View de Pesquisa](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/pesquisa.png)
 ![View NavigationDrawer](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/navdrawer.png)
 ![View de Resposta](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/resposta.png)
+![Ajuda de Resposta](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/ajuda_resposta.png)
 ![View de Duvida](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/novaduvida.png)
+![Ajuda de Duvida](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/ajuda_duvida.png)
 ![View de Materias](https://raw.githubusercontent.com/gabrielqueiroz/androidtcc/master/screenshots/materias.png)
