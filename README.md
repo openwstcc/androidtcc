@@ -1,7 +1,7 @@
 # Protótipo de aplicativo Android para trabalho de conclusão de curso.
 * **Sobre**
 
-Protótipo de aplicativo **Android**, para trabalho de conclusão de curso, consumindo um **WebService** hospedado na Amazon e gerenciado pelo **OpenShift** em [OpenWSTCC](http://openwstcc-devbr.rhcloud.com/). Você também pode verificar a cópia local do Servidor de Aplicação [clicando aqui (wstcc)](https://github.com/gabrielqueiroz/wstcc).
+Protótipo de aplicativo **Android**, para trabalho de conclusão de curso, com consumo de **WebService** por servidor de aplicação JBoss, hospedado na Amazon e gerenciado pelo **OpenShift** em [OpenWSTCC](http://openwstcc-devbr.rhcloud.com/). Você também pode verificar a cópia local do Servidor de Aplicação [clicando aqui (wstcc)](https://github.com/gabrielqueiroz/wstcc).
 
 O aplicativo utiliza recursos recentes do Android, visando melhor performance e usabilidade, tais como, RecyclerView, CardView, ExpandableList, NavigationDrawer entre outros. Para utilizar o aplicativo é necessário ter acesso com a internet. Possui compatibilidade a partir do Android Jelly Bean até o mais recente Marshmallow (API 16-23). 
 
